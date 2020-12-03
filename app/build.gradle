@@ -1,0 +1,114 @@
+
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.0'
+    id 'application'
+    id 'jacoco'
+    id 'info.solidsoft.pitest' version '1.5.1'
+}
+
+repositories {
+    // Use JCenter for resolving dependencies.
+    // jcenter()
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_11
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_11
+}
+
+dependencies {
+    ext.kotlinVersion = '1.4.0'
+    ext.junit_version = "5.7.0"
+
+    // Align versions of all Kotlin components
+    implementation platform('org.jetbrains.kotlin:kotlin-bom')
+
+    // Kotlin standard libraries
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+
+    // unit testing libraries
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+    testImplementation 'com.willowtreeapps.assertk:assertk-jvm:0.23'
+    testImplementation "io.mockk:mockk:1.10.2"
+}
+
+build {
+    dependsOn 'pitest'
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport // generate report after tests
+}
+
+// --- jacoco plugin configuration --- measures code coverage of unit tests ---
+
+jacocoTestReport {
+    dependsOn test // tests are a prerequisite for report
+}
+
+jacoco {
+    toolVersion = "0.8.6"
+    reportsDir = file("$buildDir/jacoco")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.9
+            }
+        }
+
+        rule {
+            enabled = false
+            element = 'CLASS'
+            includes = ['org.hostsharing.hsadmin.billing.core.*']
+
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                maximum = 0.3
+            }
+        }
+    }
+}
+
+// --- pitest configuration --- runs mutation tests, thus testing the quality of the unit tests ---
+
+pitest {
+    junit5PluginVersion.set('0.12')
+    targetClasses.set(['org.hostsharing.hsadmin.billing.core.*'])
+    pitestVersion.set('1.5.1') //not needed when a default PIT version should be used
+    threads.set(4)
+    outputFormats.set(['XML', 'HTML'])
+    timestampedReports.set(false)
+    mutationThreshold.set(95)
+}
+
+// --- application
+
+application {
+    mainClass.set('org.hostsharing.hsadmin.billing.core.Billing')
+}

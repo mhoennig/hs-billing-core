@@ -1,0 +1,78 @@
+
+    Protokoll 2020-12-03 Martin, Estelle, Michael Hierweck, Michael Hönnig
+
+    Unabhängige Anwendung, die Daten aus den dBs abfragt und in csv of bereit stellt.
+
+    1 Adapter der aus HSDB Kundendaten holt
+    1 Adapter der Abrechnungsdaten (aus Versuch. Quellen) holt
+
+
+    Es sollen aber auch csv Dateien "zu Fuß" erstellt werden können.
+
+    Auch bei Mitgliederstammdaten und Hosting-Leitungen soll
+
+    Abruf zu bestimmten Zeiten (Zeitpunktabrechnung) Stichtags genau.
+
+    Abrechnungsdaten müssen vom Programm zusammengeführt werden, Rechnung für die Posten soll erstellt werden.
+
+
+    Kontext Mini1StopShop uw für Eu und Nicht EU Auslands Abrechnungen (B2B und B2C)
+
+
+    Daten:
+    Kundenstammdaten (inkl. SEPARAT Basis
+    Zusatztexte im Rechnungsdokument variabel einfügbar
+    Abrechnungsprüfung MG Beitrag,  Serrverprodukte, weitere Produkte, später Wod etc. Zeiten.
+
+
+    Wichtig: Preisfindung sollen die Adapter machen, weil Versuch. Systeme mit eigenem Pricing dazwischen liegen.
+    Bsp.: Preise für Managed Server stehen zwar in HSDB, Domain etc. Preise werden derzeit per Skripten zusammen gesammelt.
+    Wenn Preise sich ändern, sei es an den Schnittstellen oder Hostsharing intern.
+
+    Details für die Unterscheidungskriterien sind noch festzulegen (s.a. im Bsp. Michael H. val actualInvoicesCsv = Billing ...)
+    Billing Items benötigen ein Leistungsdatum oder - Zeitraum (kann auch leer sein)
+    Ggfs. Uhrzeit, zB bei BBB.
+    Neu: auch Group-IDs werden eingefügt.
+
+
+    Immer als erstes aufschreiben, was konkret passieren soll. Das geht, wenn die grundsätzlichen Abläufe klar sind.
+
+
+    2. Und 3. Spalte zu einer Spalte zusammenfassen, Unterschied Paket und Domains ist historisch bedingt und wird nicht mehr benötigt.
+
+    Wie erfolgt die Sortierung auf der Rechnung? (Output-Generator)
+
+
+    Fallgruppen:
+    - 1 mal jährlich im Voraus Zahlung für das Jahr; das betrifft im wesentlichen MG mit (Beitrag, Domain, best. Webpaket Konfiguration):
+    Könnte mit einem 2. REchnungstyp umgesetzt werden (ähnlich Strom/Wasseerr-Rechnung) es steht dann nicht Rechnung drauf? Rechtlich ist das eine Anzahlung, dafür sollte eigentlich schon eine Rechnung erstellt werden.
+    Könnte in Zukunft gemacht werden, nicht akut.
+
+    - 2. Fall: Einzahlung eines Guthabens (ebenfalls eine Anzahlung auf der Rechnung mit Bez. "Anzahlung").
+    P: Abgrenzungspositionen (Domains gem. StB nicht). P: Buchungssätze und Bilanzerstellung.
+    Bsp.: VR Networld möchte 4K anzahlen für Leistunten 12 Monate (=Anzalhung für Zeitraum 01.12.2020 bis 30.11.2021)
+
+    Wenn Leistungszeitraum nicht komplett innerhalb Abrechnungsperiode (Monat), müssen intern Buchung der Abgrenzungsposten erfolgen.
+    Umbau gönnte mit Spanne 1 Jahr umgesetzt werden, da dann der Generator Abgrenzung berechnen kann.
+    Z.B. Generator für Domainabrrechnung;
+
+    Abgrenzung muss bei Erzeugung von Buchungssätzen erfolgen (passive Rechnungsabgrenzung), dann wenn Leistungsdatum oder Pos. Nicht in Abrechnungsperiode Monat passt, weil sie darüber hinausgeht.
+    Timestmp "from", "until".
+
+    Andere Frage: Projekt-Rechnung für zB 3 Jahre mit Vorauszahlungen, P: was wenn weitere nicht enthaltene LEistungen gebucht werden?
+    Fall Pauschalabrechnung: es wird keine Rechnung im Zeitraum erstellt.
+    -> P: Kd. Bucht CPU oder weitere Leisttungen hinzu.
+
+    L: billing-items.csv erstellen, das die Komponenten enthält und Abgleich je Kunde ermöglicht.
+
+    Das Feature wird erst umgesetzt, wenn manuell nicht mehr handhabbar.
+
+    Bsp. PR-Berater Projektabrechnung,, Bezeichnung für Kd. mit Textfeld könnte eingefügt werden. P: Domaingenerator?
+
+
+    Szenario Desaster: Stornierung muss derzeit manuell erfolgen. Automatisierter Stornolauf möglich, für definierte Rechnungen/je Kunde? Einzelposten sollen nicht Storniert werden.
+    Es muss je Rechnung storniert werden und eine neue Rechnung erzeugt werden.
+
+    Programm muss deterministisch arbeiten, sonst geht das nicht. Das ist derzeit nicht der Fall (Bsp. Iteration über Mitglieder erzeugt keine determinierte Rechnungsnurmmer!)
+
+    Fall als User-Story formulieren.
