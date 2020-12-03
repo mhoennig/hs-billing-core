@@ -14,7 +14,7 @@ class Billing(
 
     fun generateInvoicesCsv(invoicesCSV: File): File {
         invoicesCSV.writeText("""
-            customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vat.vatRate;vat.gross"
+            customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;vatGross"
             "12345";"2020-2000-12345";"02.12.2020";"30.11.2020";"11/2020";"20.12.2020";"true";"16";"206,66"
             """.trimIndent()
         )
