@@ -1,4 +1,4 @@
-package org.hostsharing.hsadmin.billing.core
+package org.hostsharing.hsadmin.billing.core.domain
 
 import java.time.LocalDate
 

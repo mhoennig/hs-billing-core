@@ -1,18 +1,22 @@
-package org.hostsharing.hsadmin.billing.core
+package org.hostsharing.hsadmin.billing.core.writer
 
 import org.apache.velocity.Template
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.VelocityEngine
 import org.apache.velocity.context.Context
+import org.hostsharing.hsadmin.billing.core.domain.Contact
+import org.hostsharing.hsadmin.billing.core.domain.Customer
+import org.hostsharing.hsadmin.billing.core.domain.Invoice
+import org.hostsharing.hsadmin.billing.core.lib.Format
+import org.hostsharing.hsadmin.billing.core.lib.format
 import java.io.Writer
 import java.math.BigDecimal
-import java.util.*
 
 /**
  * Merges a single invoice into the given template and
  * appends the formatted output to a given [java.io.Writer].
  */
-internal class InvoicePrinter(templateFilename: String?) {
+internal class InvoiceWriter(templateFilename: String?) {
 
     interface VatGroup {
         val vatRate: BigDecimal
@@ -36,7 +40,10 @@ internal class InvoicePrinter(templateFilename: String?) {
         val documentDateFormatted = invoice.documentDate.format(Format.date)
         val dueDateFormatted = invoice.dueDate.format(Format.date)
 
-        override val customer: Customer = Customer()
+        override val customer: Customer = CustomerFormatter(invoice.customer)
+    }
+
+    class CustomerFormatter(customer: Customer) : Customer by customer {
     }
 
     private val template: Template

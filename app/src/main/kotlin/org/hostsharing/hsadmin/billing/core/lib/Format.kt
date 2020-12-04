@@ -1,4 +1,4 @@
-package org.hostsharing.hsadmin.billing.core
+package org.hostsharing.hsadmin.billing.core.lib
 
 import java.math.BigDecimal
 import java.text.DateFormat

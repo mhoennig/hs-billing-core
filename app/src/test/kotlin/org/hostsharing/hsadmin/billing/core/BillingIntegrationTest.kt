@@ -12,7 +12,7 @@ import java.time.LocalDate
 class BillingIntegrationTest {
 
     @Test
-    fun `will generate buchungen-csv`() {
+    fun `will generate bookings-csv`() {
 
         val customersCsvFile = givenInputFile named "customers.csv" containing """
             customerNumber;customerCode;salutation;company;title;firstName;lastName;fullName;co;address;zipcode;city;country;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef
@@ -43,7 +43,7 @@ class BillingIntegrationTest {
             "hsh00-xyz";    "bbbmeet";     "myxyz";   "1";     "08";   "4711"; "2020-11-01T10:25:00";  "2020-11-14T11:35:00"; "BBB Meet Konferenz";           "15.00"
             """
 
-        val actualBookingsCsvFile = givenOutputFile named "buchungen.csv"
+        val actualBookingsCsvFile = givenOutputFile named "bookings.csv"
 
         val actualBookingsCsv = Billing(
             configuration,
