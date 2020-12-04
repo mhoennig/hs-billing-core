@@ -28,23 +28,42 @@ class Billing(
     val invoices: MutableList<Invoice> = mutableListOf()
 
     init {
-        val customers: List<Customer> =
-            semicolonSeparatedFileReader().open(customersCSV) {
-                readAllWithHeaderAsSequence()
-                    .map {
-                        object : Customer {
-                            override val uidVat = it["uidVat"]
-                            override val number = Integer.parseInt(it["customerNumber"]
-                                ?: error("customer-row without customerNumber"))
-                            override val code = it["customerCode"] ?: error("customer-row without customerCode: ${it}")
-                            override val billingContact = Contact()
-                            override val directDebiting = true
-                        }
+        val customers: List<Customer> = readCustomers(customersCSV)
+
+        val billingItems: List<InvoiceItem> = readBillingItems(billingItemsCSVs)
+
+        customers.forEachIndexed { index, customer ->
+            invoices.add(object : Invoice {
+                override val documentNumber = "${billingDate.format(Format.year)}-${startInvoiceNumber + index}-${customer.number}"
+                override val documentDate = billingDate
+                override val customer = customer
+                override val referenceDate = periodEndDate
+                override val dueDate = this.documentDate.plusDays(30)
+                override val directDebiting = this.customer.directDebiting
+                override val items = billingItems.filter { it.customerCode == customer.code }
+            })
+        }
+    }
+
+    private fun readCustomers(customersCSV: File): List<Customer> =
+        semicolonSeparatedFileReader().open(customersCSV) {
+            readAllWithHeaderAsSequence()
+                .map {
+                    object : Customer {
+                        override val uidVat = it["uidVat"]
+                        override val number = Integer.parseInt(it["customerNumber"]
+                            ?: error("customer-row without customerNumber"))
+                        override val code = it["customerCode"] ?: error("customer-row without customerCode: ${it}")
+                        override val billingContact = Contact()
+                        override val directDebiting = true
                     }
-                    .toList()
-            }
-        val billingItems: List<InvoiceItem> =
-            semicolonSeparatedFileReader().open(billingItemsCSVs[0]) { // TODO: not just first, but all
+                }
+                .toList()
+        }
+
+    private fun readBillingItems(billingItemsCSVs: Array<out File>): List<InvoiceItem> =
+        billingItemsCSVs.flatMap {
+            semicolonSeparatedFileReader().open(it) {
                 readAllWithHeaderAsSequence()
                     .map {
                         object : InvoiceItem {
@@ -55,18 +74,8 @@ class Billing(
                     }
                     .toList()
             }
-        customers.forEachIndexed { index, customer ->
-            invoices.add(object : Invoice {
-                override val documentNumber = "${billingDate.format(Format.year)}-${startInvoiceNumber+index}-${customer.number}"
-                override val documentDate = billingDate
-                override val customer = customer
-                override val referenceDate = periodEndDate
-                override val dueDate = this.documentDate.plusDays(30)
-                override val directDebiting = this.customer.directDebiting
-                override val items = billingItems.filter { it.customerCode == customer.code }
-            })
         }
-    }
+
 
     private fun semicolonSeparatedFileReader() =
         csvReader {
