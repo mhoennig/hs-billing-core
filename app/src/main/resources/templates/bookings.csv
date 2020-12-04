@@ -1,0 +1,4 @@
+customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount
+#foreach ($vatGroup in $vatGroups)
+"$!customer.number";"$!invoice.documentNumber";"$!invoice.documentDateFormatted";"$!invoice.referenceDateFormatted";"$!invoice.referencePeriodFormatted";"$!invoice.dueDateFormatted";"$!invoice.directDebiting";"$!vatGroup.vatRateFormatted";"$!vatGroup.netAmountFormatted";"$!vatGroup.grossAmountFormatted";"$!vatGroup.vatAmountFormatted";"$!vatGroup.vatAccount"
+#end
