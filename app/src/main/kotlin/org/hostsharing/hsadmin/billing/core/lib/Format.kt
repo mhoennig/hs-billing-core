@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter
 class Format {
 
     companion object {
+        val year: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy")
         val date: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
         val datePeriod: DateTimeFormatter = DateTimeFormatter.ofPattern("MM/yyyy")
         val money = DecimalFormat("#,##0.00")

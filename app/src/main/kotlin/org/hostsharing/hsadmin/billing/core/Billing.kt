@@ -1,12 +1,15 @@
 package org.hostsharing.hsadmin.billing.core
 
+import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import org.hostsharing.hsadmin.billing.core.domain.Contact
 import org.hostsharing.hsadmin.billing.core.domain.Customer
 import org.hostsharing.hsadmin.billing.core.domain.Invoice
 import org.hostsharing.hsadmin.billing.core.domain.InvoiceItem
+import org.hostsharing.hsadmin.billing.core.lib.Format
 import org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter
 import java.io.File
 import java.io.FileWriter
+import java.math.BigDecimal
 import java.time.LocalDate
 
 class Billing(
@@ -22,25 +25,56 @@ class Billing(
         private const val BOOKINGS_TEMPLATE = "bookings.csv.vm"
     }
 
-    val invoices: List<Invoice> = arrayListOf(
-        object : Invoice {
-            override val documentNumber = "2020-2000-12345"
-            override val documentDate = LocalDate.parse("2020-12-02")
-            override val customer: Customer = object : Customer {
-                override val uidVat = "DE1234567"
-                override val number = 12345
-                override val code = "xyz"
-                override val billingContact = Contact()
+    val invoices: MutableList<Invoice> = mutableListOf()
+
+    init {
+        val customers: List<Customer> =
+            semicolonSeparatedFileReader().open(customersCSV) {
+                readAllWithHeaderAsSequence()
+                    .map {
+                        object : Customer {
+                            override val uidVat = it["uidVat"]
+                            override val number = Integer.parseInt(it["customerNumber"]
+                                ?: error("customer-row without customerNumber"))
+                            override val code = it["customerCode"] ?: error("customer-row without customerCode: ${it}")
+                            override val billingContact = Contact()
+                            override val directDebiting = true
+                        }
+                    }
+                    .toList()
             }
-
-            override val referenceDate = LocalDate.parse("2020-11-20")
-
-            override val dueDate = documentDate.plusDays(30)
-            override val directDebiting = true
-
-            override val items: List<InvoiceItem> = arrayListOf()
+        val billingItems: List<InvoiceItem> =
+            semicolonSeparatedFileReader().open(billingItemsCSVs[0]) { // TODO: not just first, but all
+                readAllWithHeaderAsSequence()
+                    .map {
+                        object : InvoiceItem {
+                            override val customerCode = it["customerCode"]
+                                ?: error("billing-item-row without customerCode: ${it}")
+                            override val netAmount = BigDecimal(it["netAmount"])
+                        }
+                    }
+                    .toList()
+            }
+        customers.forEachIndexed { index, customer ->
+            invoices.add(object : Invoice {
+                override val documentNumber = "${billingDate.format(Format.year)}-${startInvoiceNumber+index}-${customer.number}"
+                override val documentDate = billingDate
+                override val customer = customer
+                override val referenceDate = periodEndDate
+                override val dueDate = this.documentDate.plusDays(30)
+                override val directDebiting = this.customer.directDebiting
+                override val items = billingItems.filter { it.customerCode == customer.code }
+            })
         }
-    )
+    }
+
+    private fun semicolonSeparatedFileReader() =
+        csvReader {
+            charset = "UTF-8"
+            quoteChar = '"'
+            delimiter = ';'
+            escapeChar = '\\'
+        }
 
     fun generateBookingsCsv(bookingsCSV: File): File {
 
