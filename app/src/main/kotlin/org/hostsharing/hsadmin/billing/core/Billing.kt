@@ -6,6 +6,8 @@ import org.hostsharing.hsadmin.billing.core.domain.Customer
 import org.hostsharing.hsadmin.billing.core.domain.Invoice
 import org.hostsharing.hsadmin.billing.core.domain.InvoiceItem
 import org.hostsharing.hsadmin.billing.core.lib.Format
+import org.hostsharing.hsadmin.billing.core.reader.readBillingItems
+import org.hostsharing.hsadmin.billing.core.reader.readCustomers
 import org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter
 import java.io.File
 import java.io.FileWriter
@@ -44,46 +46,6 @@ class Billing(
             })
         }
     }
-
-    private fun readCustomers(customersCSV: File): List<Customer> =
-        semicolonSeparatedFileReader().open(customersCSV) {
-            readAllWithHeaderAsSequence()
-                .map {
-                    object : Customer {
-                        override val uidVat = it["uidVat"]
-                        override val number = Integer.parseInt(it["customerNumber"]
-                            ?: error("customer-row without customerNumber"))
-                        override val code = it["customerCode"] ?: error("customer-row without customerCode: ${it}")
-                        override val billingContact = Contact()
-                        override val directDebiting = true
-                    }
-                }
-                .toList()
-        }
-
-    private fun readBillingItems(billingItemsCSVs: Array<out File>): List<InvoiceItem> =
-        billingItemsCSVs.flatMap {
-            semicolonSeparatedFileReader().open(it) {
-                readAllWithHeaderAsSequence()
-                    .map {
-                        object : InvoiceItem {
-                            override val customerCode = it["customerCode"]
-                                ?: error("billing-item-row without customerCode: ${it}")
-                            override val netAmount = BigDecimal(it["netAmount"])
-                        }
-                    }
-                    .toList()
-            }
-        }
-
-
-    private fun semicolonSeparatedFileReader() =
-        csvReader {
-            charset = "UTF-8"
-            quoteChar = '"'
-            delimiter = ';'
-            escapeChar = '\\'
-        }
 
     fun generateBookingsCsv(bookingsCSV: File): File {
 
