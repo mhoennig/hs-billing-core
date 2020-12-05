@@ -7,4 +7,5 @@ interface Customer {
     val code: String
     val billingContact: Contact
     val directDebiting: Boolean
+    val countryCode: String
 }
