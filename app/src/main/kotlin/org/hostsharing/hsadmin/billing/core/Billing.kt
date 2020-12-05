@@ -1,12 +1,9 @@
 package org.hostsharing.hsadmin.billing.core
 
-import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import org.hostsharing.hsadmin.billing.core.domain.*
 import org.hostsharing.hsadmin.billing.core.lib.Format
-import org.hostsharing.hsadmin.billing.core.reader.VatGroup
-import org.hostsharing.hsadmin.billing.core.reader.readBillingItems
-import org.hostsharing.hsadmin.billing.core.reader.readCustomers
-import org.hostsharing.hsadmin.billing.core.reader.readVatGroups
+import org.hostsharing.hsadmin.billing.core.reader.*
+import org.hostsharing.hsadmin.billing.core.reader.VatGroupDef
 import org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter
 import java.io.File
 import java.io.FileWriter
@@ -29,7 +26,7 @@ class Billing(
 
     val customers: List<Customer> = readCustomers(customersCSV)
     val billingItems: List<BillingItem> = readBillingItems(billingItemsCSVs)
-    val vatGroups: Map<String, VatGroup> = readVatGroups(vatGroupsCSV)
+    val vatGroupDefDefs: Map<String, VatGroupDef> = readVatGroups(vatGroupsCSV)
     val invoices: List<Invoice> = generateInvoices(customers, billingItems)
 
     private fun generateInvoices(customers: List<Customer>, billingItems: List<BillingItem>): List<Invoice> =
@@ -41,15 +38,28 @@ class Billing(
                 override val referenceDate = periodEndDate
                 override val dueDate = this.documentDate.plusDays(30)
                 override val directDebiting = this.customer.directDebiting
-                override val items = billingItems
+                override val vatGroups = billingItems
                     .filter { it.customerCode == customer.code }
-                    .map { object: InvoiceItem, BillingItem by it {
-                        override val grossAmount = netAmount * vatFactor(it.vatGroupId, customer.countryCode)
-                    }}
+                    .map { InvoiceItemData (
+                        vatGroupDefDefs,
+                        customerCountryCode = customer.countryCode,
+                        billingItem = it
+                        )
+                    }
+                    .groupBy { it.vatGroupId }
+                    .map { InvoiceVatGroup(
+                        vatGroupDefDefs[it.key] ?: error("vatGroup ${it.key} not found"),
+                        customer.countryCode,
+                        vatAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.vatAmount },
+                        netAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.netAmount },
+                        grossAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.grossAmount },
+                        items = it.value)
+                    }
+                    .toList()
             })
         }
 
-    fun generateBookingsCsv(bookingsCSV: File): File {
+fun generateBookingsCsv(bookingsCSV: File): File {
 
         println("Writing bookings file ${bookingsCSV.name} ...")
         val invoicePrinter = InvoiceWriter(
@@ -61,10 +71,35 @@ class Billing(
         return bookingsCSV
     }
 
-    private fun vatFactor(vatGroupId: String, countryCode: String): BigDecimal =
+}
+
+class InvoiceVatGroup(
+    vatGroupDef: VatGroupDef,
+    customerCountryCode: String,
+    override val vatAmount: BigDecimal,
+    override val netAmount: BigDecimal,
+    override val grossAmount: BigDecimal,
+    override val items: List<InvoiceItem>
+): VatGroup {
+    override val vatRate: VatRate = vatGroupDef.rates[customerCountryCode]!!
+    override val vatAccount =
+        if (vatRate.noTax) "420000" else "4400" + vatGroupDef.id // TODO just a simplified fake
+}
+
+class InvoiceItemData(
+    val vatGroupDefDefs: Map<String, VatGroupDef>,
+    val customerCountryCode: String,
+    val billingItem: BillingItem
+    ): InvoiceItem, BillingItem by billingItem  {
+    val vatRate: VatRate = vatRate()
+    val vatAmount: BigDecimal = netAmount * vatRate.percentage
+    override val grossAmount = netAmount + vatAmount
+
+    private fun vatRate(): VatRate =
         try {
-            BigDecimal.ONE + vatGroups[vatGroupId]!!.rates[countryCode]!!.percentage / BigDecimal(100)
+            vatGroupDefDefs[billingItem.vatGroupId]!!.rates[customerCountryCode]!!
         } catch (exc: Exception) {
-            throw RuntimeException( "cannot find VAT for vatGroupId:${vatGroupId} and countryCode=${countryCode}")
+            throw RuntimeException( "cannot find VAT for vatGroupId:${vatGroupId} and countryCode=${customerCountryCode}")
         }
 }
+

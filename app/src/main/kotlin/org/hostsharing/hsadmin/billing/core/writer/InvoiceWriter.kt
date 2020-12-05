@@ -4,13 +4,10 @@ import org.apache.velocity.Template
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.VelocityEngine
 import org.apache.velocity.context.Context
-import org.hostsharing.hsadmin.billing.core.domain.Contact
-import org.hostsharing.hsadmin.billing.core.domain.Customer
-import org.hostsharing.hsadmin.billing.core.domain.Invoice
+import org.hostsharing.hsadmin.billing.core.domain.*
 import org.hostsharing.hsadmin.billing.core.lib.Format
 import org.hostsharing.hsadmin.billing.core.lib.format
 import java.io.Writer
-import java.math.BigDecimal
 
 /**
  * Merges a single invoice into the given template and
@@ -18,16 +15,8 @@ import java.math.BigDecimal
  */
 internal class InvoiceWriter(templateFilename: String?) {
 
-    interface VatGroup {
-        val vatRate: BigDecimal
-        val vatAmount: BigDecimal
-        val netAmount: BigDecimal
-        val grossAmount: BigDecimal
-        val vatAccount: String
-    }
-
     class VatGroupFormatter(vatGroup: VatGroup) : VatGroup by vatGroup {
-        val vatRateFormatted = vatGroup.vatRate.format(Format.vatRate)
+        val vatRateFormatted = vatGroup.vatRate.percentage.format(Format.vatRate)
         val vatAmountFormatted = vatGroup.vatAmount.format(Format.money)
         val netAmountFormatted = vatGroup.netAmount.format(Format.money)
         val grossAmountFormatted = vatGroup.grossAmount.format(Format.money)
@@ -60,23 +49,7 @@ internal class InvoiceWriter(templateFilename: String?) {
 
         ctx.put("customer", invoice.customer)
         ctx.put("invoice", InvoiceFormatter(invoice))
-        ctx.put("vatGroups",
-            arrayListOf(
-                VatGroupFormatter(object : VatGroup {
-                    override val vatRate = BigDecimal("16.00")
-                    override val vatAmount = BigDecimal("30.00")
-                    override val netAmount = BigDecimal("206.66")
-                    override val grossAmount = BigDecimal("236.66")
-                    override val vatAccount = "440006"
-                }),
-                VatGroupFormatter(object : VatGroup {
-                    override val vatRate = BigDecimal("0.00")
-                    override val vatAmount = BigDecimal("0.00")
-                    override val netAmount = BigDecimal("10.00")
-                    override val grossAmount = BigDecimal("10.00")
-                    override val vatAccount = "420000"
-                })
-            ))
+        ctx.put("vatGroups", invoice.vatGroups.map{VatGroupFormatter(it)})
         return ctx
     }
 

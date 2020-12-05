@@ -12,5 +12,5 @@ interface Invoice {
     val dueDate: LocalDate
     val directDebiting: Boolean
 
-    val items: List<InvoiceItem>
+    val vatGroups: List<VatGroup>
 }

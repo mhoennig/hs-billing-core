@@ -4,8 +4,6 @@ import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import org.hostsharing.hsadmin.billing.core.domain.BillingItem
 import org.hostsharing.hsadmin.billing.core.domain.Contact
 import org.hostsharing.hsadmin.billing.core.domain.Customer
-import org.hostsharing.hsadmin.billing.core.domain.InvoiceItem
-import org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter
 import java.io.File
 import java.math.BigDecimal
 
@@ -28,11 +26,11 @@ fun readCustomers(customersCSV: File): List<Customer> =
             .toList()
     }
 
-fun readVatGroups(vatGroupsCSV: File): Map<String, VatGroup> =
+fun readVatGroups(vatGroupsCSV: File): Map<String, VatGroupDef> =
     semicolonSeparatedFileReader().open(vatGroupsCSV) {
         readAllWithHeaderAsSequence()
             .map {
-                object : VatGroup {
+                object : VatGroupDef {
                     override val id = it["id"]
                         ?: error("vat-group-row without 'id' value")
                     override val description = it["description"]
