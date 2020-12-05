@@ -3,8 +3,6 @@ package org.hostsharing.hsadmin.billing.core
 import assertk.Assert
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import assertk.fail
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.time.LocalDate
@@ -57,7 +55,7 @@ class BillingIntegrationTest {
             billingItemsCSVs = arrayOf(billingItemsCsvFile)
         ).generateBookingsCsv(actualBookingsCsvFile).readText()
 
-        assertThat(actualBookingsCsv) matches """
+        assertThat(actualBookingsCsv) matchesInExactOrder """
             |customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount
             |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
             |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"10,00";"11,60";"1,60";"440001"
@@ -113,18 +111,12 @@ class BillingIntegrationTest {
             billingItemsCSVs = arrayOf(customerBillingItemsCsvFile, domainItemsCsvFile, packageBillingItemsCsvFile)
         ).generateBookingsCsv(actualBookingsCsvFile).readText()
 
-        assertThat(actualBookingsCsv) matches """
+        assertThat(actualBookingsCsv) matchesInExactOrder """
             |customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount
             |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
             |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"4,50";"5,22";"0,72";"440002"
             |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"20,00";"23,20";"3,20";"440003"
             |"""
-    }
-
-    @Test
-    @Disabled
-    fun `repeated runs will generate identical invoices-csv`() {
-        fail("todo")
     }
 
     // --- fixture ----------------------------------------------------------
@@ -152,6 +144,6 @@ class BillingIntegrationTest {
         return this
     }
 
-    private infix fun Assert<String>.matches(textBlock: String) = this.isEqualTo(textBlock.replaceIndentByMargin(marginPrefix = "|"))
+    private infix fun Assert<String>.matchesInExactOrder(textBlock: String) = this.isEqualTo(textBlock.replaceIndentByMargin(marginPrefix = "|"))
 }
 
