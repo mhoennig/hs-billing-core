@@ -4,6 +4,15 @@ interface Configuration {
 
     val templatesDirectory: String
 
+    val accountBaseForNonTaxableRevenues: String                    // "4200" + vatGroupId
+
+    val accountBaseForTaxableDomesticRevenues: String               // "4400" + vatGroupId
+
+    val accountBaseForTaxableForeignEuRevenuesReverseCharge: String // "4336" + vatGroupId
+    val accountBaseForTaxableForeignEuRevenues: String              // "4331" + vatGroupId
+
+    val accountBaseForTaxableAbroadEuRevenuesReverseCharge: String  // "4338" + vatGroupId
+
     /**
      * Konten:
      *

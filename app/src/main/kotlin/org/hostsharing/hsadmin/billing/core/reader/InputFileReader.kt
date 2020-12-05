@@ -21,6 +21,8 @@ fun readCustomers(customersCSV: File): List<Customer> =
                         ?: error("customer-row without directDebiting: ${it}")).toBoolean()
                     override val countryCode = it["countryCode"]
                         ?: error("customer-row without countryCode: ${it}")
+                    override val vatChargeCode = it["vatChargeCode"]
+                        ?: error("customer-row without vatChargeCode: ${it}")
                 }
             }
             .toList()

@@ -8,4 +8,5 @@ interface Customer {
     val billingContact: Contact
     val directDebiting: Boolean
     val countryCode: String
+    val vatChargeCode: String
 }
