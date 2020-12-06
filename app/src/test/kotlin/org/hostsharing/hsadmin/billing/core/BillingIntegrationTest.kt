@@ -3,8 +3,6 @@ package org.hostsharing.hsadmin.billing.core
 import assertk.Assert
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import assertk.assertions.isInstanceOf
-import assertk.assertions.isNotNull
 import org.hostsharing.hsadmin.billing.core.lib.ContextException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -17,8 +15,8 @@ class BillingIntegrationTest {
     fun `will generate bookings-csv`() {
 
         val customersCsvFile = givenInputFile named "customers.csv" containing """
-            |customerNumber;customerCode;salutation;company;title;firstName;lastName;fullName;co;address;zipcode;city;country;countryCode;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeCode
-            |"12345";"hsh00-xyz";"Herr";"Testmann GmbH";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";"DE";"DE987654321";"true";"Testmann GmbH";"DE81201900030012345678";"GENODEF1HH2";"HS-10003-20140801";"domestic"
+            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;countryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeCode
+            |"12345";"hsh00-xyz";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";"DE";"taesti@taestmann.de";"DE987654321";"true";"Testmann GmbH";"DE81201900030012345678";"GENODEF1HH2";"HS-10003-20140801";"domestic"
             |"""
 
         val vatGroupsCsvFile = givenInputFile named "article-groups.csv" containing """
@@ -77,8 +75,8 @@ class BillingIntegrationTest {
     fun `will consider multiple billing-item-files`() {
 
         val customersCsvFile = givenInputFile named "customers.csv" containing """
-            |customerNumber;customerCode;salutation;company;title;firstName;lastName;fullName;co;address;zipcode;city;country;countryCode;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeCode
-            |"12345";"hsh00-xyz";"Herr";"Testmann GmbH";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";"DE";"DE987654321";"true";"Testmann GmbH";"DE81201900030012345678";"GENODEF1HH2";"HS-10003-20140801";"domestic"
+            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;countryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeCode
+            |"12345";"hsh00-xyz";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";"DE";"taesti@taestmann.de";"DE987654321";"true";"Testmann GmbH";"DE81201900030012345678";"GENODEF1HH2";"HS-10003-20140801";"domestic"
             |"""
 
         val vatGroupsCsvFile = givenInputFile named "article-groups.csv" containing """
@@ -127,12 +125,12 @@ class BillingIntegrationTest {
     fun `will choose VAT-accounts based on vatChargeCode`() {
 
         val customersCsvFile = givenInputFile named "customers.csv" containing """
-            |customerNumber;customerCode;salutation;company;title;firstName;lastName;fullName;co;address;zipcode;city;country;countryCode;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeCode
-            |"10001";"hsh00-dee";"Herr";"Testmann GmbH";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";    "DE";"DE987654321";"true";"Tästmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10001-20140801";"domestic"
-            |"10001";"hsh00-dep";"Herr";               ;"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";    "DE";             ;"true";"Tästi Tästmann";"DE81201900030012345678";"GENODEF1HH2";"HS-10001-20140801";"domestic"
-            |"10002";"hsh00-ate";"Herr";"Testmann GmbH";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"10010";"Wien";   "Austria";    "AT";"AT123456789";"true";"Testmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10002-20140801";"EU:RC"
-            |"10002";"hsh00-atp";"Herr";               ;"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"10010";"Wien";   "Austria";    "AT";             ;"true";"Testmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10002-20140801";"EU"
-            |"10003";"hsh00-che";"Herr";"Testmann GmbH";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20020";"Zürich"; "Switzerland";"AT";"CH123456789";"true";"Testmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10002-20140801";"NonEU:RC"
+            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;countryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeCode
+            |"10001";"hsh00-dee";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";    "DE";"taesti@taestmann.de";"DE987654321";"true";"Tästmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10001-20140801";"domestic"
+            |"10001";"hsh00-dep";               ;"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";    "DE";"taesti@taestmann.de";             ;"true";"Tästi Tästmann";"DE81201900030012345678";"GENODEF1HH2";"HS-10001-20140801";"domestic"
+            |"10002";"hsh00-ate";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"10010";"Wien";   "Austria";    "AT";"taesti@taestmann.de";"AT123456789";"true";"Testmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10002-20140801";"EU:RC"
+            |"10002";"hsh00-atp";               ;"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"10010";"Wien";   "Austria";    "AT";"taesti@taestmann.de";             ;"true";"Testmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10002-20140801";"EU"
+            |"10003";"hsh00-che";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20020";"Zürich"; "Switzerland";"AT";"taesti@taestmann.de";"CH123456789";"true";"Testmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10002-20140801";"NonEU:RC"
             |"""
 
         val vatGroupsCsvFile = givenInputFile named "article-groups.csv" containing """
@@ -183,10 +181,10 @@ class BillingIntegrationTest {
     }
 
     @Test
-    fun `will log error message on invalid CSV`() {
+    fun `will report missing field and invalid record on invalid CSV`() {
 
         val customersCsvFile = givenInputFile named "customers.csv" containing """
-            |customerNumber;customerCode
+            |customerNumber;customerCode;salutation
             |"10001";"hsh00-dee";"Herr"
             |"""
 
@@ -211,7 +209,7 @@ class BillingIntegrationTest {
         }
 
         assertThat(actualException.message).isEqualTo("""
-            customer-row without directDebiting: {customerNumber=10001, customerCode=hsh00-dee}
+            customer-row without firstName: {customerNumber=10001, customerCode=hsh00-dee, salutation=Herr}
             - while readCustomers: customers.csv
         """.trimIndent())
     }

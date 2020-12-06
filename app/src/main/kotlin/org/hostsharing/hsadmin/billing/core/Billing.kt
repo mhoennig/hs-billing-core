@@ -64,19 +64,16 @@ class Billing(
             })
         }
 
-    fun generateBookingsCsv(bookingsCSV: File): File {
-
+    fun generateBookingsCsv(bookingsCSV: File): File =
         withContext("outputFile: " + bookingsCSV.name) {
-
             val invoicePrinter = InvoiceWriter(
                 configuration.templatesDirectory + "/" + BOOKINGS_TEMPLATE)
 
             FileWriter(bookingsCSV).use { fileWriter ->
                 invoices.forEach { invoicePrinter.printInvoice(it, fileWriter) }
             }
-            return bookingsCSV
+            bookingsCSV
         }
-    }
 }
 
 class InvoiceVatGroup(
@@ -92,6 +89,7 @@ class InvoiceVatGroup(
     override val vatAccount =
         when (true) {
             vatRate.noTax -> config.accountBaseForNonTaxableRevenues
+            // TODO introduce enum class
             customer.vatChargeCode == "domestic" -> config.accountBaseForTaxableDomesticRevenues
             customer.vatChargeCode == "EU" -> config.accountBaseForTaxableForeignEuRevenues
             customer.vatChargeCode == "EU:RC" -> config.accountBaseForTaxableForeignEuRevenuesReverseCharge

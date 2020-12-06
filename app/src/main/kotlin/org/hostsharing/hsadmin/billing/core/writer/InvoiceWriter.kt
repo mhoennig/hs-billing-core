@@ -1,6 +1,5 @@
 package org.hostsharing.hsadmin.billing.core.writer
 
-import org.apache.velocity.Template
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.VelocityEngine
 import org.apache.velocity.context.Context
