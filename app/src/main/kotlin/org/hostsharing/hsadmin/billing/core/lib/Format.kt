@@ -32,5 +32,5 @@ class Format {
     }
 }
 
-fun LocalDate.format(format: DateFormat): String = format.format(this)
-fun BigDecimal.format(format: DecimalFormat): String = format.format(this)
+inline fun LocalDate.format(format: DateFormat): String = format.format(this)
+inline fun BigDecimal.format(format: DecimalFormat): String = format.format(this)

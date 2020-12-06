@@ -11,7 +11,7 @@ class Context {
     }
 }
 
-inline fun <T> withContext(contextInfo: String, body: () -> T): T {
+fun <T> withContext(contextInfo: String, body: () -> T): T {
     try {
         Context.infos.push(contextInfo)
         try {
