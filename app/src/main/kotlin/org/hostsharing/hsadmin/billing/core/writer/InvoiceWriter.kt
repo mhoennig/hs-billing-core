@@ -13,7 +13,7 @@ import java.io.Writer
  * Merges a single invoice into the given template and
  * appends the formatted output to a given [java.io.Writer].
  */
-internal class InvoiceWriter(templateFilename: String?) {
+internal class InvoiceWriter(templateFilename: String) {
 
     class VatGroupFormatter(vatGroup: VatGroup) : VatGroup by vatGroup {
         val vatRateFormatted = vatGroup.vatRate.percentage.format(Format.vatRate)
@@ -35,7 +35,9 @@ internal class InvoiceWriter(templateFilename: String?) {
     class CustomerFormatter(customer: Customer) : Customer by customer {
     }
 
-    private val template: Template
+    private val template = initializeVelocity(templateFilename)
+
+    private var chunk = 0
 
     /**
      * Makes the data of an invoice accessible from a Velocity template.
@@ -47,6 +49,7 @@ internal class InvoiceWriter(templateFilename: String?) {
     private fun createVelocityContext(invoice: Invoice): Context {
         val ctx: Context = VelocityContext()
 
+        ctx.put("chunk", chunk)
         ctx.put("customer", invoice.customer)
         ctx.put("invoice", InvoiceFormatter(invoice))
         ctx.put("vatGroups", invoice.vatGroups.map{VatGroupFormatter(it)})
@@ -61,10 +64,9 @@ internal class InvoiceWriter(templateFilename: String?) {
      */
     fun printInvoice(invoice: Invoice, writer: Writer?) {
         template.merge(createVelocityContext(invoice), writer)
-    }
-
-    init {
-        // initialize Velocity with the given template
-        template = VelocityEngine().also { it.init() }.getTemplate(templateFilename, "UTF-8")
+        chunk++
     }
 }
+
+private fun initializeVelocity(templateFilename: String) =
+    VelocityEngine().also { it.init() }.getTemplate(templateFilename, "UTF-8")
