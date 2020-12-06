@@ -1,7 +1,6 @@
 package org.hostsharing.hsadmin.billing.core
 
 import org.hostsharing.hsadmin.billing.core.domain.*
-import org.hostsharing.hsadmin.billing.core.lib.Context
 import org.hostsharing.hsadmin.billing.core.lib.Format
 import org.hostsharing.hsadmin.billing.core.lib.withContext
 import org.hostsharing.hsadmin.billing.core.reader.*
@@ -87,17 +86,10 @@ class InvoiceVatGroup(
 ) : VatGroup {
     override val vatRate: VatRate = vatGroupDef.rates[customer.countryCode]!!
     override val vatAccount =
-        when (true) {
-            vatRate.noTax -> config.accountBaseForNonTaxableRevenues
-            // TODO introduce enum class
-            customer.vatChargeCode == "domestic" -> config.accountBaseForTaxableDomesticRevenues
-            customer.vatChargeCode == "EU" -> config.accountBaseForTaxableForeignEuRevenues
-            customer.vatChargeCode == "EU:RC" -> config.accountBaseForTaxableForeignEuRevenuesReverseCharge
-            customer.vatChargeCode == "NonEU" -> config.accountBaseForTaxableForeignEuRevenues
-            customer.vatChargeCode == "NonEU:RC" -> config.accountBaseForTaxableForeignEuRevenuesReverseCharge
-            else -> {
-                throw RuntimeException("unknown vatChargeCode ${customer.vatChargeCode}")
-            }
+        if (vatRate.noTax) {
+            config.accountBaseForNonTaxableRevenues
+        } else {
+            VatChargeCode.ofCode(customer.vatChargeCode).accountBase(config)
         } + vatGroupDef.id
 }
 
