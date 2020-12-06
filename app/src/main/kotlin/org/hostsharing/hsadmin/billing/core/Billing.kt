@@ -1,7 +1,9 @@
 package org.hostsharing.hsadmin.billing.core
 
 import org.hostsharing.hsadmin.billing.core.domain.*
+import org.hostsharing.hsadmin.billing.core.lib.Context
 import org.hostsharing.hsadmin.billing.core.lib.Format
+import org.hostsharing.hsadmin.billing.core.lib.withContext
 import org.hostsharing.hsadmin.billing.core.reader.*
 import org.hostsharing.hsadmin.billing.core.reader.VatGroupDef
 import org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter
@@ -64,16 +66,18 @@ class Billing(
 
     fun generateBookingsCsv(bookingsCSV: File): File {
 
-        println("Writing bookings file ${bookingsCSV.name} ...")
-        val invoicePrinter = InvoiceWriter(
-            configuration.templatesDirectory + "/" + BOOKINGS_TEMPLATE)
+        withContext("outputFile: " + bookingsCSV.name) {
+            Context.log("generating")
 
-        FileWriter(bookingsCSV).use { fileWriter ->
-            invoices.forEach { invoicePrinter.printInvoice(it, fileWriter) }
+            val invoicePrinter = InvoiceWriter(
+                configuration.templatesDirectory + "/" + BOOKINGS_TEMPLATE)
+
+            FileWriter(bookingsCSV).use { fileWriter ->
+                invoices.forEach { invoicePrinter.printInvoice(it, fileWriter) }
+            }
+            return bookingsCSV
         }
-        return bookingsCSV
     }
-
 }
 
 class InvoiceVatGroup(

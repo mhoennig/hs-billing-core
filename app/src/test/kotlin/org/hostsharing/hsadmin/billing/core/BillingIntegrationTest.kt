@@ -3,7 +3,11 @@ package org.hostsharing.hsadmin.billing.core
 import assertk.Assert
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
+import assertk.assertions.isNotNull
+import org.hostsharing.hsadmin.billing.core.lib.ContextException
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.io.File
 import java.time.LocalDate
 
@@ -175,7 +179,38 @@ class BillingIntegrationTest {
             |"10002";"2020-2003-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,20";"20,00";"24,00";"4,00";"433103"
             |"10003";"2020-2004-10003";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
             |"10003";"2020-2004-10003";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,20";"20,00";"24,00";"4,00";"433603"
-|"""
+            |"""
+    }
+
+    @Test
+    fun `will log error message on invalid CSV`() {
+
+        val customersCsvFile = givenInputFile named "customers.csv" containing """
+            |customerNumber;customerCode
+            |"10001";"hsh00-dee";"Herr"
+            |"""
+
+        val vatGroupsCsvFile = givenInputFile named "article-groups.csv" containing """
+            |id;    description;            electronicService;    DE;         AT;
+            |"00";  "Mitgliedsbeitrag";     "true";               "noTax";    "noTax";    
+            |"03";  "Package";              "true";               "16.00";    "20.00";
+            |"""
+
+        val actualBookingsCsvFile = givenOutputFile named "bookings.csv"
+
+        val actualException = assertThrows<ContextException> {
+            Billing(
+                configuration,
+                periodEndDate = LocalDate.parse("2020-11-30"),
+                billingDate = LocalDate.parse("2020-12-03"),
+                startInvoiceNumber = 2000,
+                vatGroupsCSV = vatGroupsCsvFile,
+                customersCSV = customersCsvFile,
+                billingItemsCSVs = emptyArray()
+            ).generateBookingsCsv(actualBookingsCsvFile).readText()
+        }
+
+        assertThat(actualException.message).isEqualTo("customer-row without directDebiting: {customerNumber=10001, customerCode=hsh00-dee}")
     }
 
     // --- fixture ----------------------------------------------------------
