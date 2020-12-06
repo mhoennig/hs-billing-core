@@ -210,7 +210,10 @@ class BillingIntegrationTest {
             ).generateBookingsCsv(actualBookingsCsvFile).readText()
         }
 
-        assertThat(actualException.message).isEqualTo("customer-row without directDebiting: {customerNumber=10001, customerCode=hsh00-dee}")
+        assertThat(actualException.message).isEqualTo("""
+            customer-row without directDebiting: {customerNumber=10001, customerCode=hsh00-dee}
+            - while readCustomers: customers.csv
+        """.trimIndent())
     }
 
     // --- fixture ----------------------------------------------------------

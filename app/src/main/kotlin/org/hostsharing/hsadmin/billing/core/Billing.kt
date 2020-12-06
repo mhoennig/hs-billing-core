@@ -67,7 +67,6 @@ class Billing(
     fun generateBookingsCsv(bookingsCSV: File): File {
 
         withContext("outputFile: " + bookingsCSV.name) {
-            Context.log("generating")
 
             val invoicePrinter = InvoiceWriter(
                 configuration.templatesDirectory + "/" + BOOKINGS_TEMPLATE)

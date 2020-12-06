@@ -6,13 +6,8 @@ class Context {
     companion object {
         val infos = Stack<String>()
 
-        fun log(message: String) {
-            System.out.println(message)
-        }
-
-        fun err(message: String) {
-            System.err.println(message)
-        }
+        override fun toString(): String =
+            infos.reversed().map{ "- while ${it}"}.joinToString("\n")
     }
 }
 
@@ -22,11 +17,11 @@ inline fun <T> withContext(contextInfo: String, body: () -> T): T {
         try {
             return body()
         } catch ( exc: ContextException ) {
-            Context.err("- within " + contextInfo)
             throw exc
         } catch ( exc: Exception ) {
-            Context.err(contextInfo + ": " + exc.message)
-            throw ContextException(exc.message ?: exc.javaClass.simpleName, exc)
+            throw ContextException(
+                (exc.message ?: exc.javaClass.simpleName) + "\n" + Context.toString(),
+                exc)
         }
     } finally {
         Context.infos.pop()
