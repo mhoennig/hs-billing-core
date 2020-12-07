@@ -1,4 +1,27 @@
 
+== Unit Testing
+
+For unit-tests consider the __BRIEF__ rules http://gasparnagy.com/2019/05/clean-up-bad-bdd-scenarios/[from BDD]
+
+Business language::
+enables collaboration and feedback
+
+Real data::
+helps to discover white spots in requirements
+
+Intention revealing::
+
+is a way to describe the tests by focusing on what we wanted to achieve and not on how
+
+Essential::
+include only relevant details in the scenario
+
+Focused::
+the scenarios should illustrate a single rule only
+Brief — keep scenarios short
+
+
+
 == Architecture Verification
 
 There is some automatic verification of architecture rules using __ArchUnit__ in the unit test `ArchitectureTest`.

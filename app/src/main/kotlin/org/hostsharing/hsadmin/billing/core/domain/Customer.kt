@@ -10,15 +10,15 @@ interface Customer: Formattable {
     val uidVat: String?
 
     override fun format(indent: Int): String = """
-        |number="${number}"
-        |code="${code}"
+        |number=${number.quoted}
+        |code=${code.quoted}
         |billingContact={
         |${billingContact.formatted(indent+4)}
         |}
         |sepa={
         |${sepa.formatted(indent+4)}
         |}
-        |vatChargeCode="${vatChargeCode}"
-        |uidVat="${uidVat}"
+        |vatChargeCode=${vatChargeCode.quoted}
+        |uidVat=${uidVat.quoted}
         """
 }

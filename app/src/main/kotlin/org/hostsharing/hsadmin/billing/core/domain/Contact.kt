@@ -16,17 +16,17 @@ interface Contact: Formattable {
     val email: String
 
     override fun format(indent: Int): String = """
-        |company="${company}"
-        |salutation="${salutation}"
-        |title="${title}"
-        |firstName="${firstName}"
-        |lastName="${lastName}"
-        |co="${co}"
-        |street="${street}"
-        |zipCode="${zipCode}"
-        |city="${city}"
-        |country="${country}"
-        |countryCode="${countryCode}"
-        |email="${email}"
+        |company=${company.quoted}
+        |salutation=${salutation.quoted}
+        |title=${title.quoted}
+        |firstName=${firstName.quoted}
+        |lastName=${lastName.quoted}
+        |co=${co.quoted}
+        |street=${street.quoted}
+        |zipCode=${zipCode.quoted}
+        |city=${city.quoted}
+        |country=${country.quoted}
+        |countryCode=${countryCode.quoted}
+        |email=${email.quoted}
         """
 }

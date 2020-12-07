@@ -8,10 +8,10 @@ interface Sepa: Formattable {
     val mandatRef: String?
 
     override fun format(indent: Int): String = """
-        |directDebiting="${directDebiting}"
-        |bankCustomer="${bankCustomer}"
-        |bankIBAN="${bankIBAN}"
-        |bankBIC="${bankBIC}"
-        |mandatRef="${mandatRef}"
+        |directDebiting=${directDebiting.quoted}
+        |bankCustomer=${bankCustomer.quoted}
+        |bankIBAN=${bankIBAN.quoted}
+        |bankBIC=${bankBIC.quoted}
+        |mandatRef=${mandatRef.quoted}
         """
 }

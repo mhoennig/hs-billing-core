@@ -6,4 +6,7 @@ interface Formattable {
 
     fun formatted(indent: Int = 0): String =
         format(indent).replaceIndentByMargin(marginPrefix = "|", newIndent = " ".repeat(indent))
+
+    val Any?.quoted: String
+        get() = if (this != null ) """"${this}"""" else "null"
 }
