@@ -11,6 +11,9 @@ File-Formats
 - configurable number formats (#,## vs. #.## etc.)
 - output vat rate as 0,16 or 16,00?
 
+Architecture
+- refactor Billing, extracting the InvoiceGenerator to become just orchestrator
+
 Code-Quality
 - increase mutationThreshold.set(85) to 95 for pitest
 - configure path coverage for jacoco

@@ -32,6 +32,17 @@ internal class VatGroupDefParserTest {
             """.trimIndent())
     }
 
+    @ParameterizedTest
+    @ValueSource(booleans = [true, false])
+    fun `will set electronicService in VatGroupDef depending on electronicService value in record`(electronicService: Boolean) {
+        val givenRecord = defaultRecordWithAllValidValues.toMutableMap().also {
+            it.put("electronicService", "${electronicService}")
+        }
+        val actual = VatGroupDefParser.parse(givenRecord)
+
+        assertThat(actual.electronicService).isEqualTo(electronicService)
+    }
+
     @Test
     fun `will throw error when parsing VatGroupDef with invalid percentage`() {
         val givenRecord = defaultRecordWithAllValidValues.toMutableMap().also {
