@@ -1,5 +1,6 @@
 Cycle detected: Slice domain -> Slice lib -> Slice domain\
 Dependencies of Slice domain\
+Class <org.hostsharing.hsadmin.billing.core.domain.VatChargeCodeTest$configuration> implements interface <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCodeTest.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getGoodDependency()> has return type <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode.accountBase(org.hostsharing.hsadmin.billing.core.lib.Configuration)> has parameter of type <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCode.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$1.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableDomesticRevenues()> in (VatChargeCode.kt:8)\
@@ -10,6 +11,7 @@ Dependencies of Slice lib\
 Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToDomain()> has return type <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
 Cycle detected: Slice domain -> Slice lib -> Slice reader -> Slice domain\
 Dependencies of Slice domain\
+Class <org.hostsharing.hsadmin.billing.core.domain.VatChargeCodeTest$configuration> implements interface <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCodeTest.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getGoodDependency()> has return type <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode.accountBase(org.hostsharing.hsadmin.billing.core.lib.Configuration)> has parameter of type <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCode.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$1.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableDomesticRevenues()> in (VatChargeCode.kt:8)\
@@ -26,6 +28,7 @@ Method <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readCustom
 Constructor <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readVatGroups$1$1$1$1.<init>(java.util.Map)> calls constructor <org.hostsharing.hsadmin.billing.core.domain.VatRate.<init>(java.lang.String)> in (InputFileReader.kt:63)
 Cycle detected: Slice domain -> Slice lib -> Slice reader -> Slice writer -> Slice domain\
 Dependencies of Slice domain\
+Class <org.hostsharing.hsadmin.billing.core.domain.VatChargeCodeTest$configuration> implements interface <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCodeTest.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getGoodDependency()> has return type <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode.accountBase(org.hostsharing.hsadmin.billing.core.lib.Configuration)> has parameter of type <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCode.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$1.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableDomesticRevenues()> in (VatChargeCode.kt:8)\
@@ -60,6 +63,7 @@ Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupF
 (26 further dependencies have been omitted...)
 Cycle detected: Slice domain -> Slice lib -> Slice writer -> Slice domain\
 Dependencies of Slice domain\
+Class <org.hostsharing.hsadmin.billing.core.domain.VatChargeCodeTest$configuration> implements interface <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCodeTest.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getGoodDependency()> has return type <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode.accountBase(org.hostsharing.hsadmin.billing.core.lib.Configuration)> has parameter of type <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCode.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$1.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableDomesticRevenues()> in (VatChargeCode.kt:8)\
@@ -92,6 +96,7 @@ Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupF
 (26 further dependencies have been omitted...)
 Cycle detected: Slice domain -> Slice lib -> Slice writer -> Slice reader -> Slice domain\
 Dependencies of Slice domain\
+Class <org.hostsharing.hsadmin.billing.core.domain.VatChargeCodeTest$configuration> implements interface <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCodeTest.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getGoodDependency()> has return type <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode.accountBase(org.hostsharing.hsadmin.billing.core.lib.Configuration)> has parameter of type <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCode.kt:0)\
 Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$1.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableDomesticRevenues()> in (VatChargeCode.kt:8)\
@@ -137,6 +142,8 @@ Cycle detected: Slice domain -> Slice writer -> Slice lib -> Slice domain\
 Dependencies of Slice domain\
 Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getBadDependency()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)\
 Dependencies of Slice writer\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format year()> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getYear()> in (FormatTest.kt:16)\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format year()> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (FormatTest.kt:16)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getVatRate()> in (InvoiceWriter.kt:18)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:18)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:19)\
@@ -145,6 +152,8 @@ Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupF
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:20)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:21)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:21)\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format date()> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (FormatTest.kt:23)\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format date()> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (FormatTest.kt:23)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:26)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:26)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDatePeriod()> in (InvoiceWriter.kt:27)\
@@ -153,12 +162,15 @@ Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFo
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:28)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:29)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:29)\
+(6 further dependencies have been omitted...)\
 Dependencies of Slice lib\
 Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToDomain()> has return type <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
 Cycle detected: Slice domain -> Slice writer -> Slice lib -> Slice reader -> Slice domain\
 Dependencies of Slice domain\
 Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getBadDependency()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)\
 Dependencies of Slice writer\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format year()> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getYear()> in (FormatTest.kt:16)\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format year()> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (FormatTest.kt:16)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getVatRate()> in (InvoiceWriter.kt:18)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:18)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:19)\
@@ -167,6 +179,8 @@ Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupF
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:20)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:21)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:21)\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format date()> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (FormatTest.kt:23)\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format date()> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (FormatTest.kt:23)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:26)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:26)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDatePeriod()> in (InvoiceWriter.kt:27)\
@@ -175,6 +189,7 @@ Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFo
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:28)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:29)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:29)\
+(6 further dependencies have been omitted...)\
 Dependencies of Slice lib\
 Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToReader()> has return type <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)\
 Dependencies of Slice reader\
@@ -218,6 +233,8 @@ Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBad
 Dependencies of Slice reader\
 Method <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules.getBadCycle()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InReaderToTestArchUnitRules.kt:0)\
 Dependencies of Slice writer\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format year()> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getYear()> in (FormatTest.kt:16)\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format year()> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (FormatTest.kt:16)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getVatRate()> in (InvoiceWriter.kt:18)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:18)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:19)\
@@ -226,6 +243,8 @@ Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupF
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:20)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:21)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:21)\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format date()> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (FormatTest.kt:23)\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format date()> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (FormatTest.kt:23)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:26)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:26)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDatePeriod()> in (InvoiceWriter.kt:27)\
@@ -233,11 +252,14 @@ Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFo
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:28)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:28)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:29)\
-Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:29)
+Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:29)\
+(6 further dependencies have been omitted...)
 Cycle detected: Slice lib -> Slice writer -> Slice lib\
 Dependencies of Slice lib\
 Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToWriter()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)\
 Dependencies of Slice writer\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format year()> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getYear()> in (FormatTest.kt:16)\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format year()> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (FormatTest.kt:16)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getVatRate()> in (InvoiceWriter.kt:18)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:18)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:19)\
@@ -246,6 +268,8 @@ Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupF
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:20)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:21)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:21)\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format date()> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (FormatTest.kt:23)\
+Method <org.hostsharing.hsadmin.billing.core.writer.FormatTest.will format date()> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (FormatTest.kt:23)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:26)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:26)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDatePeriod()> in (InvoiceWriter.kt:27)\
@@ -253,7 +277,8 @@ Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFo
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:28)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:28)\
 Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:29)\
-Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:29)
+Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:29)\
+(6 further dependencies have been omitted...)
 Cycle detected: Slice lib -> Slice writer -> Slice reader -> Slice lib\
 Dependencies of Slice lib\
 Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToWriter()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)\

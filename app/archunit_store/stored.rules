@@ -1,5 +1,5 @@
 #
-#Mon Dec 07 10:07:32 CET 2020
-slices\ matching\ 'org.hostsharing.hsadmin.billing.core.(*)..'\ should\ be\ free\ of\ cycles=f850e5cf-ba4a-4ad7-ba3b-3a0e11e6f071
-no\ classes\ that\ reside\ in\ a\ package\ '..lib..'\ should\ depend\ on\ classes\ that\ reside\ in\ any\ package\ ['org.hostsharing.hsadmin.billing.core',\ 'org.hostsharing.hsadmin.billing.core.domain',\ 'org.hostsharing.hsadmin.billing.core.reader',\ 'org.hostsharing.hsadmin.billing.core.writer']=ec429f20-3215-4eba-bf76-83aed2b24655
-no\ classes\ that\ reside\ in\ a\ package\ '..domain..'\ should\ depend\ on\ classes\ that\ reside\ in\ any\ package\ ['org.hostsharing.hsadmin.billing.core',\ 'org.hostsharing.hsadmin.billing.core.reader',\ 'org.hostsharing.hsadmin.billing.core.writer']=9819ad08-caa1-4497-8656-f02c68e65920
+#Mon Dec 07 10:50:40 CET 2020
+slices\ matching\ 'org.hostsharing.hsadmin.billing.core.(*)..'\ should\ be\ free\ of\ cycles=df0f8805-ed5f-422d-907e-fff0e8c71201
+no\ classes\ that\ reside\ in\ a\ package\ '..lib..'\ should\ depend\ on\ classes\ that\ reside\ in\ any\ package\ ['org.hostsharing.hsadmin.billing.core',\ 'org.hostsharing.hsadmin.billing.core.domain',\ 'org.hostsharing.hsadmin.billing.core.reader',\ 'org.hostsharing.hsadmin.billing.core.writer']=fbbeefb9-204b-4d1e-a9d3-7556f0c5e7a8
+no\ classes\ that\ reside\ in\ a\ package\ '..domain..'\ should\ depend\ on\ classes\ that\ reside\ in\ any\ package\ ['org.hostsharing.hsadmin.billing.core',\ 'org.hostsharing.hsadmin.billing.core.reader',\ 'org.hostsharing.hsadmin.billing.core.writer']=c5d609d6-cdba-42c0-915f-580fa7ee730b
