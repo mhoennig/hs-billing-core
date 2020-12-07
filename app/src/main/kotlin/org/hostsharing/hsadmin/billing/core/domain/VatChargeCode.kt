@@ -8,7 +8,7 @@ enum class VatChargeCode(val code: String, val accountBaseGetter: KProperty1<Con
     DOMESTIC("domestic", Configuration::accountBaseForTaxableDomesticRevenues),
     EU("EU", Configuration::accountBaseForTaxableForeignEuRevenues),
     EU_RC("EU-RC", Configuration::accountBaseForTaxableForeignEuRevenuesReverseCharge),
-    NON_EU_RC("NonER-RC", Configuration::accountBaseForTaxableAbroadEuRevenuesReverseCharge);
+    NON_EU_RC("NonEU-RC", Configuration::accountBaseForTaxableAbroadEuRevenuesReverseCharge);
 
     companion object {
         fun ofCode(code: String): VatChargeCode =
