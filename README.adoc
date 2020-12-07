@@ -1,0 +1,13 @@
+
+== Architecture Verification
+
+There is some automatic verification of architecture rules using __ArchUnit__ in the unit test `ArchitectureTest`.
+See there for more information.
+
+== Mutation Testing
+
+./gradlew pitest
+
+creates: link:./app/build/reports/pitest/org.hostsharing.hsadmin.billing.core.reader/index.html[]
+
+configuration of limits in app/build.gradle

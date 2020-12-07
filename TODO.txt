@@ -6,3 +6,8 @@ File-Formats
 - decide if we want mandatory header lines in csv-files
 - what's customer.fullName? can we drop it?
 - do we need both "DE" as well es "Germany" for customer?
+- which field values do we need to validate? e.g. email?
+
+Code-Quality
+- increase mutationThreshold.set(85) to 95 for pitest
+- configure path coverage for jacoco

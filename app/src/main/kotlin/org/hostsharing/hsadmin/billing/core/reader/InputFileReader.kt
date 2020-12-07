@@ -3,9 +3,9 @@ package org.hostsharing.hsadmin.billing.core.reader
 import com.github.doyaaaaaken.kotlincsv.client.CsvFileReader
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import org.hostsharing.hsadmin.billing.core.domain.BillingItem
-import org.hostsharing.hsadmin.billing.core.domain.Contact
 import org.hostsharing.hsadmin.billing.core.domain.Customer
 import org.hostsharing.hsadmin.billing.core.domain.VatRate
+import org.hostsharing.hsadmin.billing.core.domain.isCountryCode
 import org.hostsharing.hsadmin.billing.core.lib.withContext
 import java.io.File
 import java.math.BigDecimal
@@ -13,37 +13,7 @@ import java.math.BigDecimal
 fun readCustomers(customersCSV: File): List<Customer> =
     inputFileReader("reading customers", customersCSV) {
         readAllWithHeaderAsSequence()
-            .map {
-                object : Customer {
-                    // TODO: avoid need of separate error(...) for each + avoid !!
-                    // TODO: maybe automatically iterate over properties?
-                    override val uidVat = it["uidVat"]
-                    override val number = (it["customerNumber"]
-                        ?: error("customer-row without customerNumber")).toInt()
-                    override val code = it["customerCode"]
-                        ?: error("customer-row without customerCode: ${it}")
-                    override val billingContact = object : Contact {
-                        override val company = it["company"]
-                        override val salutation = it["salutation"]!!
-                        override val title = it["title"]
-                        override val firstName = it["firstName"]
-                            ?: error("customer-row without firstName: ${it}")
-                        override val lastName = it["lastName"]!!
-                        override val co = it["co"]
-                        override val street = it["street"]!!
-                        override val zipCode = it["zipCode"]!!
-                        override val city = it["city"]!!
-                        override val country = it["country"]!!
-                        override val email = it["email"]!!
-                    }
-                    override val directDebiting = (it["directDebiting"]
-                        ?: error("customer-row without directDebiting: ${it}")).toBoolean()
-                    override val countryCode = it["countryCode"]
-                        ?: error("customer-row without countryCode: ${it}")
-                    override val vatChargeCode = it["vatChargeCode"]
-                        ?: error("customer-row without vatChargeCode: ${it}")
-                }
-            }
+            .map { CustomerParser.parse(it) }
             .toList()
     }
 
@@ -57,7 +27,7 @@ fun readVatGroups(vatGroupsCSV: File): Map<String, VatGroupDef> =
                     override val description = it["description"]
                         ?: error("vat-group-row without 'description' value")
                     override val electronicService = it["electronicService"].toBoolean()
-                    override val rates = it.filter { it.key.isCoutryCode() }
+                    override val rates = it.filter { it.key.isCountryCode() }
                         .map { it.key to VatRate(it.value) }
                         .toMap()
 
@@ -94,6 +64,3 @@ fun <T> inputFileReader(title: String, file: File, read: CsvFileReader.() -> T):
         }.open(file) { read() }
     }
 
-
-private fun String.isCoutryCode() =
-    this.length == 2 && this == this.toUpperCase() && this[0].isLetter() && this[1].isLetter()

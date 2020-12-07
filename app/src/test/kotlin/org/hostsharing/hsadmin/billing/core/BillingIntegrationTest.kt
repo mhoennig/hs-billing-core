@@ -210,9 +210,11 @@ class BillingIntegrationTest {
         }
 
         assertThat(actualException.message).isEqualTo("""
-            customer-row without firstName: {customerNumber=10001, customerCode=hsh00-dee, salutation=Herr}
+            billing contact without firstName
+            - while parsing billing contact {customerNumber=10001, customerCode=hsh00-dee, salutation=Herr}
+            - while parsing customer {customerNumber=10001, customerCode=hsh00-dee, salutation=Herr}
             - while reading customers: customers.csv
-        """.trimIndent())
+            """.trimIndent())
     }
 
     // --- fixture ----------------------------------------------------------

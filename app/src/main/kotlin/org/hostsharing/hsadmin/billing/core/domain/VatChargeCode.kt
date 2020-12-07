@@ -14,7 +14,6 @@ enum class VatChargeCode(val code: String, val accountBaseGetter: KProperty1<Con
         fun ofCode(code: String): VatChargeCode =
             values().firstOrNull { it.code == code }
                 ?: error("unknown vatChargeCode '${code}'")
-
     }
 
     fun accountBase(config: Configuration): String = accountBaseGetter.get(config)

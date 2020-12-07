@@ -39,13 +39,13 @@ class Billing(
                 override val customer = customer
                 override val referenceDate = periodEndDate
                 override val dueDate = this.documentDate.plusDays(30)
-                override val directDebiting = this.customer.directDebiting
+                override val directDebiting = this.customer.sepa.directDebiting
                 override val vatGroups = billingItems
                     .filter { it.customerCode == customer.code }
                     .map {
                         InvoiceItemData(
                             vatGroupDefDefs,
-                            customerCountryCode = customer.countryCode,
+                            customerCountryCode = customer.billingContact.countryCode,
                             billingItem = it
                         )
                     }
@@ -85,12 +85,12 @@ class InvoiceVatGroup(
     override val grossAmount: BigDecimal,
     override val items: List<InvoiceItem>
 ) : VatGroup {
-    override val vatRate: VatRate = vatGroupDef.rates[customer.countryCode]!!
+    override val vatRate: VatRate = vatGroupDef.rates[customer.billingContact.countryCode]!!
     override val vatAccount =
         if (vatRate.noTax) {
             config.accountBaseForNonTaxableRevenues
         } else {
-            VatChargeCode.ofCode(customer.vatChargeCode).accountBase(config)
+            customer.vatChargeCode.accountBase(config)
         } + vatGroupDef.id
 }
 
