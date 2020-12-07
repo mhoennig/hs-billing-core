@@ -21,7 +21,9 @@ internal val ALL_PACKAGES = arrayOf(
     To verify changed arch rules, you can rebase that branch to the master branch
     and check if the rules are correct by running `./gradlew test`.</p>
 
-    <p>See also 'resources/archunit.properties' for configuration.</p>
+    <p>See also 'resources/archunit.properties' for configuration
+    and 'app/archunit_store' for the rules+results snapshots,
+    both are only available in git branch 'archunit-rule-validation'.</p>
 
     <p>Please also add such "rule-tests" to that branch when you change these rules.</p>
  */
