@@ -21,6 +21,7 @@ internal class CustomerParserTest {
             "zipCode" to "20144",
             "city" to "Hamburg",
             "country" to "Germany",
+            "countryCode" to "DE",
             "email" to "taesti@taestmann.de",
             "uidVat" to "DE81201900030012345678",
             "directDebiting" to "true",
@@ -28,7 +29,6 @@ internal class CustomerParserTest {
             "bankIBAN" to "DE987654321",
             "bankBIC" to "GENODEF1HH2",
             "mandatRef" to "HS-10001-20140801",
-            "countryCode" to "DE",
             "vatChargeCode" to "domestic",
         )
 

@@ -30,7 +30,7 @@ internal class SepaParserTest {
     }
 
     @Test
-    fun `will create SEPA data from record directDebiting disabled and all other fields null`() {
+    fun `will create SEPA data from record with directDebiting disabled and all other fields null`() {
         val givenRecord = mapOf(
             "directDebiting" to "false",
             "bankCustomer" to null,
@@ -51,7 +51,7 @@ internal class SepaParserTest {
     }
 
     @Test
-    fun `will throw error when parsing SEPA data from record missing directDebiting`() {
+    fun `will throw error when parsing SEPA data from record without directDebiting`() {
         val givenRecord = mapOf(
             "directDebiting" to null,
             "bankCustomer" to "Tästmann GmbH",

@@ -34,3 +34,5 @@ See there for more information.
 creates: link:./app/build/reports/pitest/org.hostsharing.hsadmin.billing.core.reader/index.html[]
 
 configuration of limits in app/build.gradle
+
+Please increase the limit according to what we have reached, once we became better.
