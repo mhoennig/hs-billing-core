@@ -1,0 +1,8 @@
+Performance + Efficiency
+- read billing items only on a per-customer basis
+    e.g. by first generating a separate file for each customer from all billing item files
+
+File-Formats
+- decide if we want mandatory header lines in csv-files
+- what's customer.fullName? can we drop it?
+- do we need both "DE" as well es "Germany" for customer?
