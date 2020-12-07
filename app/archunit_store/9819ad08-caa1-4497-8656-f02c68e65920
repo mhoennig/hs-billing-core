@@ -1,0 +1,1 @@
+Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getBadDependency()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)

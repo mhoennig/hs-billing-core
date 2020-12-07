@@ -1,0 +1,4 @@
+Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToDomain()> has return type <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToReader()> has return type <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToRoot()> has return type <org.hostsharing.hsadmin.billing.core.InRootToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToWriter()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
