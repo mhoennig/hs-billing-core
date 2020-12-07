@@ -20,19 +20,7 @@ fun readCustomers(customersCSV: File): List<Customer> =
 fun readVatGroups(vatGroupsCSV: File): Map<String, VatGroupDef> =
     inputFileReader("readVatGroups: ", vatGroupsCSV) {
         readAllWithHeaderAsSequence()
-            .map {
-                object : VatGroupDef {
-                    override val id = it["id"]
-                        ?: error("vat-group-row without 'id' value")
-                    override val description = it["description"]
-                        ?: error("vat-group-row without 'description' value")
-                    override val electronicService = it["electronicService"].toBoolean()
-                    override val rates = it.filter { it.key.isCountryCode() }
-                        .map { it.key to VatRate(it.value) }
-                        .toMap()
-
-                }
-            }
+            .map { VatGroupDefParser.parse(it) }
             .map { it.id to it }
             .toMap()
     }

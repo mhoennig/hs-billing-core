@@ -79,7 +79,7 @@ internal class CustomerParserTest {
 
         assertThat(actual.message).isEqualTo("""
             customer-row with vatChargeCode='garbage' not a valid VAT charge code
-            - while parsing customer $givenRecord
+            - in parsing customer $givenRecord
             """.trimIndent())
     }
 }

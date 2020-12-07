@@ -23,14 +23,14 @@ class BillingIntegrationTest {
         val vatGroupsCsvFile = givenInputFile named "article-groups.csv" containing """
             |id;    description;            electronicService;    DE;         AT;
             |"00";  "Mitgliedsbeitrag";     "true";             "noTax";    "noTax";    
-            |"01";  "Rabatttarif";          "true";             "16.00";    "20.00";
-            |"02";  "Domain-Laufzeit";      "true";             "16.00";    "20.00";
-            |"03";  "Package";              "true";             "16.00";    "20.00";
-            |"04";  "Traffic";              "true";             "16.00";    "20.00";
-            |"05";  "CPU";                  "true";             "16.00";    "20.00";
-            |"06";  "WoD";                  "false";            "16.00";    "20.00";
-            |"07";  "SLA";                  "true";             "16.00";    "20.00";
-            |"08";  "BBB";                  "true";             "16.00";    "20.00";
+            |"01";  "Rabatttarif";          "true";             "16,00";    "21,00";
+            |"02";  "Domain-Laufzeit";      "true";             "16,00";    "21,00";
+            |"03";  "Package";              "true";             "16,00";    "21,00";
+            |"04";  "Traffic";              "true";             "16,00";    "21,00";
+            |"05";  "CPU";                  "true";             "16,00";    "21,00";
+            |"06";  "WoD";                  "false";            "16,00";    "21,00";
+            |"07";  "SLA";                  "true";             "16,00";    "21,00";
+            |"08";  "BBB";                  "true";             "16,00";    "21,00";
             |"""
 
         val billingItemsCsvFile = givenInputFile named "billing-items.csv" containing """
@@ -61,14 +61,14 @@ class BillingIntegrationTest {
         assertThat(actualBookingsCsv) matchesInExactOrder """
             |customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount
             |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"10,00";"11,60";"1,60";"440001"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"4,50";"5,22";"0,72";"440002"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"24,00";"27,84";"3,84";"440003"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"5,00";"5,80";"0,80";"440004"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"25,00";"29,00";"4,00";"440006"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"10,00";"11,60";"1,60";"440007"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"15,00";"17,40";"2,40";"440005"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"15,00";"17,40";"2,40";"440008"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"10,00";"11,60";"1,60";"440001"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"4,50";"5,22";"0,72";"440002"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"24,00";"27,84";"3,84";"440003"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"5,00";"5,80";"0,80";"440004"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"25,00";"29,00";"4,00";"440006"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"10,00";"11,60";"1,60";"440007"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"15,00";"17,40";"2,40";"440005"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"15,00";"17,40";"2,40";"440008"
             |"""
     }
 
@@ -83,8 +83,8 @@ class BillingIntegrationTest {
         val vatGroupsCsvFile = givenInputFile named "article-groups.csv" containing """
             |id;    description;               electronicService;    DE;         AT;
             |"00";  "Mitgliedsbeitrag";     "true";             "noTax";    "noTax";    
-            |"02";  "Domain-Laufzeit";      "true";             "16.00";    "20.00";
-            |"03";  "Package";              "true";             "16.00";    "20.00";
+            |"02";  "Domain-Laufzeit";      "true";             "16,00";    "21,00";
+            |"03";  "Package";              "true";             "16,00";    "21,00";
             |"""
 
         val customerBillingItemsCsvFile = givenInputFile named "customer-billing-items.csv" containing """
@@ -117,8 +117,8 @@ class BillingIntegrationTest {
         assertThat(actualBookingsCsv) matchesInExactOrder """
             |customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount
             |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"4,50";"5,22";"0,72";"440002"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"20,00";"23,20";"3,20";"440003"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"4,50";"5,22";"0,72";"440002"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"20,00";"23,20";"3,20";"440003"
             |"""
     }
 
@@ -137,7 +137,7 @@ class BillingIntegrationTest {
         val vatGroupsCsvFile = givenInputFile named "article-groups.csv" containing """
             |id;    description;            electronicService;    DE;         AT;
             |"00";  "Mitgliedsbeitrag";     "true";               "noTax";    "noTax";    
-            |"03";  "Package";              "true";               "16.00";    "20.00";
+            |"03";  "Package";              "true";               "16,00";    "21,00";
             |"""
 
         val billingItemsCsvFile = givenInputFile named "customer-billing-items.csv" containing """
@@ -169,15 +169,15 @@ class BillingIntegrationTest {
         assertThat(actualBookingsCsv) matchesInExactOrder """
             |customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount
             |"10001";"2020-2000-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
-            |"10001";"2020-2000-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"20,00";"23,20";"3,20";"440003"
+            |"10001";"2020-2000-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"20,00";"23,20";"3,20";"440003"
             |"10001";"2020-2001-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
-            |"10001";"2020-2001-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,16";"20,00";"23,20";"3,20";"440003"
+            |"10001";"2020-2001-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"20,00";"23,20";"3,20";"440003"
             |"10002";"2020-2002-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
-            |"10002";"2020-2002-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,20";"20,00";"24,00";"4,00";"433603"
+            |"10002";"2020-2002-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"21,00";"20,00";"24,20";"4,20";"433603"
             |"10002";"2020-2003-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
-            |"10002";"2020-2003-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,20";"20,00";"24,00";"4,00";"433103"
+            |"10002";"2020-2003-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"21,00";"20,00";"24,20";"4,20";"433103"
             |"10003";"2020-2004-10003";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
-            |"10003";"2020-2004-10003";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,20";"20,00";"24,00";"4,00";"433803"
+            |"10003";"2020-2004-10003";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"21,00";"20,00";"24,20";"4,20";"433803"
             |"""
     }
 
@@ -192,7 +192,7 @@ class BillingIntegrationTest {
         val vatGroupsCsvFile = givenInputFile named "article-groups.csv" containing """
             |id;    description;            electronicService;    DE;         AT;
             |"00";  "Mitgliedsbeitrag";     "true";               "noTax";    "noTax";    
-            |"03";  "Package";              "true";               "16.00";    "20.00";
+            |"03";  "Package";              "true";               "16,00";    "20,00";
             |"""
 
         val actualBookingsCsvFile = givenOutputFile named "bookings.csv"
@@ -211,9 +211,9 @@ class BillingIntegrationTest {
 
         assertThat(actualException.message).isEqualTo("""
             billing contact without firstName
-            - while parsing billing contact {customerNumber=10001, customerCode=hsh00-dee, salutation=Herr}
-            - while parsing customer {customerNumber=10001, customerCode=hsh00-dee, salutation=Herr}
-            - while reading customers: customers.csv
+            - in parsing billing contact {customerNumber=10001, customerCode=hsh00-dee, salutation=Herr}
+            - in parsing customer {customerNumber=10001, customerCode=hsh00-dee, salutation=Herr}
+            - in reading customers: customers.csv
             """.trimIndent())
     }
 

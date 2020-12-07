@@ -7,6 +7,7 @@ import org.hostsharing.hsadmin.billing.core.domain.*
 import org.hostsharing.hsadmin.billing.core.lib.Format
 import org.hostsharing.hsadmin.billing.core.lib.format
 import java.io.Writer
+import java.math.BigDecimal
 
 /**
  * Merges a single invoice into the given template and
@@ -15,7 +16,7 @@ import java.io.Writer
 internal class InvoiceWriter(templateFilename: String) {
 
     class VatGroupFormatter(vatGroup: VatGroup) : VatGroup by vatGroup {
-        val vatRateFormatted = vatGroup.vatRate.percentage.format(Format.vatRate)
+        val vatRateFormatted = (vatGroup.vatRate.percentage* BigDecimal(100)).format(Format.vatRate)
         val vatAmountFormatted = vatGroup.vatAmount.format(Format.money)
         val netAmountFormatted = vatGroup.netAmount.format(Format.money)
         val grossAmountFormatted = vatGroup.grossAmount.format(Format.money)

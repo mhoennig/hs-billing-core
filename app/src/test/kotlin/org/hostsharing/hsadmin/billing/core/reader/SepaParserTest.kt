@@ -66,7 +66,7 @@ internal class SepaParserTest {
 
         assertThat(actualException.message).isEqualTo("""
             SEPA data without directDebiting
-            - while parsing SEPA data {directDebiting=null, bankCustomer=Tästmann GmbH, bankIBAN=DE987654321, bankBIC=GENODEF1HH2, mandatRef=HS-10001-20140801}
+            - in parsing SEPA data {directDebiting=null, bankCustomer=Tästmann GmbH, bankIBAN=DE987654321, bankBIC=GENODEF1HH2, mandatRef=HS-10001-20140801}
             """.trimIndent())
     }
 }

@@ -18,8 +18,8 @@ internal class ContextTest {
 
         assertThat(actualException.message).isEqualTo("""
             some error message
-            - while processing inner
-            - while processing outer
+            - in processing inner
+            - in processing outer
             """.trimIndent())
     }
 
@@ -35,8 +35,8 @@ internal class ContextTest {
 
         assertThat(actualException.message).isEqualTo("""
             IllegalStateException
-            - while processing inner
-            - while processing outer
+            - in processing inner
+            - in processing outer
             """.trimIndent())
     }
 

@@ -92,7 +92,7 @@ internal class ContactParserTest {
 
         assertThat(actualException.message).isEqualTo("""
             contact without $fieldName
-            - while parsing contact $givenRecord
+            - in parsing contact $givenRecord
             """.trimIndent())
     }
 
@@ -108,7 +108,7 @@ internal class ContactParserTest {
 
         assertThat(actualException.message).isEqualTo("""
             contact with countryCode='X' not a valid country code
-            - while parsing contact $givenRecord
+            - in parsing contact $givenRecord
             """.trimIndent())
     }
 }

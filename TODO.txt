@@ -8,6 +8,8 @@ File-Formats
 - do we need both "DE" as well es "Germany" for customer?
 - which field values do we need to validate? e.g. email?
 - check field names for "denglisch"
+- configurable number formats (#,## vs. #.## etc.)
+- output vat rate as 0,16 or 16,00?
 
 Code-Quality
 - increase mutationThreshold.set(85) to 95 for pitest

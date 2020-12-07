@@ -7,7 +7,7 @@ class Context {
         val infos = Stack<String>()
 
         override fun toString(): String =
-            infos.reversed().map{ "- while ${it}"}.joinToString("\n")
+            infos.reversed().map{ "- in ${it}"}.joinToString("\n")
     }
 }
 
