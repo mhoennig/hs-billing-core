@@ -1,4 +1,4 @@
-package org.hostsharing.hsadmin.billing.writer
+package org.hostsharing.hsadmin.billing.core.writer
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
