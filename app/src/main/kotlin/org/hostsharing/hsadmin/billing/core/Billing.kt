@@ -1,6 +1,7 @@
 package org.hostsharing.hsadmin.billing.core
 
 import org.hostsharing.hsadmin.billing.core.domain.*
+import org.hostsharing.hsadmin.billing.core.lib.Configuration
 import org.hostsharing.hsadmin.billing.core.lib.Format
 import org.hostsharing.hsadmin.billing.core.lib.withContext
 import org.hostsharing.hsadmin.billing.core.reader.*

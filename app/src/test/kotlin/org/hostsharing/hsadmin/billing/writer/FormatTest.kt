@@ -1,7 +1,9 @@
-package org.hostsharing.hsadmin.billing.core.lib
+package org.hostsharing.hsadmin.billing.writer
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import org.hostsharing.hsadmin.billing.core.lib.Format
+import org.hostsharing.hsadmin.billing.core.lib.format
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 import java.time.LocalDate

@@ -3,6 +3,7 @@ package org.hostsharing.hsadmin.billing.core
 import assertk.Assert
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import org.hostsharing.hsadmin.billing.core.lib.Configuration
 import org.hostsharing.hsadmin.billing.core.lib.ContextException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

@@ -1,6 +1,6 @@
 package org.hostsharing.hsadmin.billing.core.domain
 
-import org.hostsharing.hsadmin.billing.core.Configuration
+import org.hostsharing.hsadmin.billing.core.lib.Configuration
 import kotlin.reflect.KProperty1
 
 enum class VatChargeCode(val code: String, val accountBaseGetter: KProperty1<Configuration, String>) {

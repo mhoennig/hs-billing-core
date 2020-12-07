@@ -3,7 +3,7 @@ package org.hostsharing.hsadmin.billing.domain
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isSameAs
-import org.hostsharing.hsadmin.billing.core.Configuration
+import org.hostsharing.hsadmin.billing.core.lib.Configuration
 import org.hostsharing.hsadmin.billing.core.domain.VatChargeCode
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

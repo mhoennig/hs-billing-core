@@ -4,6 +4,7 @@ import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import org.hostsharing.hsadmin.billing.core.domain.BillingItem
 import org.hostsharing.hsadmin.billing.core.domain.Contact
 import org.hostsharing.hsadmin.billing.core.domain.Customer
+import org.hostsharing.hsadmin.billing.core.domain.VatRate
 import org.hostsharing.hsadmin.billing.core.lib.withContext
 import java.io.File
 import java.math.BigDecimal
