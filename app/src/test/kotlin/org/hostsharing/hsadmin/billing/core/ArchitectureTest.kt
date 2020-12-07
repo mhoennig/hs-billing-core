@@ -5,6 +5,7 @@ import com.tngtech.archunit.junit.ArchTest
 import com.tngtech.archunit.lang.ArchRule
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses
 import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices
+import com.tngtech.archunit.library.freeze.FreezingArchRule.freeze
 
 internal const val ROOT_PACKAGE = "org.hostsharing.hsadmin.billing.core"
 internal val ALL_PACKAGES = arrayOf(
@@ -57,5 +58,5 @@ internal class ArchitectureTest {
         }.toTypedArray()
 }
 
-// in the git branch 'archunit-rule-validation', this function freezes the results
-fun verify(archRule: ArchRule): ArchRule = archRule
+// in other git branches, this function is noop
+fun verify(archRule: ArchRule): ArchRule = freeze(archRule)
