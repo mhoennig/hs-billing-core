@@ -211,7 +211,7 @@ class BillingIntegrationTest {
 
         assertThat(actualException.message).isEqualTo("""
             customer-row without firstName: {customerNumber=10001, customerCode=hsh00-dee, salutation=Herr}
-            - while readCustomers: customers.csv
+            - while reading customers: customers.csv
         """.trimIndent())
     }
 
