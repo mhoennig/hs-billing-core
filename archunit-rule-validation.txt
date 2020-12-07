@@ -1,0 +1,284 @@
+ArchitectureTest > will not have cycles between packages FAILED
+    java.lang.AssertionError: Architecture Violation [Priority: MEDIUM] - Rule 'slices matching 'org.hostsharing.hsadmin.billing.core.(*)..' should be free of cycles' was violated (15 times):
+    Cycle detected: Slice domain -> Slice lib -> Slice domain
+    Dependencies of Slice domain
+    Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getGoodDependency()> has return type <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode.accountBase(org.hostsharing.hsadmin.billing.core.lib.Configuration)> has parameter of type <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCode.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$1.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableDomesticRevenues()> in (VatChargeCode.kt:8)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$2.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableForeignEuRevenues()> in (VatChargeCode.kt:9)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$3.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableForeignEuRevenuesReverseCharge()> in (VatChargeCode.kt:10)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$4.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableAbroadEuRevenuesReverseCharge()> in (VatChargeCode.kt:11)
+    Dependencies of Slice lib
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToDomain()> has return type <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Cycle detected: Slice domain -> Slice lib -> Slice reader -> Slice domain
+    Dependencies of Slice domain
+    Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getGoodDependency()> has return type <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode.accountBase(org.hostsharing.hsadmin.billing.core.lib.Configuration)> has parameter of type <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCode.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$1.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableDomesticRevenues()> in (VatChargeCode.kt:8)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$2.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableForeignEuRevenues()> in (VatChargeCode.kt:9)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$3.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableForeignEuRevenuesReverseCharge()> in (VatChargeCode.kt:10)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$4.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableAbroadEuRevenuesReverseCharge()> in (VatChargeCode.kt:11)
+    Dependencies of Slice lib
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToReader()> has return type <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Dependencies of Slice reader
+    Class <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readBillingItems$1$1$1$1$1> implements interface <org.hostsharing.hsadmin.billing.core.domain.BillingItem> in (InputFileReader.kt:0)
+    Class <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readCustomers$1$1$1$1$billingContact$1> implements interface <org.hostsharing.hsadmin.billing.core.domain.Contact> in (InputFileReader.kt:0)
+    Class <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readCustomers$1$1$1$1> implements interface <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InputFileReader.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readCustomers$1$1$1$1.getBillingContact()> has return type <org.hostsharing.hsadmin.billing.core.domain.Contact> in (InputFileReader.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readVatGroups$1$1$1$1.<init>(java.util.Map)> calls constructor <org.hostsharing.hsadmin.billing.core.domain.VatRate.<init>(java.lang.String)> in (InputFileReader.kt:63)
+    Cycle detected: Slice domain -> Slice lib -> Slice reader -> Slice writer -> Slice domain
+    Dependencies of Slice domain
+    Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getGoodDependency()> has return type <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode.accountBase(org.hostsharing.hsadmin.billing.core.lib.Configuration)> has parameter of type <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCode.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$1.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableDomesticRevenues()> in (VatChargeCode.kt:8)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$2.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableForeignEuRevenues()> in (VatChargeCode.kt:9)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$3.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableForeignEuRevenuesReverseCharge()> in (VatChargeCode.kt:10)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$4.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableAbroadEuRevenuesReverseCharge()> in (VatChargeCode.kt:11)
+    Dependencies of Slice lib
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToReader()> has return type <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Dependencies of Slice reader
+    Method <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules.getBadCycle()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InReaderToTestArchUnitRules.kt:0)
+    Dependencies of Slice writer
+    Class <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$CustomerFormatter> implements interface <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Class <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter> implements interface <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Class <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter> implements interface <org.hostsharing.hsadmin.billing.core.domain.VatGroup> in (InvoiceWriter.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$CustomerFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Customer)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.VatGroup> in (InvoiceWriter.kt:0)
+    Field <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$CustomerFormatter.$$delegate_0> has type <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Field <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.$$delegate_0> has type <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Field <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.customer> has type <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Field <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.$$delegate_0> has type <org.hostsharing.hsadmin.billing.core.domain.VatGroup> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$CustomerFormatter.getBillingContact()> has return type <org.hostsharing.hsadmin.billing.core.domain.Contact> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.getCustomer()> has return type <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.getVatRate()> has return type <org.hostsharing.hsadmin.billing.core.domain.VatRate> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter.createVelocityContext(org.hostsharing.hsadmin.billing.core.domain.Invoice)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter.printInvoice(org.hostsharing.hsadmin.billing.core.domain.Invoice, java.io.Writer)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatGroup.getVatRate()> in (InvoiceWriter.kt:18)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatRate.getPercentage()> in (InvoiceWriter.kt:18)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatGroup.getVatAmount()> in (InvoiceWriter.kt:19)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatGroup.getNetAmount()> in (InvoiceWriter.kt:20)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatGroup.getGrossAmount()> in (InvoiceWriter.kt:21)
+    (26 further dependencies have been omitted...)
+    Cycle detected: Slice domain -> Slice lib -> Slice writer -> Slice domain
+    Dependencies of Slice domain
+    Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getGoodDependency()> has return type <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode.accountBase(org.hostsharing.hsadmin.billing.core.lib.Configuration)> has parameter of type <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCode.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$1.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableDomesticRevenues()> in (VatChargeCode.kt:8)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$2.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableForeignEuRevenues()> in (VatChargeCode.kt:9)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$3.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableForeignEuRevenuesReverseCharge()> in (VatChargeCode.kt:10)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$4.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableAbroadEuRevenuesReverseCharge()> in (VatChargeCode.kt:11)
+    Dependencies of Slice lib
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToWriter()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Dependencies of Slice writer
+    Class <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$CustomerFormatter> implements interface <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Class <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter> implements interface <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Class <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter> implements interface <org.hostsharing.hsadmin.billing.core.domain.VatGroup> in (InvoiceWriter.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$CustomerFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Customer)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.VatGroup> in (InvoiceWriter.kt:0)
+    Field <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$CustomerFormatter.$$delegate_0> has type <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Field <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.$$delegate_0> has type <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Field <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.customer> has type <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Field <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.$$delegate_0> has type <org.hostsharing.hsadmin.billing.core.domain.VatGroup> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$CustomerFormatter.getBillingContact()> has return type <org.hostsharing.hsadmin.billing.core.domain.Contact> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.getCustomer()> has return type <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.getVatRate()> has return type <org.hostsharing.hsadmin.billing.core.domain.VatRate> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter.createVelocityContext(org.hostsharing.hsadmin.billing.core.domain.Invoice)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter.printInvoice(org.hostsharing.hsadmin.billing.core.domain.Invoice, java.io.Writer)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatGroup.getVatRate()> in (InvoiceWriter.kt:18)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatRate.getPercentage()> in (InvoiceWriter.kt:18)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatGroup.getVatAmount()> in (InvoiceWriter.kt:19)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatGroup.getNetAmount()> in (InvoiceWriter.kt:20)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatGroup.getGrossAmount()> in (InvoiceWriter.kt:21)
+    (26 further dependencies have been omitted...)
+    Cycle detected: Slice domain -> Slice lib -> Slice writer -> Slice reader -> Slice domain
+    Dependencies of Slice domain
+    Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getGoodDependency()> has return type <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode.accountBase(org.hostsharing.hsadmin.billing.core.lib.Configuration)> has parameter of type <org.hostsharing.hsadmin.billing.core.lib.Configuration> in (VatChargeCode.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$1.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableDomesticRevenues()> in (VatChargeCode.kt:8)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$2.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableForeignEuRevenues()> in (VatChargeCode.kt:9)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$3.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableForeignEuRevenuesReverseCharge()> in (VatChargeCode.kt:10)
+    Method <org.hostsharing.hsadmin.billing.core.domain.VatChargeCode$4.get(java.lang.Object)> calls method <org.hostsharing.hsadmin.billing.core.lib.Configuration.getAccountBaseForTaxableAbroadEuRevenuesReverseCharge()> in (VatChargeCode.kt:11)
+    Dependencies of Slice lib
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToWriter()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Dependencies of Slice writer
+    Method <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules.getBadCycle()> has return type <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules> in (InWriterToTestArchUnitRules.kt:0)
+    Dependencies of Slice reader
+    Class <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readBillingItems$1$1$1$1$1> implements interface <org.hostsharing.hsadmin.billing.core.domain.BillingItem> in (InputFileReader.kt:0)
+    Class <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readCustomers$1$1$1$1$billingContact$1> implements interface <org.hostsharing.hsadmin.billing.core.domain.Contact> in (InputFileReader.kt:0)
+    Class <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readCustomers$1$1$1$1> implements interface <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InputFileReader.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readCustomers$1$1$1$1.getBillingContact()> has return type <org.hostsharing.hsadmin.billing.core.domain.Contact> in (InputFileReader.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readVatGroups$1$1$1$1.<init>(java.util.Map)> calls constructor <org.hostsharing.hsadmin.billing.core.domain.VatRate.<init>(java.lang.String)> in (InputFileReader.kt:63)
+    Cycle detected: Slice domain -> Slice writer -> Slice domain
+    Dependencies of Slice domain
+    Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getBadDependency()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)
+    Dependencies of Slice writer
+    Class <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$CustomerFormatter> implements interface <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Class <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter> implements interface <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Class <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter> implements interface <org.hostsharing.hsadmin.billing.core.domain.VatGroup> in (InvoiceWriter.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$CustomerFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Customer)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.VatGroup> in (InvoiceWriter.kt:0)
+    Field <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$CustomerFormatter.$$delegate_0> has type <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Field <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.$$delegate_0> has type <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Field <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.customer> has type <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Field <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.$$delegate_0> has type <org.hostsharing.hsadmin.billing.core.domain.VatGroup> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$CustomerFormatter.getBillingContact()> has return type <org.hostsharing.hsadmin.billing.core.domain.Contact> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.getCustomer()> has return type <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.getVatRate()> has return type <org.hostsharing.hsadmin.billing.core.domain.VatRate> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter.createVelocityContext(org.hostsharing.hsadmin.billing.core.domain.Invoice)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter.printInvoice(org.hostsharing.hsadmin.billing.core.domain.Invoice, java.io.Writer)> has parameter of type <org.hostsharing.hsadmin.billing.core.domain.Invoice> in (InvoiceWriter.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatGroup.getVatRate()> in (InvoiceWriter.kt:18)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatRate.getPercentage()> in (InvoiceWriter.kt:18)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatGroup.getVatAmount()> in (InvoiceWriter.kt:19)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatGroup.getNetAmount()> in (InvoiceWriter.kt:20)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.domain.VatGroup.getGrossAmount()> in (InvoiceWriter.kt:21)
+    (26 further dependencies have been omitted...)
+    Cycle detected: Slice domain -> Slice writer -> Slice lib -> Slice domain
+    Dependencies of Slice domain
+    Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getBadDependency()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)
+    Dependencies of Slice writer
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getVatRate()> in (InvoiceWriter.kt:18)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:18)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:19)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:19)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:20)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:20)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:21)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:21)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:26)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:26)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDatePeriod()> in (InvoiceWriter.kt:27)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:27)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:28)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:28)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:29)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:29)
+    Dependencies of Slice lib
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToDomain()> has return type <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Cycle detected: Slice domain -> Slice writer -> Slice lib -> Slice reader -> Slice domain
+    Dependencies of Slice domain
+    Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getBadDependency()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)
+    Dependencies of Slice writer
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getVatRate()> in (InvoiceWriter.kt:18)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:18)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:19)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:19)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:20)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:20)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:21)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:21)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:26)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:26)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDatePeriod()> in (InvoiceWriter.kt:27)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:27)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:28)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:28)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:29)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:29)
+    Dependencies of Slice lib
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToReader()> has return type <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Dependencies of Slice reader
+    Class <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readBillingItems$1$1$1$1$1> implements interface <org.hostsharing.hsadmin.billing.core.domain.BillingItem> in (InputFileReader.kt:0)
+    Class <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readCustomers$1$1$1$1$billingContact$1> implements interface <org.hostsharing.hsadmin.billing.core.domain.Contact> in (InputFileReader.kt:0)
+    Class <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readCustomers$1$1$1$1> implements interface <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InputFileReader.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readCustomers$1$1$1$1.getBillingContact()> has return type <org.hostsharing.hsadmin.billing.core.domain.Contact> in (InputFileReader.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readVatGroups$1$1$1$1.<init>(java.util.Map)> calls constructor <org.hostsharing.hsadmin.billing.core.domain.VatRate.<init>(java.lang.String)> in (InputFileReader.kt:63)
+    Cycle detected: Slice domain -> Slice writer -> Slice reader -> Slice domain
+    Dependencies of Slice domain
+    Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getBadDependency()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)
+    Dependencies of Slice writer
+    Method <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules.getBadCycle()> has return type <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules> in (InWriterToTestArchUnitRules.kt:0)
+    Dependencies of Slice reader
+    Class <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readBillingItems$1$1$1$1$1> implements interface <org.hostsharing.hsadmin.billing.core.domain.BillingItem> in (InputFileReader.kt:0)
+    Class <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readCustomers$1$1$1$1$billingContact$1> implements interface <org.hostsharing.hsadmin.billing.core.domain.Contact> in (InputFileReader.kt:0)
+    Class <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readCustomers$1$1$1$1> implements interface <org.hostsharing.hsadmin.billing.core.domain.Customer> in (InputFileReader.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readCustomers$1$1$1$1.getBillingContact()> has return type <org.hostsharing.hsadmin.billing.core.domain.Contact> in (InputFileReader.kt:0)
+    Constructor <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt$readVatGroups$1$1$1$1.<init>(java.util.Map)> calls constructor <org.hostsharing.hsadmin.billing.core.domain.VatRate.<init>(java.lang.String)> in (InputFileReader.kt:63)
+    Cycle detected: Slice domain -> Slice writer -> Slice reader -> Slice lib -> Slice domain
+    Dependencies of Slice domain
+    Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getBadDependency()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)
+    Dependencies of Slice writer
+    Method <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules.getBadCycle()> has return type <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules> in (InWriterToTestArchUnitRules.kt:0)
+    Dependencies of Slice reader
+    Method <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt.readCustomers(java.io.File)> calls method <org.hostsharing.hsadmin.billing.core.lib.ContextKt.withContext(java.lang.String, kotlin.jvm.functions.Function0)> in (InputFileReader.kt:13)
+    Method <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt.readVatGroups(java.io.File)> calls method <org.hostsharing.hsadmin.billing.core.lib.ContextKt.withContext(java.lang.String, kotlin.jvm.functions.Function0)> in (InputFileReader.kt:52)
+    Method <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt.readBillingItems([Ljava.io.File;)> calls method <org.hostsharing.hsadmin.billing.core.lib.ContextKt.withContext(java.lang.String, kotlin.jvm.functions.Function0)> in (InputFileReader.kt:75)
+    Dependencies of Slice lib
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToDomain()> has return type <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Cycle detected: Slice lib -> Slice reader -> Slice lib
+    Dependencies of Slice lib
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToReader()> has return type <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Dependencies of Slice reader
+    Method <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt.readCustomers(java.io.File)> calls method <org.hostsharing.hsadmin.billing.core.lib.ContextKt.withContext(java.lang.String, kotlin.jvm.functions.Function0)> in (InputFileReader.kt:13)
+    Method <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt.readVatGroups(java.io.File)> calls method <org.hostsharing.hsadmin.billing.core.lib.ContextKt.withContext(java.lang.String, kotlin.jvm.functions.Function0)> in (InputFileReader.kt:52)
+    Method <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt.readBillingItems([Ljava.io.File;)> calls method <org.hostsharing.hsadmin.billing.core.lib.ContextKt.withContext(java.lang.String, kotlin.jvm.functions.Function0)> in (InputFileReader.kt:75)
+    Cycle detected: Slice lib -> Slice reader -> Slice writer -> Slice lib
+    Dependencies of Slice lib
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToReader()> has return type <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Dependencies of Slice reader
+    Method <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules.getBadCycle()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InReaderToTestArchUnitRules.kt:0)
+    Dependencies of Slice writer
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getVatRate()> in (InvoiceWriter.kt:18)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:18)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:19)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:19)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:20)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:20)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:21)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:21)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:26)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:26)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDatePeriod()> in (InvoiceWriter.kt:27)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:27)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:28)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:28)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:29)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:29)
+    Cycle detected: Slice lib -> Slice writer -> Slice lib
+    Dependencies of Slice lib
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToWriter()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Dependencies of Slice writer
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getVatRate()> in (InvoiceWriter.kt:18)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:18)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:19)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:19)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:20)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:20)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getMoney()> in (InvoiceWriter.kt:21)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$VatGroupFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.VatGroup)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:21)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:26)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:26)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDatePeriod()> in (InvoiceWriter.kt:27)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:27)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:28)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:28)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> calls method <org.hostsharing.hsadmin.billing.core.lib.Format$Companion.getDate()> in (InvoiceWriter.kt:29)
+    Constructor <org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter$InvoiceFormatter.<init>(org.hostsharing.hsadmin.billing.core.domain.Invoice)> gets field <org.hostsharing.hsadmin.billing.core.lib.Format.Companion> in (InvoiceWriter.kt:29)
+    Cycle detected: Slice lib -> Slice writer -> Slice reader -> Slice lib
+    Dependencies of Slice lib
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToWriter()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Dependencies of Slice writer
+    Method <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules.getBadCycle()> has return type <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules> in (InWriterToTestArchUnitRules.kt:0)
+    Dependencies of Slice reader
+    Method <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt.readCustomers(java.io.File)> calls method <org.hostsharing.hsadmin.billing.core.lib.ContextKt.withContext(java.lang.String, kotlin.jvm.functions.Function0)> in (InputFileReader.kt:13)
+    Method <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt.readVatGroups(java.io.File)> calls method <org.hostsharing.hsadmin.billing.core.lib.ContextKt.withContext(java.lang.String, kotlin.jvm.functions.Function0)> in (InputFileReader.kt:52)
+    Method <org.hostsharing.hsadmin.billing.core.reader.InputFileReaderKt.readBillingItems([Ljava.io.File;)> calls method <org.hostsharing.hsadmin.billing.core.lib.ContextKt.withContext(java.lang.String, kotlin.jvm.functions.Function0)> in (InputFileReader.kt:75)
+    Cycle detected: Slice reader -> Slice writer -> Slice reader
+    Dependencies of Slice reader
+    Method <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules.getBadCycle()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InReaderToTestArchUnitRules.kt:0)
+    Dependencies of Slice writer
+    Method <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules.getBadCycle()> has return type <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules> in (InWriterToTestArchUnitRules.kt:0)
+        at com.tngtech.archunit.lang.ArchRule$Assertions.assertNoViolation(ArchRule.java:94)
+ArchitectureTest > package 'lib' will not use any other package FAILED
+    java.lang.AssertionError: Architecture Violation [Priority: MEDIUM] - Rule 'no classes that reside in a package '..lib..' should depend on classes that reside in any package ['org.hostsharing.hsadmin.billing.core', 'org.hostsharing.hsadmin.billing.core.domain', 'org.hostsharing.hsadmin.billing.core.reader', 'org.hostsharing.hsadmin.billing.core.writer']' was violated (4 times):
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToDomain()> has return type <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToReader()> has return type <org.hostsharing.hsadmin.billing.core.reader.InReaderToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToRoot()> has return type <org.hostsharing.hsadmin.billing.core.InRootToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+    Method <org.hostsharing.hsadmin.billing.core.lib.InLibToTestArchUnitRules.getBadDependencyToWriter()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InLibToTestArchUnitRules.kt:0)
+        at com.tngtech.archunit.lang.ArchRule$Assertions.assertNoViolation(ArchRule.java:94)
+ArchitectureTest > package 'domain' will not use any other package except 'lib' FAILED
+    java.lang.AssertionError: Architecture Violation [Priority: MEDIUM] - Rule 'no classes that reside in a package '..domain..' should depend on classes that reside in any package ['org.hostsharing.hsadmin.billing.core', 'org.hostsharing.hsadmin.billing.core.reader', 'org.hostsharing.hsadmin.billing.core.writer']' was violated (1 times):
+    Method <org.hostsharing.hsadmin.billing.core.domain.InDomainToTestArchUnitRules.getBadDependency()> has return type <org.hostsharing.hsadmin.billing.core.writer.InWriterToTestArchUnitRules> in (InDomainToTestArchUnitRules.kt:0)
+        at com.tngtech.archunit.lang.ArchRule$Assertions.assertNoViolation(ArchRule.java:94)
