@@ -2,6 +2,7 @@ package org.hostsharing.hsadmin.billing.core.reader
 
 import org.hostsharing.hsadmin.billing.core.domain.VatChargeCode
 import org.hostsharing.hsadmin.billing.core.domain.isCountryCode
+import java.math.BigDecimal
 
 open class Parser(val contextInfo: String) {
 
@@ -13,6 +14,10 @@ open class Parser(val contextInfo: String) {
 
     protected fun Map<String, String?>.mandatoryInt(fieldName: String): Int =
         mandatoryString(fieldName).toInt()
+
+
+    protected fun Map<String, String?>.madatoryBigDecimal(fieldName: String): BigDecimal =
+        mandatoryString(fieldName).toBigDecimal()
 
     protected fun Map<String, String?>.mandatoryBoolean(fieldName: String): Boolean =
         mandatoryString(fieldName).toBoolean()

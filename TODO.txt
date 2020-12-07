@@ -15,5 +15,6 @@ Architecture
 - refactor Billing, extracting the InvoiceGenerator to become just orchestrator
 
 Code-Quality
+- ktlint installieren
 - increase mutationThreshold.set(85) to 95 for pitest
 - configure path coverage for jacoco

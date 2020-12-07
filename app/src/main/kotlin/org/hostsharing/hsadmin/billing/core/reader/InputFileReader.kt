@@ -29,15 +29,7 @@ fun readBillingItems(billingItemsCSVs: Array<out File>): List<BillingItem> =
     billingItemsCSVs.flatMap {
         inputFileReader("reading billing items", it) {
             readAllWithHeaderAsSequence()
-                .map {
-                    object : BillingItem {
-                        override val customerCode = it["customerCode"]
-                            ?: error("billing-item-row without customerCode: ${it}")
-                        override val vatGroupId = it["vatGroupId"]
-                            ?: error("billing-item-row without vatGroupId: ${it}")
-                        override val netAmount = BigDecimal(it["netAmount"])
-                    }
-                }
+                .map { BillingItemParser.parse(it) }
                 .toList()
         }
     }
@@ -45,10 +37,7 @@ fun readBillingItems(billingItemsCSVs: Array<out File>): List<BillingItem> =
 fun <T> inputFileReader(title: String, file: File, read: CsvFileReader.() -> T): T =
     withContext("${title}: ${file.name}") {
         csvReader {
-            charset = "UTF-8"
-            quoteChar = '"'
             delimiter = ';'
-            escapeChar = '\\'
         }.open(file) { read() }
     }
 
