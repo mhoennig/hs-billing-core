@@ -14,6 +14,7 @@ internal class VatChargeCodeTest {
 
     object configuration : Configuration {
         override val templatesDirectory = "/src/main/resources/templates"
+        override val outputDirectory = "/unused/"
         override val accountBaseForNonTaxableRevenues = "1000"
         override val accountBaseForTaxableDomesticRevenues = "1001"
         override val accountBaseForTaxableForeignEuRevenues = "1002"

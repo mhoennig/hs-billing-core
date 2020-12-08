@@ -3,6 +3,7 @@ package org.hostsharing.hsadmin.billing.core.lib
 interface Configuration {
 
     val templatesDirectory: String
+    val outputDirectory: String
 
     val accountBaseForNonTaxableRevenues: String // "4200" + vatGroupId
 

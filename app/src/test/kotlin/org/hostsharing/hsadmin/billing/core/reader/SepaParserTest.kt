@@ -2,7 +2,7 @@ package org.hostsharing.hsadmin.billing.core.reader
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import org.hostsharing.hsadmin.billing.core.lib.ContextException
+import org.hostsharing.hsadmin.billing.core.lib.DomainException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -64,7 +64,7 @@ internal class SepaParserTest {
             "mandatRef" to "HS-10001-20140801",
         )
 
-        val actualException = assertThrows<ContextException> {
+        val actualException = assertThrows<DomainException> {
             SepaParser.parse(givenRecord)
         }
 

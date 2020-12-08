@@ -11,12 +11,14 @@ internal val ALL_PACKAGES = arrayOf(
     ROOT_PACKAGE,
     "$ROOT_PACKAGE.domain",
     "$ROOT_PACKAGE.reader",
+    "$ROOT_PACKAGE.invoicing",
+    "$ROOT_PACKAGE.generator",
     "$ROOT_PACKAGE.writer",
     "$ROOT_PACKAGE.lib"
 )
 
 /**
- Verification of some architecture rules, e.g. package depenencies.
+ Verification of some architecture rules, e.g. package dependencies.
 
  <p>There is a special git branch 'archunit-rule-validation' which deliberately breaks each rule.
  To verify changed arch rules, you can rebase that branch to the master branch

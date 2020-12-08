@@ -4,7 +4,7 @@ import assertk.Assert
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import org.hostsharing.hsadmin.billing.core.lib.Configuration
-import org.hostsharing.hsadmin.billing.core.lib.ContextException
+import org.hostsharing.hsadmin.billing.core.lib.DomainException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.io.File
@@ -13,14 +13,14 @@ import java.time.LocalDate
 class BillingIntegrationTest {
 
     @Test
-    fun `will generate bookings-csv`() {
+    fun `will generate accounting-records-csv`() {
 
-        val customersCsvFile = givenInputFile named "customers.csv" containing """
+        val customersCsvFile = givenInputDir withFile "customers.csv" containing """
             |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;countryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeCode
             |"12345";"hsh00-xyz";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";"DE";"taesti@taestmann.de";"DE987654321";"true";"Testmann GmbH";"DE81201900030012345678";"GENODEF1HH2";"HS-10003-20140801";"domestic"
             |"""
 
-        val vatGroupsCsvFile = givenInputFile named "article-groups.csv" containing """
+        val vatGroupsCsvFile = givenInputDir withFile "article-groups.csv" containing """
             |id;    description;            electronicService;    DE;         AT;
             |"00";  "Mitgliedsbeitrag";     "true";             "noTax";    "noTax";    
             |"01";  "Rabatttarif";          "true";             "16,00";    "21,00";
@@ -33,7 +33,7 @@ class BillingIntegrationTest {
             |"08";  "BBB";                  "true";             "16,00";    "21,00";
             |"""
 
-        val billingItemsCsvFile = givenInputFile named "billing-items.csv" containing """
+        val billingItemsCsvFile = givenInputDir withFile "billing-items.csv" containing """
             |customerCode;   product?;      project; count; vatGroupId; articleId; fromTimestamp;          untilTimestamp;        description;                  netAmount
             |"hsh00-xyz";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Mitgliedsbeitrag";             "10.00"
             |"hsh00-xyz";    "";            ;          "1";       "01";    "110"; "2020-11-14";           "2020-11-14";          "Domain-Rabatt";                "10.00"
@@ -46,9 +46,7 @@ class BillingIntegrationTest {
             |"hsh00-xyz";    "bbbmeet";     "myxyz";   "1";       "08";   "4711"; "2020-11-01T10:25:00";  "2020-11-14T11:35:00"; "BBB Meet Konferenz";           "15.00"
             |"""
 
-        val actualBookingsCsvFile = givenOutputFile named "bookings.csv"
-
-        val actualBookingsCsv = Billing(
+        val actualAccountRecords = Billing(
             configuration,
             periodEndDate = LocalDate.parse("2020-11-30"),
             billingDate = LocalDate.parse("2020-12-03"),
@@ -56,9 +54,9 @@ class BillingIntegrationTest {
             vatGroupsCSV = vatGroupsCsvFile,
             customersCSV = customersCsvFile,
             billingItemsCSVs = arrayOf(billingItemsCsvFile)
-        ).generateBookingsCsv(actualBookingsCsvFile).readText()
+        ).generateAccountingRecordsCsv().readText()
 
-        assertThat(actualBookingsCsv) matchesInExactOrder """
+        assertThat(actualAccountRecords) matchesInExactOrder """
             |customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount
             |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
             |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"10,00";"11,60";"1,60";"440001"
@@ -75,36 +73,34 @@ class BillingIntegrationTest {
     @Test
     fun `will consider multiple billing-item-files`() {
 
-        val customersCsvFile = givenInputFile named "customers.csv" containing """
+        val customersCsvFile = givenInputDir withFile "customers.csv" containing """
             |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;countryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeCode
             |"12345";"hsh00-xyz";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";"DE";"taesti@taestmann.de";"DE987654321";"true";"Testmann GmbH";"DE81201900030012345678";"GENODEF1HH2";"HS-10003-20140801";"domestic"
             |"""
 
-        val vatGroupsCsvFile = givenInputFile named "article-groups.csv" containing """
+        val vatGroupsCsvFile = givenInputDir withFile "article-groups.csv" containing """
             |id;    description;               electronicService;    DE;         AT;
             |"00";  "Mitgliedsbeitrag";     "true";             "noTax";    "noTax";    
             |"02";  "Domain-Laufzeit";      "true";             "16,00";    "21,00";
             |"03";  "Package";              "true";             "16,00";    "21,00";
             |"""
 
-        val customerBillingItemsCsvFile = givenInputFile named "customer-billing-items.csv" containing """
+        val customerBillingItemsCsvFile = givenInputDir withFile "customer-billing-items.csv" containing """
             |customerCode;   product?;      project; count; vatGroupId; articleId; fromTimestamp;          untilTimestamp;        description;                  netAmount
             |"hsh00-xyz";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Mitgliedsbeitrag";             "10.00"
             |"""
 
-        val domainItemsCsvFile = givenInputFile named "domain-billing-items.csv" containing """
+        val domainItemsCsvFile = givenInputDir withFile "domain-billing-items.csv" containing """
             |customerCode;   product?;      project; count; vatGroupId; articleId; fromTimestamp;          untilTimestamp;        description;                  netAmount
             |"hsh00-xyz";    "testmann.xy"; "myxyz";   "1";       "02";    "210"; "2020-11-01";           "2020-11-14";          "Laufzeit bis 01.10.21";         "4.50"
             |"""
 
-        val packageBillingItemsCsvFile = givenInputFile named "package-billing-items.csv" containing """
+        val packageBillingItemsCsvFile = givenInputDir withFile "package-billing-items.csv" containing """
             |customerCode;   product?;      project; count; vatGroupId; articleId; fromTimestamp;          untilTimestamp;        description;                  netAmount
             |"hsh00-xyz";    "xyz01";       "myxyz";   "1";       "03";   "2000"; "2020-11-14";           "2020-12-13";          "Web-Paket";                    "20.00"
             |"""
 
-        val actualBookingsCsvFile = givenOutputFile named "bookings.csv"
-
-        val actualBookingsCsv = Billing(
+        val actualAccountRecords = Billing(
             configuration,
             periodEndDate = LocalDate.parse("2020-11-30"),
             billingDate = LocalDate.parse("2020-12-03"),
@@ -112,9 +108,9 @@ class BillingIntegrationTest {
             vatGroupsCSV = vatGroupsCsvFile,
             customersCSV = customersCsvFile,
             billingItemsCSVs = arrayOf(customerBillingItemsCsvFile, domainItemsCsvFile, packageBillingItemsCsvFile)
-        ).generateBookingsCsv(actualBookingsCsvFile).readText()
+        ).generateAccountingRecordsCsv().readText()
 
-        assertThat(actualBookingsCsv) matchesInExactOrder """
+        assertThat(actualAccountRecords) matchesInExactOrder """
             |customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount
             |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
             |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"4,50";"5,22";"0,72";"440002"
@@ -125,7 +121,7 @@ class BillingIntegrationTest {
     @Test
     fun `will choose VAT-accounts based on vatChargeCode`() {
 
-        val customersCsvFile = givenInputFile named "customers.csv" containing """
+        val customersCsvFile = givenInputDir withFile "customers.csv" containing """
             |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;countryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeCode
             |"10001";"hsh00-dee";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";    "DE";"taesti@taestmann.de";"DE987654321";"true";"Tästmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10001-20140801";"domestic"
             |"10001";"hsh00-dep";               ;"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";    "DE";"taesti@taestmann.de";             ;"true";"Tästi Tästmann";"DE81201900030012345678";"GENODEF1HH2";"HS-10001-20140801";"domestic"
@@ -134,13 +130,13 @@ class BillingIntegrationTest {
             |"10003";"hsh00-che";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20020";"Zürich"; "Switzerland";"AT";"taesti@taestmann.de";"CH123456789";"true";"Testmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10002-20140801";"NonEU-RC"
             |"""
 
-        val vatGroupsCsvFile = givenInputFile named "article-groups.csv" containing """
+        val vatGroupsCsvFile = givenInputDir withFile "article-groups.csv" containing """
             |id;    description;            electronicService;    DE;         AT;
             |"00";  "Mitgliedsbeitrag";     "true";               "noTax";    "noTax";    
             |"03";  "Package";              "true";               "16,00";    "21,00";
             |"""
 
-        val billingItemsCsvFile = givenInputFile named "customer-billing-items.csv" containing """
+        val billingItemsCsvFile = givenInputDir withFile "customer-billing-items.csv" containing """
             |customerCode;   product?;      project; count; vatGroupId; articleId; fromTimestamp;          untilTimestamp;        description;                  netAmount
             |"hsh00-dee";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Mitgliedsbeitrag";            "10.00"
             |"hsh00-dee";    "";            ;          "1";       "03";     "10"; "2020-11-14";           "2020-11-14";          "Web-Paket";                   "20.00"
@@ -154,9 +150,7 @@ class BillingIntegrationTest {
             |"hsh00-che";    "";            ;          "1";       "03";     "10"; "2020-11-14";           "2020-11-14";          "Web-Paket";                   "20.00"
             |"""
 
-        val actualBookingsCsvFile = givenOutputFile named "bookings.csv"
-
-        val actualBookingsCsv = Billing(
+        val actualAccountingRecordsCsv = Billing(
             configuration,
             periodEndDate = LocalDate.parse("2020-11-30"),
             billingDate = LocalDate.parse("2020-12-03"),
@@ -164,9 +158,9 @@ class BillingIntegrationTest {
             vatGroupsCSV = vatGroupsCsvFile,
             customersCSV = customersCsvFile,
             billingItemsCSVs = arrayOf(billingItemsCsvFile)
-        ).generateBookingsCsv(actualBookingsCsvFile).readText()
+        ).generateAccountingRecordsCsv().readText()
 
-        assertThat(actualBookingsCsv) matchesInExactOrder """
+        assertThat(actualAccountingRecordsCsv) matchesInExactOrder """
             |customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount
             |"10001";"2020-2000-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
             |"10001";"2020-2000-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"20,00";"23,20";"3,20";"440003"
@@ -184,20 +178,18 @@ class BillingIntegrationTest {
     @Test
     fun `will report missing field and invalid record on invalid CSV`() {
 
-        val customersCsvFile = givenInputFile named "customers.csv" containing """
+        val customersCsvFile = givenInputDir withFile "customers.csv" containing """
             |customerNumber;customerCode;salutation
             |"10001";"hsh00-dee";"Herr"
             |"""
 
-        val vatGroupsCsvFile = givenInputFile named "article-groups.csv" containing """
+        val vatGroupsCsvFile = givenInputDir withFile "article-groups.csv" containing """
             |id;    description;            electronicService;    DE;         AT;
             |"00";  "Mitgliedsbeitrag";     "true";               "noTax";    "noTax";    
             |"03";  "Package";              "true";               "16,00";    "20,00";
             |"""
 
-        val actualBookingsCsvFile = givenOutputFile named "bookings.csv"
-
-        val actualException = assertThrows<ContextException> {
+        val actualException = assertThrows<DomainException> {
             Billing(
                 configuration,
                 periodEndDate = LocalDate.parse("2020-11-30"),
@@ -206,7 +198,7 @@ class BillingIntegrationTest {
                 vatGroupsCSV = vatGroupsCsvFile,
                 customersCSV = customersCsvFile,
                 billingItemsCSVs = emptyArray()
-            ).generateBookingsCsv(actualBookingsCsvFile).readText()
+            ).generateAccountingRecordsCsv().readText()
         }
 
         assertThat(actualException.message).isEqualTo(
@@ -221,8 +213,13 @@ class BillingIntegrationTest {
 
     // --- fixture ----------------------------------------------------------
 
+    val givenInputDir = createTempDir(prefix = "hs-billing-test-input")
+
     object configuration : Configuration {
         override val templatesDirectory = "/src/main/resources/templates"
+        override val outputDirectory = createTempDir(prefix = "hs-billing-test-output").also {
+            it.mkdirs()
+        }.toString()
         override val accountBaseForNonTaxableRevenues = "4200"
         override val accountBaseForTaxableDomesticRevenues = "4400"
         override val accountBaseForTaxableForeignEuRevenuesReverseCharge = "4336"
@@ -230,13 +227,8 @@ class BillingIntegrationTest {
         override val accountBaseForTaxableAbroadEuRevenuesReverseCharge = "4338"
     }
 
-    val givenInputDir = createTempDir(prefix = "hs-billing-test-input")
-    val givenInputFile = givenInputDir
-    val givenOutputDir = createTempDir(prefix = "hs-billing-test-output")
-    val givenOutputFile = givenOutputDir
-
-    private infix fun File.named(name: String): File =
-        File(givenInputFile, name)
+    private infix fun File.withFile(name: String): File =
+        File(givenInputDir, name)
 
     val semicolonWithSpaces = Regex("; *")
 

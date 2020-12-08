@@ -1,16 +1,14 @@
 package org.hostsharing.hsadmin.billing.core
 
-import org.hostsharing.hsadmin.billing.core.domain.*
+import org.hostsharing.hsadmin.billing.core.domain.Customer
+import org.hostsharing.hsadmin.billing.core.domain.Invoice
+import org.hostsharing.hsadmin.billing.core.generator.AccountingRecordsGenerator
+import org.hostsharing.hsadmin.billing.core.invoicing.InvoiceGenerator
 import org.hostsharing.hsadmin.billing.core.lib.Configuration
-import org.hostsharing.hsadmin.billing.core.lib.Format
-import org.hostsharing.hsadmin.billing.core.lib.withContext
-import org.hostsharing.hsadmin.billing.core.reader.*
-import org.hostsharing.hsadmin.billing.core.reader.VatGroupDef
-import org.hostsharing.hsadmin.billing.core.writer.InvoiceWriter
+import org.hostsharing.hsadmin.billing.core.reader.readBillingItems
+import org.hostsharing.hsadmin.billing.core.reader.readCustomers
+import org.hostsharing.hsadmin.billing.core.reader.readVatGroups
 import java.io.File
-import java.io.FileWriter
-import java.lang.RuntimeException
-import java.math.BigDecimal
 import java.time.LocalDate
 
 class Billing(
@@ -20,97 +18,26 @@ class Billing(
     val startInvoiceNumber: Int,
     val vatGroupsCSV: File,
     val customersCSV: File,
-    vararg billingItemsCSVs: File,
+    vararg val billingItemsCSVs: File,
 ) {
-    companion object {
-        private const val BOOKINGS_TEMPLATE = "bookings.csv.vm"
+    val customers: List<Customer> = readCustomers(customersCSV)
+
+    val invoices: List<Invoice> by lazy {
+        InvoiceGenerator(
+            configuration,
+            periodEndDate,
+            billingDate,
+            startInvoiceNumber,
+            readVatGroups(vatGroupsCSV),
+            customers,
+            readBillingItems(billingItemsCSVs)
+        ).generateInvoices()
     }
 
-    val customers: List<Customer> = readCustomers(customersCSV)
-    val billingItems: List<BillingItem> = readBillingItems(billingItemsCSVs)
-    val vatGroupDefDefs: Map<String, VatGroupDef> = readVatGroups(vatGroupsCSV)
-    val invoices: List<Invoice> = generateInvoices(customers, billingItems)
+    fun run() {
+        generateAccountingRecordsCsv()
+    }
 
-    private fun generateInvoices(customers: List<Customer>, billingItems: List<BillingItem>): List<Invoice> =
-        customers.foldIndexed(emptyList()) { index, invoices, customer ->
-            invoices + (
-                object : Invoice {
-                    override val documentNumber = "${billingDate.format(Format.year)}-${startInvoiceNumber + index}-${customer.number}"
-                    override val documentDate = billingDate
-                    override val customer = customer
-                    override val referenceDate = periodEndDate
-                    override val dueDate = this.documentDate.plusDays(30)
-                    override val directDebiting = this.customer.sepa.directDebiting
-                    override val vatGroups = billingItems
-                        .filter { it.customerCode == customer.code }
-                        .map {
-                            InvoiceItemData(
-                                vatGroupDefDefs,
-                                customerCountryCode = customer.billingContact.countryCode,
-                                billingItem = it
-                            )
-                        }
-                        .groupBy { it.vatGroupId }
-                        .map {
-                            InvoiceVatGroup(
-                                configuration,
-                                vatGroupDefDefs[it.key] ?: error("vatGroup ${it.key} not found"),
-                                customer,
-                                vatAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.vatAmount },
-                                netAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.netAmount },
-                                grossAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.grossAmount },
-                                items = it.value
-                            )
-                        }
-                        .toList()
-                }
-                )
-        }
-
-    fun generateBookingsCsv(bookingsCSV: File): File =
-        withContext("outputFile: " + bookingsCSV.name) {
-            val invoicePrinter = InvoiceWriter(
-                configuration.templatesDirectory + "/" + BOOKINGS_TEMPLATE
-            )
-
-            FileWriter(bookingsCSV).use { fileWriter ->
-                invoices.forEach { invoicePrinter.printInvoice(it, fileWriter) }
-            }
-            bookingsCSV
-        }
-}
-
-class InvoiceVatGroup(
-    config: Configuration,
-    vatGroupDef: VatGroupDef,
-    customer: Customer,
-    override val vatAmount: BigDecimal,
-    override val netAmount: BigDecimal,
-    override val grossAmount: BigDecimal,
-    override val items: List<InvoiceItem>
-) : VatGroup {
-    override val vatRate: VatRate = vatGroupDef.rates[customer.billingContact.countryCode]!!
-    override val vatAccount =
-        if (vatRate.noTax) {
-            config.accountBaseForNonTaxableRevenues
-        } else {
-            customer.vatChargeCode.accountBase(config)
-        } + vatGroupDef.id
-}
-
-class InvoiceItemData(
-    val vatGroupDefDefs: Map<String, VatGroupDef>,
-    val customerCountryCode: String,
-    val billingItem: BillingItem
-) : InvoiceItem, BillingItem by billingItem {
-    val vatRate: VatRate = vatRate()
-    val vatAmount: BigDecimal = netAmount * vatRate.percentage
-    override val grossAmount = netAmount + vatAmount
-
-    private fun vatRate(): VatRate =
-        try {
-            vatGroupDefDefs[billingItem.vatGroupId]!!.rates[customerCountryCode]!!
-        } catch (exc: Exception) {
-            throw RuntimeException("cannot find VAT for vatGroupId:$vatGroupId and countryCode=$customerCountryCode")
-        }
+    fun generateAccountingRecordsCsv(): File =
+        AccountingRecordsGenerator(configuration).generate(invoices)
 }

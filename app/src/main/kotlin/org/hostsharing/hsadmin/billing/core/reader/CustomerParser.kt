@@ -1,14 +1,14 @@
 package org.hostsharing.hsadmin.billing.core.reader
 
 import org.hostsharing.hsadmin.billing.core.domain.Customer
-import org.hostsharing.hsadmin.billing.core.lib.withContext
+import org.hostsharing.hsadmin.billing.core.lib.withDomainContext
 
 class CustomerParser internal constructor(record: Map<String, String?>) :
     Customer, Parser("customer-row") {
 
     companion object {
         fun parse(record: Map<String, String?>): Customer =
-            withContext("parsing customer $record") { CustomerParser(record) }
+            withDomainContext("parsing customer $record") { CustomerParser(record) }
     }
 
     override val number = record.mandatoryInt("customerNumber")

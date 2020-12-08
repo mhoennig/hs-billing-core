@@ -2,7 +2,7 @@ package org.hostsharing.hsadmin.billing.core.reader
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import org.hostsharing.hsadmin.billing.core.lib.ContextException
+import org.hostsharing.hsadmin.billing.core.lib.DomainException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -92,7 +92,7 @@ internal class ContactParserTest {
             it.put(fieldName, null)
         }
 
-        val actualException = org.junit.jupiter.api.assertThrows<ContextException> {
+        val actualException = org.junit.jupiter.api.assertThrows<DomainException> {
             ContactParser.parse("contact", givenRecord)
         }
 
@@ -110,7 +110,7 @@ internal class ContactParserTest {
             it.put("countryCode", "X")
         }
 
-        val actualException = org.junit.jupiter.api.assertThrows<ContextException> {
+        val actualException = org.junit.jupiter.api.assertThrows<DomainException> {
             ContactParser.parse("contact", givenRecord)
         }
 

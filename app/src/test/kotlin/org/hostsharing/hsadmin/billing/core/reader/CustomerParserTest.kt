@@ -2,7 +2,7 @@ package org.hostsharing.hsadmin.billing.core.reader
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import org.hostsharing.hsadmin.billing.core.lib.ContextException
+import org.hostsharing.hsadmin.billing.core.lib.DomainException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -75,7 +75,7 @@ internal class CustomerParserTest {
             it.put("vatChargeCode", "garbage")
         }
 
-        val actual = assertThrows<ContextException> {
+        val actual = assertThrows<DomainException> {
             CustomerParser.parse(givenRecord)
         }
 

@@ -1,14 +1,14 @@
 package org.hostsharing.hsadmin.billing.core.reader
 
 import org.hostsharing.hsadmin.billing.core.domain.Sepa
-import org.hostsharing.hsadmin.billing.core.lib.withContext
+import org.hostsharing.hsadmin.billing.core.lib.withDomainContext
 
 class SepaParser internal constructor(record: Map<String, String?>) :
     Sepa, Parser("SEPA data") {
 
     companion object {
         fun parse(record: Map<String, String?>): Sepa =
-            withContext("parsing SEPA data $record") { SepaParser(record) }
+            withDomainContext("parsing SEPA data $record") { SepaParser(record) }
     }
 
     override val directDebiting = record.mandatoryBoolean("directDebiting")

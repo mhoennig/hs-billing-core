@@ -2,7 +2,7 @@ package org.hostsharing.hsadmin.billing.core.reader
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import org.hostsharing.hsadmin.billing.core.lib.ContextException
+import org.hostsharing.hsadmin.billing.core.lib.DomainException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -51,7 +51,7 @@ internal class VatGroupDefParserTest {
             it.put("DE", "broken")
         }
 
-        val actual = assertThrows<ContextException> {
+        val actual = assertThrows<DomainException> {
             VatGroupDefParser.parse(givenRecord)
         }
 
@@ -71,7 +71,7 @@ internal class VatGroupDefParserTest {
             it.put(fieldName, null)
         }
 
-        val actualException = assertThrows<ContextException> {
+        val actualException = assertThrows<DomainException> {
             VatGroupDefParser.parse(givenRecord)
         }
 

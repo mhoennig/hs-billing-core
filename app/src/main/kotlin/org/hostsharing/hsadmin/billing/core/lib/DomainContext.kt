@@ -2,7 +2,7 @@ package org.hostsharing.hsadmin.billing.core.lib
 
 import java.util.*
 
-class Context {
+class DomainContext {
     companion object {
         val infos = Stack<String>()
 
@@ -11,22 +11,22 @@ class Context {
     }
 }
 
-fun <T> withContext(contextInfo: String, body: () -> T): T {
+fun <T> withDomainContext(contextInfo: String, body: () -> T): T {
     try {
-        Context.infos.push(contextInfo)
+        DomainContext.infos.push(contextInfo)
         try {
             return body()
-        } catch (exc: ContextException) {
+        } catch (exc: DomainException) {
             throw exc
         } catch (exc: Exception) {
-            throw ContextException(
-                (exc.message ?: exc.javaClass.simpleName) + "\n" + Context.toString(),
+            throw DomainException(
+                (exc.message ?: exc.javaClass.simpleName) + "\n" + DomainContext.toString(),
                 exc
             )
         }
     } finally {
-        Context.infos.pop()
+        DomainContext.infos.pop()
     }
 }
 
-class ContextException(message: String, exc: Exception) : Exception(message, exc)
+class DomainException(message: String, exc: Exception) : Exception(message, exc)
