@@ -23,7 +23,6 @@ class AccountingRecordsGenerator(val configuration: Configuration) {
             FileWriter(outputFile).use { fileWriter ->
                 invoices.forEach { invoicePrinter.printInvoice(it, fileWriter) }
             }
-
         }
         return outputFile
     }

@@ -1,15 +1,13 @@
 package org.hostsharing.hsadmin.billing.core
 
-import org.hostsharing.hsadmin.billing.core.domain.Customer
-import org.hostsharing.hsadmin.billing.core.domain.Invoice
+import org.hostsharing.hsadmin.billing.core.domain.*
 import org.hostsharing.hsadmin.billing.core.generator.AccountingRecordsGenerator
 import org.hostsharing.hsadmin.billing.core.invoicing.InvoiceGenerator
 import org.hostsharing.hsadmin.billing.core.lib.Configuration
-import org.hostsharing.hsadmin.billing.core.reader.readBillingItems
-import org.hostsharing.hsadmin.billing.core.reader.readCustomers
-import org.hostsharing.hsadmin.billing.core.reader.readVatGroups
+import org.hostsharing.hsadmin.billing.core.reader.*
 import java.io.File
 import java.time.LocalDate
+import java.util.*
 
 class Billing(
     val configuration: Configuration,
