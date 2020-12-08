@@ -209,12 +209,14 @@ class BillingIntegrationTest {
             ).generateBookingsCsv(actualBookingsCsvFile).readText()
         }
 
-        assertThat(actualException.message).isEqualTo("""
+        assertThat(actualException.message).isEqualTo(
+            """
             billing contact without firstName
             - in parsing billing contact {customerNumber=10001, customerCode=hsh00-dee, salutation=Herr}
             - in parsing customer {customerNumber=10001, customerCode=hsh00-dee, salutation=Herr}
             - in reading customers: customers.csv
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 
     // --- fixture ----------------------------------------------------------
@@ -245,4 +247,3 @@ class BillingIntegrationTest {
 
     private infix fun Assert<String>.matchesInExactOrder(textBlock: String) = this.isEqualTo(textBlock.replaceIndentByMargin(marginPrefix = "|"))
 }
-

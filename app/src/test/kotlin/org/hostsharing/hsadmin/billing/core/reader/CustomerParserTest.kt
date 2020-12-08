@@ -38,7 +38,8 @@ internal class CustomerParserTest {
 
         val actual = CustomerParser.parse(givenRecord)
 
-        assertThat(actual.formatted()).isEqualTo("""
+        assertThat(actual.formatted()).isEqualTo(
+            """
             number="10001"
             code="hsh00-dee"
             billingContact={
@@ -64,7 +65,8 @@ internal class CustomerParserTest {
             }
             vatChargeCode="DOMESTIC"
             uidVat="DE81201900030012345678"
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 
     @Test
@@ -77,9 +79,11 @@ internal class CustomerParserTest {
             CustomerParser.parse(givenRecord)
         }
 
-        assertThat(actual.message).isEqualTo("""
+        assertThat(actual.message).isEqualTo(
+            """
             customer-row with vatChargeCode='garbage' not a valid VAT charge code
             - in parsing customer $givenRecord
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 }

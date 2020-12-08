@@ -33,41 +33,45 @@ class Billing(
 
     private fun generateInvoices(customers: List<Customer>, billingItems: List<BillingItem>): List<Invoice> =
         customers.foldIndexed(emptyList()) { index, invoices, customer ->
-            invoices + (object : Invoice {
-                override val documentNumber = "${billingDate.format(Format.year)}-${startInvoiceNumber + index}-${customer.number}"
-                override val documentDate = billingDate
-                override val customer = customer
-                override val referenceDate = periodEndDate
-                override val dueDate = this.documentDate.plusDays(30)
-                override val directDebiting = this.customer.sepa.directDebiting
-                override val vatGroups = billingItems
-                    .filter { it.customerCode == customer.code }
-                    .map {
-                        InvoiceItemData(
-                            vatGroupDefDefs,
-                            customerCountryCode = customer.billingContact.countryCode,
-                            billingItem = it
-                        )
-                    }
-                    .groupBy { it.vatGroupId }
-                    .map {
-                        InvoiceVatGroup(
-                            configuration,
-                            vatGroupDefDefs[it.key] ?: error("vatGroup ${it.key} not found"),
-                            customer,
-                            vatAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.vatAmount },
-                            netAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.netAmount },
-                            grossAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.grossAmount },
-                            items = it.value)
-                    }
-                    .toList()
-            })
+            invoices + (
+                object : Invoice {
+                    override val documentNumber = "${billingDate.format(Format.year)}-${startInvoiceNumber + index}-${customer.number}"
+                    override val documentDate = billingDate
+                    override val customer = customer
+                    override val referenceDate = periodEndDate
+                    override val dueDate = this.documentDate.plusDays(30)
+                    override val directDebiting = this.customer.sepa.directDebiting
+                    override val vatGroups = billingItems
+                        .filter { it.customerCode == customer.code }
+                        .map {
+                            InvoiceItemData(
+                                vatGroupDefDefs,
+                                customerCountryCode = customer.billingContact.countryCode,
+                                billingItem = it
+                            )
+                        }
+                        .groupBy { it.vatGroupId }
+                        .map {
+                            InvoiceVatGroup(
+                                configuration,
+                                vatGroupDefDefs[it.key] ?: error("vatGroup ${it.key} not found"),
+                                customer,
+                                vatAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.vatAmount },
+                                netAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.netAmount },
+                                grossAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.grossAmount },
+                                items = it.value
+                            )
+                        }
+                        .toList()
+                }
+                )
         }
 
     fun generateBookingsCsv(bookingsCSV: File): File =
         withContext("outputFile: " + bookingsCSV.name) {
             val invoicePrinter = InvoiceWriter(
-                configuration.templatesDirectory + "/" + BOOKINGS_TEMPLATE)
+                configuration.templatesDirectory + "/" + BOOKINGS_TEMPLATE
+            )
 
             FileWriter(bookingsCSV).use { fileWriter ->
                 invoices.forEach { invoicePrinter.printInvoice(it, fileWriter) }
@@ -107,7 +111,6 @@ class InvoiceItemData(
         try {
             vatGroupDefDefs[billingItem.vatGroupId]!!.rates[customerCountryCode]!!
         } catch (exc: Exception) {
-            throw RuntimeException("cannot find VAT for vatGroupId:${vatGroupId} and countryCode=${customerCountryCode}")
+            throw RuntimeException("cannot find VAT for vatGroupId:$vatGroupId and countryCode=$customerCountryCode")
         }
 }
-

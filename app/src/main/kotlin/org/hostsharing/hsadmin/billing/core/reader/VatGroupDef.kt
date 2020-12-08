@@ -3,7 +3,7 @@ package org.hostsharing.hsadmin.billing.core.reader
 import org.hostsharing.hsadmin.billing.core.domain.Formattable
 import org.hostsharing.hsadmin.billing.core.domain.VatRate
 
-interface VatGroupDef: Formattable {
+interface VatGroupDef : Formattable {
     val id: String
     val description: String
     val electronicService: Boolean
@@ -13,8 +13,6 @@ interface VatGroupDef: Formattable {
         |id=${id.quoted}
         |description=${description.quoted}
         |electronicService=${electronicService.quoted}
-        |rates=${rates}
+        |rates=$rates
         """
 }
-
-

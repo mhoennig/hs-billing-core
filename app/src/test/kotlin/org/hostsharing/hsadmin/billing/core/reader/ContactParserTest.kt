@@ -21,7 +21,8 @@ internal class ContactParserTest {
         "city" to "Hamburg",
         "country" to "Germany",
         "countryCode" to "DE",
-        "email" to "taesti@taestmann.de")
+        "email" to "taesti@taestmann.de"
+    )
 
     @Test
     fun `will create contact from record with all related fields set and valid`() {
@@ -29,7 +30,8 @@ internal class ContactParserTest {
 
         val actual = ContactParser.parse("contact", givenRecord)
 
-        assertThat(actual.formatted()).isEqualTo("""
+        assertThat(actual.formatted()).isEqualTo(
+            """
             company="Testmann GmbH"
             salutation="Herr"
             title="Dr."
@@ -42,7 +44,8 @@ internal class ContactParserTest {
             country="Germany"
             countryCode="DE"
             email="taesti@taestmann.de"
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 
     @Test
@@ -59,11 +62,13 @@ internal class ContactParserTest {
             "city" to "Hamburg",
             "country" to "Germany",
             "countryCode" to "DE",
-            "email" to "taesti@taestmann.de")
+            "email" to "taesti@taestmann.de"
+        )
 
         val actual = ContactParser.parse("contact", givenRecord)
 
-        assertThat(actual.formatted()).isEqualTo("""
+        assertThat(actual.formatted()).isEqualTo(
+            """
             company=null
             salutation="Herr"
             title=null
@@ -76,7 +81,8 @@ internal class ContactParserTest {
             country="Germany"
             countryCode="DE"
             email="taesti@taestmann.de"
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 
     @ParameterizedTest
@@ -90,10 +96,12 @@ internal class ContactParserTest {
             ContactParser.parse("contact", givenRecord)
         }
 
-        assertThat(actualException.message).isEqualTo("""
+        assertThat(actualException.message).isEqualTo(
+            """
             contact without $fieldName
             - in parsing contact $givenRecord
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 
     @Test
@@ -106,9 +114,11 @@ internal class ContactParserTest {
             ContactParser.parse("contact", givenRecord)
         }
 
-        assertThat(actualException.message).isEqualTo("""
+        assertThat(actualException.message).isEqualTo(
+            """
             contact with countryCode='X' not a valid country code
             - in parsing contact $givenRecord
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 }

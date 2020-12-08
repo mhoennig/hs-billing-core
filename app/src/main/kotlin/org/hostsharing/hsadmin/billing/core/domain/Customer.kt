@@ -1,6 +1,6 @@
 package org.hostsharing.hsadmin.billing.core.domain
 
-interface Customer: Formattable {
+interface Customer : Formattable {
 
     val number: Int
     val code: String
@@ -13,10 +13,10 @@ interface Customer: Formattable {
         |number=${number.quoted}
         |code=${code.quoted}
         |billingContact={
-        |${billingContact.formatted(indent+4)}
+        |${billingContact.formatted(indent + 4)}
         |}
         |sepa={
-        |${sepa.formatted(indent+4)}
+        |${sepa.formatted(indent + 4)}
         |}
         |vatChargeCode=${vatChargeCode.quoted}
         |uidVat=${uidVat.quoted}

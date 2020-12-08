@@ -4,14 +4,14 @@ interface Configuration {
 
     val templatesDirectory: String
 
-    val accountBaseForNonTaxableRevenues: String                    // "4200" + vatGroupId
+    val accountBaseForNonTaxableRevenues: String // "4200" + vatGroupId
 
-    val accountBaseForTaxableDomesticRevenues: String               // "4400" + vatGroupId
+    val accountBaseForTaxableDomesticRevenues: String // "4400" + vatGroupId
 
     val accountBaseForTaxableForeignEuRevenuesReverseCharge: String // "4336" + vatGroupId & RC-Text, s.u.
-    val accountBaseForTaxableForeignEuRevenues: String              // "4331" + vatGroupId & Non-RC-Text, s.u.
+    val accountBaseForTaxableForeignEuRevenues: String // "4331" + vatGroupId & Non-RC-Text, s.u.
 
-    val accountBaseForTaxableAbroadEuRevenuesReverseCharge: String  // "4338" + vatGroupId
+    val accountBaseForTaxableAbroadEuRevenuesReverseCharge: String // "4338" + vatGroupId
 
     /**
      * Diese Texte müssen über das Velocity-Template in die Rechnungen aufgenommen werden:
@@ -24,4 +24,3 @@ interface Configuration {
      *  "Buchungsschlüssel 44, EU-Steuersatz, EU-Land"
      */
 }
-

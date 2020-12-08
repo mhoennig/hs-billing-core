@@ -4,11 +4,8 @@ import com.github.doyaaaaaken.kotlincsv.client.CsvFileReader
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import org.hostsharing.hsadmin.billing.core.domain.BillingItem
 import org.hostsharing.hsadmin.billing.core.domain.Customer
-import org.hostsharing.hsadmin.billing.core.domain.VatRate
-import org.hostsharing.hsadmin.billing.core.domain.isCountryCode
 import org.hostsharing.hsadmin.billing.core.lib.withContext
 import java.io.File
-import java.math.BigDecimal
 
 fun readCustomers(customersCSV: File): List<Customer> =
     inputFileReader("reading customers", customersCSV) {
@@ -35,9 +32,8 @@ fun readBillingItems(billingItemsCSVs: Array<out File>): List<BillingItem> =
     }
 
 fun <T> inputFileReader(title: String, file: File, read: CsvFileReader.() -> T): T =
-    withContext("${title}: ${file.name}") {
+    withContext("$title: ${file.name}") {
         csvReader {
             delimiter = ';'
         }.open(file) { read() }
     }
-

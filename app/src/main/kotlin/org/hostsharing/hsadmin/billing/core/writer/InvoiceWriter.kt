@@ -16,7 +16,7 @@ import java.math.BigDecimal
 internal class InvoiceWriter(templateFilename: String) {
 
     class VatGroupFormatter(vatGroup: VatGroup) : VatGroup by vatGroup {
-        val vatRateFormatted = (vatGroup.vatRate.percentage* BigDecimal(100)).format(Format.vatRate)
+        val vatRateFormatted = (vatGroup.vatRate.percentage * BigDecimal(100)).format(Format.vatRate)
         val vatAmountFormatted = vatGroup.vatAmount.format(Format.money)
         val netAmountFormatted = vatGroup.netAmount.format(Format.money)
         val grossAmountFormatted = vatGroup.grossAmount.format(Format.money)
@@ -32,8 +32,7 @@ internal class InvoiceWriter(templateFilename: String) {
         override val customer: Customer = CustomerFormatter(invoice.customer)
     }
 
-    class CustomerFormatter(customer: Customer) : Customer by customer {
-    }
+    class CustomerFormatter(customer: Customer) : Customer by customer
 
     private val template = initializeVelocity(templateFilename)
 
@@ -52,7 +51,7 @@ internal class InvoiceWriter(templateFilename: String) {
         ctx.put("chunk", chunk)
         ctx.put("customer", invoice.customer)
         ctx.put("invoice", InvoiceFormatter(invoice))
-        ctx.put("vatGroups", invoice.vatGroups.map{VatGroupFormatter(it)})
+        ctx.put("vatGroups", invoice.vatGroups.map { VatGroupFormatter(it) })
         return ctx
     }
 

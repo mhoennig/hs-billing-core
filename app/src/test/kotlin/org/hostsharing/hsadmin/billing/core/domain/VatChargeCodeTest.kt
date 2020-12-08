@@ -39,6 +39,6 @@ internal class VatChargeCodeTest {
     @ParameterizedTest
     @EnumSource(VatChargeCode::class)
     fun `will resolve account base`(vatChargeCode: VatChargeCode) {
-        assertThat(vatChargeCode.accountBase(configuration)).isEqualTo((vatChargeCode.ordinal+1001).toString())
+        assertThat(vatChargeCode.accountBase(configuration)).isEqualTo((vatChargeCode.ordinal + 1001).toString())
     }
 }

@@ -1,6 +1,6 @@
 package org.hostsharing.hsadmin.billing.core.domain
 
-interface Contact: Formattable {
+interface Contact : Formattable {
 
     val company: String?
     val salutation: String

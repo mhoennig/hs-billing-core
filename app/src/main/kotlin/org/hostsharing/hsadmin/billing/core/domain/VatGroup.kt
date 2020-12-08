@@ -16,11 +16,13 @@ interface VatGroup {
 class VatRate(value: String) {
 
     companion object {
-        val decimalFormat = DecimalFormat("#0.0#",
+        val decimalFormat = DecimalFormat(
+            "#0.0#",
             DecimalFormatSymbols().also {
                 it.setGroupingSeparator('.')
                 it.setDecimalSeparator(',')
-            }).also {
+            }
+        ).also {
             it.setParseBigDecimal(true)
         }
     }
@@ -30,6 +32,5 @@ class VatRate(value: String) {
         if (noTax) BigDecimal.ZERO else decimalFormat.parse(value) as BigDecimal / BigDecimal(100)
 
     override fun toString(): String =
-        if (noTax ) "noTax" else decimalFormat.format(percentage * BigDecimal(100))
+        if (noTax) "noTax" else decimalFormat.format(percentage * BigDecimal(100))
 }
-

@@ -24,19 +24,21 @@ internal class VatGroupDefParserTest {
 
         val actual = VatGroupDefParser.parse(givenRecord)
 
-        assertThat(actual.formatted()).isEqualTo("""
+        assertThat(actual.formatted()).isEqualTo(
+            """
             id="42"
             description="Tästmann GmbH"
             electronicService="false"
             rates={DE=16,0, AT=20,0}
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 
     @ParameterizedTest
     @ValueSource(booleans = [true, false])
     fun `will set electronicService in VatGroupDef depending on electronicService value in record`(electronicService: Boolean) {
         val givenRecord = defaultRecordWithAllValidValues.toMutableMap().also {
-            it.put("electronicService", "${electronicService}")
+            it.put("electronicService", "$electronicService")
         }
         val actual = VatGroupDefParser.parse(givenRecord)
 
@@ -53,11 +55,13 @@ internal class VatGroupDefParserTest {
             VatGroupDefParser.parse(givenRecord)
         }
 
-        assertThat(actual.message).isEqualTo("""
+        assertThat(actual.message).isEqualTo(
+            """
             Unparseable number: "broken"
             - in VAT rate definition 'DE'
             - in parsing VAT group definition $givenRecord
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 
     @ParameterizedTest
@@ -71,9 +75,11 @@ internal class VatGroupDefParserTest {
             VatGroupDefParser.parse(givenRecord)
         }
 
-        assertThat(actualException.message).isEqualTo("""
+        assertThat(actualException.message).isEqualTo(
+            """
             VAT group definition without $fieldName
             - in parsing VAT group definition $givenRecord
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 }

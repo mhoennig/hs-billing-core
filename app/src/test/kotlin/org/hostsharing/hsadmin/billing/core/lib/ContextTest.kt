@@ -16,11 +16,13 @@ internal class ContextTest {
             }
         }
 
-        assertThat(actualException.message).isEqualTo("""
+        assertThat(actualException.message).isEqualTo(
+            """
             some error message
             - in processing inner
             - in processing outer
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 
     @Test
@@ -33,11 +35,13 @@ internal class ContextTest {
             }
         }
 
-        assertThat(actualException.message).isEqualTo("""
+        assertThat(actualException.message).isEqualTo(
+            """
             IllegalStateException
             - in processing inner
             - in processing outer
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 
     @Test

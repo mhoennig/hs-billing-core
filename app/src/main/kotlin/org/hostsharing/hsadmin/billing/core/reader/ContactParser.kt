@@ -3,12 +3,12 @@ package org.hostsharing.hsadmin.billing.core.reader
 import org.hostsharing.hsadmin.billing.core.domain.Contact
 import org.hostsharing.hsadmin.billing.core.lib.withContext
 
-class ContactParser internal constructor(contextInfo: String, record: Map<String, String?>)
-    : Contact, Parser(contextInfo) {
+class ContactParser internal constructor(contextInfo: String, record: Map<String, String?>) :
+    Contact, Parser(contextInfo) {
 
     companion object {
         fun parse(contextInfo: String, record: Map<String, String?>): Contact =
-            withContext("parsing ${contextInfo} ${record}") { ContactParser(contextInfo, record) }
+            withContext("parsing $contextInfo $record") { ContactParser(contextInfo, record) }
     }
 
     override val company = record.optionalString("company")

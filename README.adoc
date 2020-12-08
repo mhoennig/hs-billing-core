@@ -1,7 +1,28 @@
 
+== Code-Formatting and Linting
+
+The general formatting of files is defined in `.editorconfig`, these settings should automatically be picked up by most code editors and IDSs.
+
+Also, _ktlint_ is installed and configured.
+To check code style, run:
+
+[source,shell script]
+----
+$ ./gradlew ktlint
+----
+
+This task also bound to "gradle check".
+
+To automatically fix code style deviations, use:
+
+[source,shell script]
+----
+$ ./gradlew ktlintFormat
+----
+
 == Unit Testing
 
-For unit-tests consider the __BRIEF__ rules http://gasparnagy.com/2019/05/clean-up-bad-bdd-scenarios/[from BDD]
+For unit-tests consider the __BRIEF__ rules http://gasparnagy.com/2019/05/clean-up-bad-bdd-scenarios/[from BDD]:
 
 Business language::
 enables collaboration and feedback

@@ -1,6 +1,6 @@
 package org.hostsharing.hsadmin.billing.core.domain
 
-interface Sepa: Formattable {
+interface Sepa : Formattable {
     val directDebiting: Boolean
     val bankCustomer: String?
     val bankIBAN: String?

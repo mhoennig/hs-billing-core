@@ -4,12 +4,12 @@ import org.hostsharing.hsadmin.billing.core.domain.VatRate
 import org.hostsharing.hsadmin.billing.core.domain.isCountryCode
 import org.hostsharing.hsadmin.billing.core.lib.withContext
 
-class VatGroupDefParser internal constructor(record: Map<String, String?>)
-    : VatGroupDef, Parser("VAT group definition") {
+class VatGroupDefParser internal constructor(record: Map<String, String?>) :
+    VatGroupDef, Parser("VAT group definition") {
 
     companion object {
         fun parse(record: Map<String, String?>): VatGroupDef =
-            withContext("parsing VAT group definition ${record}") { VatGroupDefParser(record) }
+            withContext("parsing VAT group definition $record") { VatGroupDefParser(record) }
     }
 
     override val id = record.mandatoryString("id")

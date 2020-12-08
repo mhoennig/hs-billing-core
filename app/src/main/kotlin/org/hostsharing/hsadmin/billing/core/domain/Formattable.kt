@@ -8,5 +8,5 @@ interface Formattable {
         format(indent).replaceIndentByMargin(marginPrefix = "|", newIndent = " ".repeat(indent))
 
     val Any?.quoted: String
-        get() = if (this != null ) """"${this}"""" else "null"
+        get() = if (this != null) """"$this"""" else "null"
 }

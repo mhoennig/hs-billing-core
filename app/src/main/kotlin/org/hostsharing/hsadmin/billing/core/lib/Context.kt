@@ -7,7 +7,7 @@ class Context {
         val infos = Stack<String>()
 
         override fun toString(): String =
-            infos.reversed().map{ "- in ${it}"}.joinToString("\n")
+            infos.reversed().map { "- in $it" }.joinToString("\n")
     }
 }
 
@@ -16,12 +16,13 @@ fun <T> withContext(contextInfo: String, body: () -> T): T {
         Context.infos.push(contextInfo)
         try {
             return body()
-        } catch ( exc: ContextException ) {
+        } catch (exc: ContextException) {
             throw exc
-        } catch ( exc: Exception ) {
+        } catch (exc: Exception) {
             throw ContextException(
                 (exc.message ?: exc.javaClass.simpleName) + "\n" + Context.toString(),
-                exc)
+                exc
+            )
         }
     } finally {
         Context.infos.pop()

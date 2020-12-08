@@ -3,12 +3,12 @@ package org.hostsharing.hsadmin.billing.core.reader
 import org.hostsharing.hsadmin.billing.core.domain.Customer
 import org.hostsharing.hsadmin.billing.core.lib.withContext
 
-class CustomerParser internal constructor(record: Map<String, String?>)
-    : Customer, Parser("customer-row") {
+class CustomerParser internal constructor(record: Map<String, String?>) :
+    Customer, Parser("customer-row") {
 
     companion object {
         fun parse(record: Map<String, String?>): Customer =
-            withContext("parsing customer ${record}") { CustomerParser(record) }
+            withContext("parsing customer $record") { CustomerParser(record) }
     }
 
     override val number = record.mandatoryInt("customerNumber")
@@ -18,4 +18,3 @@ class CustomerParser internal constructor(record: Map<String, String?>)
     override val vatChargeCode = record.mandatoryVatChargeCode("vatChargeCode")
     override val uidVat = record.mandatoryString("uidVat")
 }
-

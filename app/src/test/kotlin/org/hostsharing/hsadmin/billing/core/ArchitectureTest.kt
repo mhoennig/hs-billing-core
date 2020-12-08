@@ -9,29 +9,30 @@ import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices
 internal const val ROOT_PACKAGE = "org.hostsharing.hsadmin.billing.core"
 internal val ALL_PACKAGES = arrayOf(
     ROOT_PACKAGE,
-    "${ROOT_PACKAGE}.domain",
-    "${ROOT_PACKAGE}.reader",
-    "${ROOT_PACKAGE}.writer",
-    "${ROOT_PACKAGE}.lib")
+    "$ROOT_PACKAGE.domain",
+    "$ROOT_PACKAGE.reader",
+    "$ROOT_PACKAGE.writer",
+    "$ROOT_PACKAGE.lib"
+)
 
 /**
-    Verification of some architecture rules, e.g. package depenencies.
+ Verification of some architecture rules, e.g. package depenencies.
 
-    <p>There is a special git branch 'archunit-rule-validation' which deliberately breaks each rule.
-    To verify changed arch rules, you can rebase that branch to the master branch
-    and check if the rules are correct by running `./gradlew test`.</p>
+ <p>There is a special git branch 'archunit-rule-validation' which deliberately breaks each rule.
+ To verify changed arch rules, you can rebase that branch to the master branch
+ and check if the rules are correct by running `./gradlew test`.</p>
 
-    <p>See also 'resources/archunit.properties' for configuration
-    and 'app/archunit_store' for the rules+results snapshots,
-    both are only available in git branch 'archunit-rule-validation'.</p>
+ <p>See also 'resources/archunit.properties' for configuration
+ and 'app/archunit_store' for the rules+results snapshots,
+ both are only available in git branch 'archunit-rule-validation'.</p>
 
-    <p>Please also add such "rule-tests" to that branch when you change these rules.</p>
+ <p>Please also add such "rule-tests" to that branch when you change these rules.</p>
  */
-@AnalyzeClasses(packages = ["${ROOT_PACKAGE}.."])
+@AnalyzeClasses(packages = ["$ROOT_PACKAGE.."])
 internal class ArchitectureTest {
     @ArchTest
     val `will not have cycles between packages`: ArchRule = verify(
-        slices().matching("${ROOT_PACKAGE}.(*)..")
+        slices().matching("$ROOT_PACKAGE.(*)..")
             .should().beFreeOfCycles()
     )
 
@@ -54,8 +55,8 @@ internal class ArchitectureTest {
     )
 
     private fun exceptPackageEndsWithAnyOf(vararg packageEndings: String): Array<String> =
-        ALL_PACKAGES.filter{
-            !packageEndings.any{ ending -> it.endsWith(ending)}
+        ALL_PACKAGES.filter {
+            !packageEndings.any { ending -> it.endsWith(ending) }
         }.toTypedArray()
 }
 

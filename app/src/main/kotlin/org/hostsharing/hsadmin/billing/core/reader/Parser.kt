@@ -7,14 +7,13 @@ import java.math.BigDecimal
 open class Parser(val contextInfo: String) {
 
     protected fun Map<String, String?>.mandatoryString(fieldName: String): String =
-        get(fieldName) ?: error("${contextInfo} without ${fieldName}")
+        get(fieldName) ?: error("$contextInfo without $fieldName")
 
     protected fun Map<String, String?>.optionalString(fieldName: String): String? =
         get(fieldName)
 
     protected fun Map<String, String?>.mandatoryInt(fieldName: String): Int =
         mandatoryString(fieldName).toInt()
-
 
     protected fun Map<String, String?>.madatoryBigDecimal(fieldName: String): BigDecimal =
         mandatoryString(fieldName).toBigDecimal()
@@ -25,7 +24,7 @@ open class Parser(val contextInfo: String) {
     protected fun Map<String, String?>.mandatoryCountryCode(fieldName: String): String {
         val fieldValue = mandatoryString(fieldName)
         if (!fieldValue.isCountryCode()) {
-            error("${contextInfo} with ${fieldName}='${fieldValue}' not a valid country code")
+            error("$contextInfo with $fieldName='$fieldValue' not a valid country code")
         }
         return fieldValue
     }
@@ -35,7 +34,7 @@ open class Parser(val contextInfo: String) {
         try {
             return VatChargeCode.ofCode(fieldValue)
         } catch (exc: Exception) {
-            error("${contextInfo} with ${fieldName}='${fieldValue}' not a valid VAT charge code")
+            error("$contextInfo with $fieldName='$fieldValue' not a valid VAT charge code")
         }
     }
 }
