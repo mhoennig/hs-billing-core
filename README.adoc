@@ -3,7 +3,63 @@ Michael Hönnig
 2020-12-03
 :icons: font
 
-== Code-Formatting and Linting
+This program is the core module of _Hostsharing_'s billing system.
+It's based on snapshot input CSV-files, supplied by other modules and creates a set of output-files like accounting records and invoices.
+These outputs are processed by subsequent steps, like mailing the invoices to the customers.
+
+Executions are idempotent and therefore repeatable:
+As long as the parameters and input files are the same, each run will produce exactly the same output.
+
+== Architecture Overview
+
+=== Input Files
+
+The input-CSV-files, supplied by other modules are:
+
+- `customer.csv` - containing customer data like billing-contact and payment mode
+- multiple `*-billing-items.csv` - containing items to be invoiced from multiple sources
+- `vat-groups.csv` - specifies
+
+=== Output Files
+
+For each run it creates a set of output files through _Velocity_ templates:
+
+- `accounting-records.csv` - accounting records including VAT-specific account numbers to be further processed by the accounting system
+- invoices in several formats like for emails and PDF-generation (not implemented yet)
+- `sepa.csv` - contains records for direct debiting
+- ...
+
+=== Package Structure
+
+The root-package of this program `org.hostsharing.hsadmin.billing.core` contains the main program.
+
+The main program orchestrates the following modules.
+
+It contains the following sub-packages:
+
+`domain`::
+Types describing the domain model.
+
+`reader`::
+Classes and functions which read and parse the input CSV-file and convert these into domain-objects.
+
+`invoicing`::
+Actual "calculation" of the invoices using the domain objects from the `reader`.
+The output is an internal presentation of the invoices.
+
+`generator`::
+These generators take the internal  presentation of the invoices from the `invoicing` module and produce output domain objects for further processing by the `writer`
+
+`writer`::
+Functions which convert the generated domain objects to be used as contexts in _Velocity_ templates which then are used to generate the output files.
+
+`lib`::
+Types functions which can be used in all other modules.
+
+
+== Quality Assurance
+
+=== Code-Formatting and Linting
 
 The general formatting of files is defined in `.editorconfig`, these settings should automatically be picked up by most code editors and IDSs.
 
@@ -24,7 +80,7 @@ To automatically fix code style deviations, use:
 $ ./gradlew ktlintFormat
 ----
 
-== Unit Testing
+=== Unit Testing
 
 For unit-testing, _JUnit 5 (Jupiter)__ is used along with _assertk_, a _Kotlin_ version of _assertj_.
 
@@ -55,7 +111,7 @@ the scenarios should illustrate a single rule only
 Brief — keep scenarios short
 
 
-== Architecture Verification
+=== Architecture Verification
 
 There is some automatic verification of architecture rules using __ArchUnit__ in the unit test `ArchitectureTest`.
 See there for more information, especially about the git branch `archunit-rule-validation` and verifying the rules themselves.
@@ -68,7 +124,7 @@ $ ./gradlew test
 ----
 
 
-== Mutation Testing
+=== Mutation Testing
 
 To check the quality of the assertions in the unit-tests, https://pitest.org/[_pitest_] is used as a https://en.wikipedia.org/wiki/Mutation_testing[mutation testing]-tool.
 
