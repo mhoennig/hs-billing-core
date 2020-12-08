@@ -115,11 +115,11 @@ jacocoTestCoverageVerification {
 pitest {
     junit5PluginVersion.set('0.12')
     targetClasses.set(['org.hostsharing.hsadmin.billing.core.*'])
-    pitestVersion.set('1.5.1') //not needed when a default PIT version should be used
+    pitestVersion.set('1.6.1') //not needed when a default PIT version should be used
     threads.set(4)
     outputFormats.set(['XML', 'HTML'])
     timestampedReports.set(false)
-    mutationThreshold.set(90)
+    mutationThreshold.set(85)
     mutators.set(["STRONGER", "DEFAULTS"])
     avoidCallsTo.set(["kotlin.jvm.internal", "kotlinx.coroutines"])
 }
