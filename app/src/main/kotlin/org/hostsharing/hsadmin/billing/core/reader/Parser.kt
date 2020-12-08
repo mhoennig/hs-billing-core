@@ -15,7 +15,7 @@ open class Parser(val contextInfo: String) {
     protected fun Map<String, String?>.mandatoryInt(fieldName: String): Int =
         mandatoryString(fieldName).toInt()
 
-    protected fun Map<String, String?>.madatoryBigDecimal(fieldName: String): BigDecimal =
+    protected fun Map<String, String?>.mandatoryBigDecimal(fieldName: String): BigDecimal =
         mandatoryString(fieldName).toBigDecimal()
 
     protected fun Map<String, String?>.mandatoryBoolean(fieldName: String): Boolean =

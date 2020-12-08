@@ -13,5 +13,5 @@ class BillingItemParser internal constructor(record: Map<String, String?>) :
 
     override val customerCode = record.mandatoryString("customerCode")
     override val vatGroupId = record.mandatoryString("vatGroupId")
-    override val netAmount = record.madatoryBigDecimal("netAmount")
+    override val netAmount = record.mandatoryBigDecimal("netAmount")
 }
