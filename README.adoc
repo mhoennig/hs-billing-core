@@ -1,3 +1,7 @@
+= Hostsharing Billing Core
+Michael Hönnig
+2020-12-03
+:icons: font
 
 == Code-Formatting and Linting
 
@@ -22,7 +26,16 @@ $ ./gradlew ktlintFormat
 
 == Unit Testing
 
-For unit-tests consider the __BRIEF__ rules http://gasparnagy.com/2019/05/clean-up-bad-bdd-scenarios/[from BDD]:
+For unit-testing, _JUnit 5 (Jupiter)__ is used along with _assertk_, a _Kotlin_ version of _assertj_.
+
+To execute the unit-tests, run:
+
+[source,shell script]
+----
+$ ./gradlew test
+----
+
+For writing unit-tests consider the __BRIEF__ rules http://gasparnagy.com/2019/05/clean-up-bad-bdd-scenarios/[from BDD]:
 
 Business language::
 enables collaboration and feedback
@@ -42,18 +55,37 @@ the scenarios should illustrate a single rule only
 Brief — keep scenarios short
 
 
-
 == Architecture Verification
 
 There is some automatic verification of architecture rules using __ArchUnit__ in the unit test `ArchitectureTest`.
-See there for more information.
+See there for more information, especially about the git branch `archunit-rule-validation` and verifying the rules themselves.
+
+Technically this is a mal unit-test, thus run with:
+
+[source,shell script]
+----
+$ ./gradlew test
+----
+
 
 == Mutation Testing
 
-./gradlew pitest
+To check the quality of the assertions in the unit-tests, https://pitest.org/[_pitest_] is used as a https://en.wikipedia.org/wiki/Mutation_testing[mutation testing]-tool.
 
-creates: link:./app/build/reports/pitest/org.hostsharing.hsadmin.billing.core.reader/index.html[]
+The mutation-tests can be executed with:
 
-configuration of limits in app/build.gradle
+[source,shell script]
+----
+$ ./gradlew pitest
+----
 
-Please increase the limit according to what we have reached, once we became better.
+This creates link:./app/build/reports/pitest/org.hostsharing.hsadmin.billing.core.reader/index.html[a report] comprising line- and mutation-coverage of the unit-tests.
+
+If the "mutant-kill rate" falls below a configured limit, the _pitest_-task  will fail;
+in that case, please improve the unit-tests.
+The limits are configured in `app/build.gradle`.
+Please increase the limit according to the level we have reached, once we become better;
+about 2 percent points below the level we have actually reached, is a good measure.
+
+CAUTION: After a successful run, you can see percentage  which actually counts for the limit.
+The percentage shown in the report HTML-file seems to be calculated differently and is usually a bit higher.
