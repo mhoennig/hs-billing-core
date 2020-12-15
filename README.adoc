@@ -3,6 +3,8 @@ Michael Hönnig
 2020-12-03
 :icons: font
 
+CAUTION: This software is under development and not yet usable.
+
 This program is the core module of _Hostsharing_'s billing system.
 It's based on snapshot input CSV-files, supplied by other modules and creates a set of output-files like accounting records and invoices.
 These outputs are processed by subsequent steps, like mailing the invoices to the customers.
@@ -80,9 +82,23 @@ To automatically fix code style deviations, use:
 $ ./gradlew ktlintFormat
 ----
 
+=== Code Complexity
+
+For checking code complexity _detekt_ is configured:
+
+[source,shell script]
+----
+$ ./gradlew detekt
+----
+
+This command will check for rule violations and create a link:app/build/reports/detekt.html[report].
+
+For more information see https://detekt.github.io/detekt/gradle.html#available-plugin-tasks[_detekt_ project on _Github_].
+
+
 === Unit Testing
 
-For unit-testing, _JUnit 5 (Jupiter)__ is used along with _assertk_, a _Kotlin_ version of _assertj_.
+For unit-testing, _JUnit 5 (Jupiter)__ is used along with _assertk_, a _Kotlin_ version of _assertj_ as a check task for gradle.
 
 To execute the unit-tests, run:
 

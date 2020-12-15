@@ -29,7 +29,8 @@ internal class CustomerParserTest {
         "bankIBAN" to "DE987654321",
         "bankBIC" to "GENODEF1HH2",
         "mandatRef" to "HS-10001-20140801",
-        "vatChargeCode" to "domestic",
+        "vatCountryCode" to "DE",
+        "vatChargeMode" to "domestic",
     )
 
     @Test
@@ -53,7 +54,6 @@ internal class CustomerParserTest {
                 zipCode="20144"
                 city="Hamburg"
                 country="Germany"
-                countryCode="DE"
                 email="taesti@taestmann.de"
             }
             sepa={
@@ -63,16 +63,38 @@ internal class CustomerParserTest {
                 bankBIC="GENODEF1HH2"
                 mandatRef="HS-10001-20140801"
             }
-            vatChargeCode="DOMESTIC"
-            uidVat="DE81201900030012345678"
+            vatBase={
+                vatCountryCode="DE"
+                vatChargeMode="DOMESTIC"
+                uidVat="DE81201900030012345678"
+            }
             """.trimIndent()
         )
     }
 
     @Test
-    fun `will throw error when parsing Customer from record with invalid vatChargeCode`() {
-        val givenRecord = recordWithAllFieldValues.toMutableMap().also {
-            it.put("vatChargeCode", "garbage")
+    fun `will throw error when parsing contact from record with invalid country code`() {
+        val givenRecord = recordWithAllFieldValues.toMutableMap().apply {
+            put("vatCountryCode", "X")
+        }
+
+        val actualException = assertThrows<DomainException> {
+            CustomerParser.parse(givenRecord)
+        }
+
+        assertThat(actualException.message).isEqualTo(
+            """
+            VatBase with vatCountryCode='X' not a valid country code
+            - in parsing VatBase data {customerNumber=10001, customerCode=hsh00-dee, company=Testmann GmbH, salutation=Herr, title=Dr., firstName=Tästi, lastName=Tästmann, co=Tästmann Holdings AG, street=Teststraße 42, zipCode=20144, city=Hamburg, country=Germany, countryCode=DE, email=taesti@taestmann.de, uidVat=DE81201900030012345678, directDebiting=true, bankCustomer=Tästmann GmbH, bankIBAN=DE987654321, bankBIC=GENODEF1HH2, mandatRef=HS-10001-20140801, vatCountryCode=X, vatChargeMode=domestic}
+            - in parsing customer $givenRecord
+            """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `will throw error when parsing Customer from record with invalid vatChargeMode`() {
+        val givenRecord = recordWithAllFieldValues.toMutableMap().apply {
+            put("vatChargeMode", "garbage")
         }
 
         val actual = assertThrows<DomainException> {
@@ -81,7 +103,8 @@ internal class CustomerParserTest {
 
         assertThat(actual.message).isEqualTo(
             """
-            customer-row with vatChargeCode='garbage' not a valid VAT charge code
+            VatBase with vatChargeMode='garbage' not a valid VAT charge code
+            - in parsing VatBase data {customerNumber=10001, customerCode=hsh00-dee, company=Testmann GmbH, salutation=Herr, title=Dr., firstName=Tästi, lastName=Tästmann, co=Tästmann Holdings AG, street=Teststraße 42, zipCode=20144, city=Hamburg, country=Germany, countryCode=DE, email=taesti@taestmann.de, uidVat=DE81201900030012345678, directDebiting=true, bankCustomer=Tästmann GmbH, bankIBAN=DE987654321, bankBIC=GENODEF1HH2, mandatRef=HS-10001-20140801, vatCountryCode=DE, vatChargeMode=garbage}
             - in parsing customer $givenRecord
             """.trimIndent()
         )

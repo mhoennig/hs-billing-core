@@ -42,7 +42,6 @@ internal class ContactParserTest {
             zipCode="20144"
             city="Hamburg"
             country="Germany"
-            countryCode="DE"
             email="taesti@taestmann.de"
             """.trimIndent()
         )
@@ -79,17 +78,16 @@ internal class ContactParserTest {
             zipCode="20144"
             city="Hamburg"
             country="Germany"
-            countryCode="DE"
             email="taesti@taestmann.de"
             """.trimIndent()
         )
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["salutation", "firstName", "lastName", "street", "zipCode", "city", "country", "countryCode", "email"])
+    @ValueSource(strings = ["salutation", "firstName", "lastName", "street", "zipCode", "city", "country", "email"])
     fun `will throw error when parsing contact from record without mandatory field`(fieldName: String) {
-        val givenRecord = recordWithAllFieldValues.toMutableMap().also {
-            it.put(fieldName, null)
+        val givenRecord = recordWithAllFieldValues.toMutableMap().apply {
+            put(fieldName, null)
         }
 
         val actualException = org.junit.jupiter.api.assertThrows<DomainException> {
@@ -99,24 +97,6 @@ internal class ContactParserTest {
         assertThat(actualException.message).isEqualTo(
             """
             contact without $fieldName
-            - in parsing contact $givenRecord
-            """.trimIndent()
-        )
-    }
-
-    @Test
-    fun `will throw error when parsing contact from record with invalid country code`() {
-        val givenRecord = recordWithAllFieldValues.toMutableMap().also {
-            it.put("countryCode", "X")
-        }
-
-        val actualException = org.junit.jupiter.api.assertThrows<DomainException> {
-            ContactParser.parse("contact", givenRecord)
-        }
-
-        assertThat(actualException.message).isEqualTo(
-            """
-            contact with countryCode='X' not a valid country code
             - in parsing contact $givenRecord
             """.trimIndent()
         )

@@ -3,7 +3,7 @@ package org.hostsharing.hsadmin.billing.core.reader
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNull
-import org.hostsharing.hsadmin.billing.core.domain.VatChargeCode
+import org.hostsharing.hsadmin.billing.core.domain.VatChargeMode
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.math.BigDecimal
@@ -184,37 +184,37 @@ internal class ParserTest : Parser("some test data") {
     }
 
     @Test
-    fun `mandatoryVatChargeCode will return given valid value`() {
+    fun `mandatoryVatChargeMode will return given valid value`() {
         val record: Map<String, String?> = mapOf(
-            "someField" to VatChargeCode.EU_RC.code
+            "someField" to VatChargeMode.EU_REVERSE.code
         )
 
-        val actual = record.mandatoryVatChargeCode("someField")
+        val actual = record.mandatoryVatChargeMode("someField")
 
-        assertThat(actual).isEqualTo(VatChargeCode.EU_RC)
+        assertThat(actual).isEqualTo(VatChargeMode.EU_REVERSE)
     }
 
     @Test
-    fun `mandatoryVatChargeCode will throw error for invalid value`() {
+    fun `mandatoryVatChargeMode will throw error for invalid value`() {
         val record: Map<String, String?> = mapOf(
             "someField" to "invalid value"
         )
 
         val actual = assertThrows<IllegalStateException> {
-            record.mandatoryVatChargeCode("someField")
+            record.mandatoryVatChargeMode("someField")
         }
 
         assertThat(actual.message).isEqualTo("some test data with someField='invalid value' not a valid VAT charge code")
     }
 
     @Test
-    fun `mandatoryVatChargeCode will throw error for missing value`() {
+    fun `mandatoryVatChargeMode will throw error for missing value`() {
         val record: Map<String, String?> = mapOf(
             "someField" to null
         )
 
         val actual = assertThrows<IllegalStateException> {
-            record.mandatoryVatChargeCode("someField")
+            record.mandatoryVatChargeMode("someField")
         }
 
         assertThat(actual.message).isEqualTo("some test data without someField")

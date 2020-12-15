@@ -16,7 +16,7 @@ import java.math.BigDecimal
 internal class InvoiceWriter(templateFilename: String) {
 
     class VatGroupFormatter(vatGroup: VatGroup) : VatGroup by vatGroup {
-        val vatRateFormatted = (vatGroup.vatRate.percentage * BigDecimal(100)).format(Format.vatRate)
+        val vatRateFormatted = (vatGroup.vatRate * BigDecimal(100)).format(Format.vatRate)
         val vatAmountFormatted = vatGroup.vatAmount.format(Format.money)
         val netAmountFormatted = vatGroup.netAmount.format(Format.money)
         val grossAmountFormatted = vatGroup.grossAmount.format(Format.money)
@@ -68,4 +68,4 @@ internal class InvoiceWriter(templateFilename: String) {
 }
 
 private fun initializeVelocity(templateFilename: String) =
-    VelocityEngine().also { it.init() }.getTemplate(templateFilename, "UTF-8")
+    VelocityEngine().apply { init() }.getTemplate(templateFilename, "UTF-8")

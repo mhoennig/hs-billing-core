@@ -1,11 +1,14 @@
 package org.hostsharing.hsadmin.billing.core.domain
 
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 
+typealias Account = String
+
 interface VatGroup {
-    val vatRate: VatRate
+    val vatRate: BigDecimal
     val vatAmount: BigDecimal
     val netAmount: BigDecimal
     val grossAmount: BigDecimal
@@ -13,24 +16,55 @@ interface VatGroup {
     val items: List<InvoiceItem>
 }
 
-class VatRate(value: String) {
+class VatRate(rate: String) {
 
     companion object {
+        val NO_TAX: VatRate = VatRate("noTax")
+        val NOT_APPLICABLE: VatRate = VatRate("n/a")
+        val NOT_IMPLEMENTED: VatRate = VatRate("n/i")
+        val CENT: BigDecimal = BigDecimal(100).apply {
+            setScale(2, RoundingMode.HALF_UP)
+        }
         val decimalFormat = DecimalFormat(
             "#0.0#",
-            DecimalFormatSymbols().also {
-                it.setGroupingSeparator('.')
-                it.setDecimalSeparator(',')
+            DecimalFormatSymbols().apply {
+                setGroupingSeparator('.')
+                setDecimalSeparator(',')
             }
-        ).also {
-            it.setParseBigDecimal(true)
+        ).apply {
+            setParseBigDecimal(true)
         }
     }
 
-    val noTax: Boolean = value == "noTax"
-    val percentage: BigDecimal =
-        if (noTax) BigDecimal.ZERO else decimalFormat.parse(value) as BigDecimal / BigDecimal(100)
+    val noTax: Boolean = rate == "noTax"
+    val notApplicable: Boolean = rate == "n/a"
+    val notImplemented: Boolean = rate == "n/i"
+    val unknown: Boolean = notApplicable || notImplemented
+    val percentage: BigDecimal? =
+        when (true) {
+            noTax -> BigDecimal.ZERO
+            notApplicable -> null
+            notImplemented -> null
+            else -> decimalFormat.parse(rate) as BigDecimal / CENT
+        }
 
     override fun toString(): String =
-        if (noTax) "noTax" else decimalFormat.format(percentage * BigDecimal(100))
+        when (true) {
+            noTax -> "noTax"
+            notApplicable -> "n/a"
+            notImplemented -> "n/i"
+            else -> percentage.toString()
+        }
+
+    override fun equals(other: Any?): Boolean =
+        other is VatRate &&
+            noTax == other.noTax &&
+            notApplicable == other.notApplicable &&
+            notImplemented == other.notImplemented &&
+            (
+                if (percentage == null)
+                    percentage == other.percentage
+                else
+                    percentage.compareTo(other.percentage) == 0
+                )
 }

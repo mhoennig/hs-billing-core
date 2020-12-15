@@ -3,9 +3,7 @@ package org.hostsharing.hsadmin.billing.core.invoicing
 import org.hostsharing.hsadmin.billing.core.domain.*
 import org.hostsharing.hsadmin.billing.core.lib.Configuration
 import org.hostsharing.hsadmin.billing.core.lib.Format
-import org.hostsharing.hsadmin.billing.core.reader.*
-import org.hostsharing.hsadmin.billing.core.reader.VatGroupDef
-import java.lang.RuntimeException
+import org.hostsharing.hsadmin.billing.core.reader.VatCalculator
 import java.math.BigDecimal
 import java.time.LocalDate
 
@@ -14,13 +12,13 @@ class InvoiceGenerator(
     val periodEndDate: LocalDate,
     val billingDate: LocalDate,
     val startInvoiceNumber: Int,
-    val vatGroupDefDefs: Map<String, VatGroupDef>,
+    val vatGroupDefs: Map<CountryCode, Map<VatGroupId, VatGroupDef>>,
     val customers: List<Customer>,
     val billingItems: List<BillingItem>
 ) {
     fun generateInvoices(): List<Invoice> =
         customers.foldIndexed(emptyList()) { index, invoices, customer ->
-            invoices + (
+            invoices +
                 object : Invoice {
                     override val documentNumber = "${billingDate.format(Format.year)}-${startInvoiceNumber + index}-${customer.number}"
                     override val documentDate = billingDate
@@ -31,18 +29,27 @@ class InvoiceGenerator(
                     override val vatGroups = billingItems
                         .filter { it.customerCode == customer.code }
                         .map {
+                            val vatResult = VatCalculator(configuration)
+                                .calculateEffectiveRate(
+                                    vatGroupDefs,
+                                    it.vatGroupId,
+                                    customer.vatBase
+                                )
                             InvoiceItemData(
-                                vatGroupDefDefs,
-                                customerCountryCode = customer.billingContact.countryCode,
+                                vatCountryCode = customer.vatBase.vatCountryCode,
+                                vatChargeMode = customer.vatBase.vatChargeMode,
+                                vatRate = vatResult.vatRate.percentage!!,
+                                vatAccount = vatResult.vatAccount,
                                 billingItem = it
                             )
                         }
                         .groupBy { it.vatGroupId }
                         .map {
                             InvoiceVatGroup(
-                                configuration,
-                                vatGroupDefDefs[it.key] ?: error("vatGroup ${it.key} not found"),
-                                customer,
+                                config = configuration,
+                                vatGroupDef = vatGroupDefs[customer.vatBase.vatCountryCode]
+                                    ?.get(it.key) ?: error("vatGroupDef ${customer.vatBase.vatCountryCode}.${it.key} not found"),
+                                customer = customer,
                                 vatAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.vatAmount },
                                 netAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.netAmount },
                                 grossAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.grossAmount },
@@ -51,7 +58,6 @@ class InvoiceGenerator(
                         }
                         .toList()
                 }
-                )
         }
 }
 
@@ -64,28 +70,19 @@ class InvoiceVatGroup(
     override val grossAmount: BigDecimal,
     override val items: List<InvoiceItem>
 ) : VatGroup {
-    override val vatRate: VatRate = vatGroupDef.rates[customer.billingContact.countryCode]!!
-    override val vatAccount =
-        if (vatRate.noTax) {
-            config.accountBaseForNonTaxableRevenues
-        } else {
-            customer.vatChargeCode.accountBase(config)
-        } + vatGroupDef.id
+    val vatResult = VatCalculator(config)
+        .calculateEffectiveRate(vatGroupDef, customer.vatBase)
+    override val vatRate: BigDecimal = vatResult.vatRate.percentage!!
+    override val vatAccount: String = vatResult.vatAccount
 }
 
 class InvoiceItemData(
-    val vatGroupDefDefs: Map<String, VatGroupDef>,
-    val customerCountryCode: String,
+    val vatCountryCode: String,
+    val vatChargeMode: VatChargeMode,
+    val vatRate: BigDecimal,
+    val vatAccount: String,
     val billingItem: BillingItem
 ) : InvoiceItem, BillingItem by billingItem {
-    val vatRate: VatRate = vatRate()
-    val vatAmount: BigDecimal = netAmount * vatRate.percentage
+    val vatAmount: BigDecimal = netAmount * vatRate
     override val grossAmount = netAmount + vatAmount
-
-    private fun vatRate(): VatRate =
-        try {
-            vatGroupDefDefs[billingItem.vatGroupId]!!.rates[customerCountryCode]!!
-        } catch (exc: Exception) {
-            throw RuntimeException("cannot find VAT for vatGroupId:$vatGroupId and countryCode=$customerCountryCode")
-        }
 }

@@ -1,7 +1,6 @@
 package org.hostsharing.hsadmin.billing.core.reader
 
-import org.hostsharing.hsadmin.billing.core.domain.VatRate
-import org.hostsharing.hsadmin.billing.core.domain.isCountryCode
+import org.hostsharing.hsadmin.billing.core.domain.VatGroupDef
 import org.hostsharing.hsadmin.billing.core.lib.withDomainContext
 
 class VatGroupDefParser internal constructor(record: Map<String, String?>) :
@@ -14,12 +13,8 @@ class VatGroupDefParser internal constructor(record: Map<String, String?>) :
 
     override val id = record.mandatoryString("id")
     override val description = record.mandatoryString("description")
-    override val electronicService = record.mandatoryBoolean("electronicService")
-    override val rates = record.filter { it.key.isCountryCode() }
-        .map {
-            withDomainContext("VAT rate definition '${it.key}'") {
-                it.key to VatRate(it.value ?: error("mandatory VAT rate missing"))
-            }
-        }
-        .toMap()
+    override val placeOfSupply = record.mandatoryPlaceOfSupply("placeOfSupply")
+    override val vatRate = record.mandatorVatRate("vatRate")
+    override val dcAccount = record.mandatoryString("dcAccount")
+    override val rcAccount = record.mandatoryString("rcAccount")
 }

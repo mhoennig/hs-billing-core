@@ -21,6 +21,5 @@ class ContactParser internal constructor(contextInfo: String, record: Map<String
     override val zipCode = record.mandatoryString("zipCode")
     override val city = record.mandatoryString("city")
     override val country = record.mandatoryString("country")
-    override val countryCode = record.mandatoryCountryCode("countryCode")
     override val email = record.mandatoryString("email")
 }

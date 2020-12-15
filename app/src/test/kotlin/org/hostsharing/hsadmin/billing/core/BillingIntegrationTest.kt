@@ -12,51 +12,39 @@ import java.time.LocalDate
 
 class BillingIntegrationTest {
 
-    val vatGroupsDeCsvFile by lazy {
-        givenInputDir withFile "article-groups-de.csv" containing """
-            |id;    description;            placeOfSupply;  rate;       dc.account;  rc.account 
-            |"00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "n/a"           
-            |"01";  "Rabatttarif";          "receiver";     "16,00";    "440001";    "n/a"           
-            |"02";  "Domain-Laufzeit";      "receiver";     "16,00";    "440002";    "n/a"
-            |"03";  "Package";              "receiver";     "16,00";    "440003";    "n/a"
-            |"04";  "Traffic";              "receiver";     "16,00";    "440004";    "n/a"
-            |"05";  "CPU";                  "receiver";     "16,00";    "440005";    "n/a"
-            |"06";  "WoD";                  "supplier";     "16,00";    "440006";    "n/a"
-            |"07";  "SLA";                  "receiver";     "16,00";    "440007";    "n/a"
-            |"08";  "BBB";                  "receiver";     "16,00";    "440008";    "n/a"
-            |"09";  "Buch";                 "supplier";      "5,00";    "430009";    "n/a"
-            |"""
-    }
-
-    val vatGroupsAtCsvFile by lazy {
-        givenInputDir withFile "article-groups-at.csv" containing """
-            |id;    description;            placeOfSupply;  rate;       dc.account;  rc.account 
-            |"00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "420000"           
-            |"01";  "Rabatttarif";          "receiver";     "21,00";    "433101";    "433601"           
-            |"02";  "Domain-Laufzeit";      "receiver";     "21,00";    "433102";    "433602"
-            |"03";  "Package";              "receiver";     "21,00";    "433103";    "433603"
-            |"04";  "Traffic";              "receiver";     "21,00";    "433104";    "433604"
-            |"05";  "CPU";                  "receiver";     "21,00";    "433105";    "433605"
-            |"06";  "WoD";                  "supplier";     "domestic"; "433806";    "433606"
-            |"07";  "SLA";                  "receiver";     "21,00";    "433107";    "433607"
-            |"08";  "BBB";                  "receiver";     "21,00";    "433108";    "433608"
-            |"09";  "Buch";                 "supplier";     "domestic"; "433809";    "433609"
-            |"""
-    }
-
-    val vatGroupsChCsvFile by lazy {
-        givenInputDir withFile "article-groups-ch.csv" containing """
-            |id;    description;            placeOfSupply;  rate;       dc.account; rc.account 
-            |"00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";   "420000"           
-            |"01";  "Rabatttarif";          "receiver";     "n/i";      "n/i";      "433801"           
-            |"02";  "Domain-Laufzeit";      "receiver";     "n/i";      "n/i";      "433802"
-            |"03";  "Package";              "receiver";     "n/i";      "n/i";      "433803"
-            |"04";  "Traffic";              "receiver";     "n/i";      "n/i";      "433804"
-            |"05";  "CPU";                  "receiver";     "n/i";      "n/i";      "433805"
-            |"06";  "WoD";                  "supplier";     "n/i";      "n/i";      "433806"
-            |"07";  "SLA";                  "receiver";     "n/i";      "n/i";      "433807"
-            |"08";  "BBB";                  "receiver";     "n/i";      "n/i";      "433808"
-            |"09";  "Buch";                 "supplier";     "n/i";      "n/i";      "433809"
+    val vatGroupsCsvFile by lazy {
+        givenInputDir withFile "vat-groups.csv" containing """
+            |countryCode; id;    description;            placeOfSupply;  rate;       dc.account;  rc.account 
+            |"DE";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "n/a"           
+            |"DE";        "01";  "Rabatttarif";          "receiver";     "16,00";    "440001";    "n/a"           
+            |"DE";        "02";  "Domain-Laufzeit";      "receiver";     "16,00";    "440002";    "n/a"
+            |"DE";        "03";  "Package";              "receiver";     "16,00";    "440003";    "n/a"
+            |"DE";        "04";  "Traffic";              "receiver";     "16,00";    "440004";    "n/a"
+            |"DE";        "05";  "CPU";                  "receiver";     "16,00";    "440005";    "n/a"
+            |"DE";        "06";  "WoD";                  "supplier";     "16,00";    "440006";    "n/a"
+            |"DE";        "07";  "SLA";                  "receiver";     "16,00";    "440007";    "n/a"
+            |"DE";        "08";  "BBB";                  "receiver";     "16,00";    "440008";    "n/a"
+            |"DE";        "09";  "Buch";                 "supplier";      "5,00";    "430009";    "n/a"
+            |"AT";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "420000"           
+            |"AT";        "01";  "Rabatttarif";          "receiver";     "21,00";    "433101";    "433601"           
+            |"AT";        "02";  "Domain-Laufzeit";      "receiver";     "21,00";    "433102";    "433602"
+            |"AT";        "03";  "Package";              "receiver";     "21,00";    "433103";    "433603"
+            |"AT";        "04";  "Traffic";              "receiver";     "21,00";    "433104";    "433604"
+            |"AT";        "05";  "CPU";                  "receiver";     "21,00";    "433105";    "433605"
+            |"AT";        "06";  "WoD";                  "supplier";     "domestic"; "433806";    "433606"
+            |"AT";        "07";  "SLA";                  "receiver";     "21,00";    "433107";    "433607"
+            |"AT";        "08";  "BBB";                  "receiver";     "21,00";    "433108";    "433608"
+            |"AT";        "09";  "Buch";                 "supplier";     "domestic"; "433809";    "433609"
+            |"CH";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";   "420000"           
+            |"AT";        "01";  "Rabatttarif";          "receiver";     "n/i";      "n/i";      "433801"           
+            |"AT";        "02";  "Domain-Laufzeit";      "receiver";     "n/i";      "n/i";      "433802"
+            |"AT";        "03";  "Package";              "receiver";     "n/i";      "n/i";      "433803"
+            |"AT";        "04";  "Traffic";              "receiver";     "n/i";      "n/i";      "433804"
+            |"AT";        "05";  "CPU";                  "receiver";     "n/i";      "n/i";      "433805"
+            |"AT";        "06";  "WoD";                  "supplier";     "n/i";      "n/i";      "433806"
+            |"AT";        "07";  "SLA";                  "receiver";     "n/i";      "n/i";      "433807"
+            |"AT";        "08";  "BBB";                  "receiver";     "n/i";      "n/i";      "433808"
+            |"AT";        "09";  "Buch";                 "supplier";     "n/i";      "n/i";      "433809"
             |"""
     }
 
@@ -64,21 +52,8 @@ class BillingIntegrationTest {
     fun `will generate accounting-records-csv`() {
 
         val customersCsvFile = givenInputDir withFile "customers.csv" containing """
-            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;vatCountryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeCode
+            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;vatCountryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeMode
             |"12345";"hsh00-xyz";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";"DE";"taesti@taestmann.de";"DE987654321";"true";"Testmann GmbH";"DE81201900030012345678";"GENODEF1HH2";"HS-10003-20140801";"domestic"
-            |"""
-
-        val vatGroupsCsvFile = givenInputDir withFile "article-groups.csv" containing """
-            |id;    description;            electronicService;    DE;         AT;
-            |"00";  "Mitgliedsbeitrag";     "true";             "noTax";    "noTax";    
-            |"01";  "Rabatttarif";          "true";             "16,00";    "21,00";
-            |"02";  "Domain-Laufzeit";      "true";             "16,00";    "21,00";
-            |"03";  "Package";              "true";             "16,00";    "21,00";
-            |"04";  "Traffic";              "true";             "16,00";    "21,00";
-            |"05";  "CPU";                  "true";             "16,00";    "21,00";
-            |"06";  "WoD";                  "false";            "16,00";    "21,00";
-            |"07";  "SLA";                  "true";             "16,00";    "21,00";
-            |"08";  "BBB";                  "true";             "16,00";    "21,00";
             |"""
 
         val billingItemsCsvFile = givenInputDir withFile "billing-items.csv" containing """
@@ -122,15 +97,8 @@ class BillingIntegrationTest {
     fun `will consider multiple billing-item-files`() {
 
         val customersCsvFile = givenInputDir withFile "customers.csv" containing """
-            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;vatCountryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeCode
+            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;vatCountryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeMode
             |"12345";"hsh00-xyz";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";"DE";"taesti@taestmann.de";"DE987654321";"true";"Testmann GmbH";"DE81201900030012345678";"GENODEF1HH2";"HS-10003-20140801";"domestic"
-            |"""
-
-        val vatGroupsCsvFile = givenInputDir withFile "article-groups.csv" containing """
-            |id;    description;               electronicService;    DE;         AT;
-            |"00";  "Mitgliedsbeitrag";     "true";             "noTax";    "noTax";    
-            |"02";  "Domain-Laufzeit";      "true";             "16,00";    "21,00";
-            |"03";  "Package";              "true";             "16,00";    "21,00";
             |"""
 
         val customerBillingItemsCsvFile = givenInputDir withFile "customer-billing-items.csv" containing """
@@ -167,21 +135,15 @@ class BillingIntegrationTest {
     }
 
     @Test
-    fun `will choose VAT-accounts based on vatChargeCode`() {
+    fun `will choose VAT-accounts based on vatChargeMode`() {
 
         val customersCsvFile = givenInputDir withFile "customers.csv" containing """
-            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;vatCountryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeCode
+            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;vatCountryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeMode
             |"10001";"hsh00-dee";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";    "DE";"taesti@taestmann.de";"DE987654321";"true";"Tästmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10001-20140801";"domestic"
             |"10001";"hsh00-dep";               ;"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";    "DE";"taesti@taestmann.de";             ;"true";"Tästi Tästmann";"DE81201900030012345678";"GENODEF1HH2";"HS-10001-20140801";"domestic"
-            |"10002";"hsh00-ate";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"10010";"Wien";   "Austria";    "AT";"taesti@taestmann.de";"AT123456789";"true";"Testmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10002-20140801";"EU-RC"
-            |"10002";"hsh00-atp";               ;"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"10010";"Wien";   "Austria";    "AT";"taesti@taestmann.de";             ;"true";"Testmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10002-20140801";"EU"
-            |"10003";"hsh00-che";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20020";"Zürich"; "Switzerland";"CH";"taesti@taestmann.de";"CH123456789";"true";"Testmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10002-20140801";"NonEU-RC"
-            |"""
-
-        val vatGroupsCsvFile = givenInputDir withFile "article-groups.csv" containing """
-            |id;    description;            electronicService;    DE;         AT;
-            |"00";  "Mitgliedsbeitrag";     "true";               "noTax";    "noTax";    
-            |"03";  "Package";              "true";               "16,00";    "21,00";
+            |"10002";"hsh00-ate";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"10010";"Wien";   "Austria";    "AT";"taesti@taestmann.de";"AT123456789";"true";"Testmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10002-20140801";"EU-reverse"
+            |"10002";"hsh00-atp";               ;"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"10010";"Wien";   "Austria";    "AT";"taesti@taestmann.de";             ;"true";"Testmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10002-20140801";"EU-direct"
+            |"10003";"hsh00-che";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20020";"Zürich"; "Switzerland";"CH";"taesti@taestmann.de";"CH123456789";"true";"Testmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10002-20140801";"NonEU-reverse"
             |"""
 
         val billingItemsCsvFile = givenInputDir withFile "customer-billing-items.csv" containing """
@@ -231,12 +193,6 @@ class BillingIntegrationTest {
             |"10001";"hsh00-dee";"Herr"
             |"""
 
-        val vatGroupsCsvFile = givenInputDir withFile "article-groups.csv" containing """
-            |id;    description;            electronicService;    DE;         AT;
-            |"00";  "Mitgliedsbeitrag";     "true";               "noTax";    "noTax";    
-            |"03";  "Package";              "true";               "16,00";    "20,00";
-            |"""
-
         val actualException = assertThrows<DomainException> {
             Billing(
                 configuration,
@@ -268,11 +224,6 @@ class BillingIntegrationTest {
         override val outputDirectory = createTempDir(prefix = "hs-billing-test-output").apply {
             mkdirs()
         }.toString()
-        override val accountBaseForNonTaxableRevenues = "4200"
-        override val accountBaseForTaxableDomesticRevenues = "4400"
-        override val accountBaseForTaxableForeignEuRevenuesReverseCharge = "4336"
-        override val accountBaseForTaxableForeignEuRevenues = "4331"
-        override val accountBaseForTaxableAbroadEuRevenuesReverseCharge = "4338"
     }
 
     private infix fun File.withFile(name: String): File =
@@ -285,5 +236,6 @@ class BillingIntegrationTest {
         return this
     }
 
-    private infix fun Assert<String>.matchesInExactOrder(textBlock: String) = this.isEqualTo(textBlock.replaceIndentByMargin(marginPrefix = "|"))
+    private infix fun Assert<String>.matchesInExactOrder(textBlock: String) =
+        this.isEqualTo(textBlock.replaceIndentByMargin(marginPrefix = "|"))
 }

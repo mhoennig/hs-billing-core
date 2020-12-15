@@ -3,22 +3,47 @@ Performance + Efficiency
     e.g. by first generating a separate file for each customer from all billing item files
 
 File-Formats
-- decide if we want mandatory header lines in csv-files
 - what's customer.fullName? can we drop it?
-- do we need both "DE" as well es "Germany" for customer?
 - which field values do we need to validate? e.g. email?
-- check field names for "denglisch"
 - configurable number formats (#,## vs. #.## etc.)
 - output vat rate as 0,16 or 16,00?
 
 Architecture
-- refactor Billing, extracting the InvoiceGenerator to become just orchestrator
+- zur Zeit nix mehr :-)
 
 Code-Quality
 - increase mutationThreshold.set(85) to 95 for pitest
 - configure path coverage for jacoco
-- use proper domain language ("bill(ing)", "invoic(ing)" etc.)
 - consistent naming of interfaces vs. implementations
+- getting rid of the """...|"""?
+- cleanup VatCalculation (feature envy)
+
+Domain Language
+- check field names for "denglisch"
+- better name for VatBase?
+- "bill(ing)", "invoic(ing)" etc.
+- also check everything for proper domain language
 
 Domain Requirements
 - discount tariffs
+- RC/Non-RC hint conditions need to be accessible in Velocity templates
+
+    val accountBaseForTaxableForeignEuRevenuesReverseCharge: String
+        get() = "4336" // & RC-text (see below) in invoice Velocity-template
+    val accountBaseForTaxableForeignEuRevenues: String
+        get() = "4331" // &Non-RC-Text (see below) in invoice Velocity-template
+
+    val accountBaseForTaxableAbroadEuRevenuesReverseCharge: String
+        get() = "4338"
+
+    /**
+     * Depending on the conditions above, these hints need to be added to the
+     * Velocity-Template for invoices:
+     *
+     *  RC-text:
+     *  "Steuerschuldnerschaft des Leistungsempfängers, we apply to reverse charge ..."
+     *      der Text evtl. mit Bedingung ins Velocity-Template
+     *
+     *  Non-RC-text:
+     *  "Buchungsschlüssel 44, EU-Steuersatz, EU-Land"
+     */

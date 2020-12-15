@@ -8,8 +8,6 @@ plugins {
 }
 
 repositories {
-    // Use JCenter for resolving dependencies.
-    // jcenter()
     mavenCentral()
 }
 
@@ -55,6 +53,8 @@ dependencies {
     testImplementation "io.mockk:mockk:1.10.2"
     testImplementation 'com.tngtech.archunit:archunit-junit5:0.14.1'
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+
+    testImplementation 'org.pitest:pitest-junit5-plugin:0.12'
 
     // linting
     ktlint "com.pinterest:ktlint:0.40.0"

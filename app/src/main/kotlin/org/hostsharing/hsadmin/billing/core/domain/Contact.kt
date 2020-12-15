@@ -12,7 +12,6 @@ interface Contact : Formattable {
     val zipCode: String
     val city: String
     val country: String
-    val countryCode: String
     val email: String
 
     override fun format(indent: Int): String = """
@@ -26,7 +25,6 @@ interface Contact : Formattable {
         |zipCode=${zipCode.quoted}
         |city=${city.quoted}
         |country=${country.quoted}
-        |countryCode=${countryCode.quoted}
         |email=${email.quoted}
         """
 }
