@@ -14,7 +14,8 @@ class BillingIntegrationTest {
 
     val vatGroupsCsvFile by lazy {
         givenInputDir withFile "vat-groups.csv" containing """
-            |countryCode; id;    description;            placeOfSupply;  rate;       dc.account;  rc.account 
+            |countryCode; id;    description;            placeOfSupply;  rate;       dc.account;  rc.account
+            |
             |"DE";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "n/a"           
             |"DE";        "01";  "Rabatttarif";          "receiver";     "16,00";    "440001";    "n/a"           
             |"DE";        "02";  "Domain-Laufzeit";      "receiver";     "16,00";    "440002";    "n/a"
@@ -25,6 +26,7 @@ class BillingIntegrationTest {
             |"DE";        "07";  "SLA";                  "receiver";     "16,00";    "440007";    "n/a"
             |"DE";        "08";  "BBB";                  "receiver";     "16,00";    "440008";    "n/a"
             |"DE";        "09";  "Buch";                 "supplier";      "5,00";    "430009";    "n/a"
+            |
             |"AT";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "420000"           
             |"AT";        "01";  "Rabatttarif";          "receiver";     "21,00";    "433101";    "433601"           
             |"AT";        "02";  "Domain-Laufzeit";      "receiver";     "21,00";    "433102";    "433602"
@@ -35,6 +37,7 @@ class BillingIntegrationTest {
             |"AT";        "07";  "SLA";                  "receiver";     "21,00";    "433107";    "433607"
             |"AT";        "08";  "BBB";                  "receiver";     "21,00";    "433108";    "433608"
             |"AT";        "09";  "Buch";                 "supplier";     "domestic"; "433809";    "433609"
+            |
             |"CH";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";   "420000"           
             |"AT";        "01";  "Rabatttarif";          "receiver";     "n/i";      "n/i";      "433801"           
             |"AT";        "02";  "Domain-Laufzeit";      "receiver";     "n/i";      "n/i";      "433802"

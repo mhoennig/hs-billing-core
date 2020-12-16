@@ -382,6 +382,7 @@ private fun vatGroupDefAssignment(
     rcAccount: String
 ): Pair<String, VatGroupDef> =
     vatGroup.id to object : VatGroupDef {
+        override val countryCode = "n/a" // not needed in the test
         override val id = vatGroup.id
         override val description = vatGroup.description
         override val placeOfSupply = vatGroup.placeOfSupply

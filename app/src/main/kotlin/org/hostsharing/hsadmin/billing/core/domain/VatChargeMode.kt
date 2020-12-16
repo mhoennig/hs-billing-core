@@ -1,7 +1,6 @@
 package org.hostsharing.hsadmin.billing.core.domain
 
 import org.hostsharing.hsadmin.billing.core.lib.Configuration
-import org.hostsharing.hsadmin.billing.core.reader.VatResult
 
 enum class VatChargeMode(
     val code: String,

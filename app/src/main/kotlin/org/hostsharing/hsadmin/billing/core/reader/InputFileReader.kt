@@ -17,11 +17,14 @@ fun readCustomers(customersCSV: File): List<Customer> =
     }
 
 fun readVatGroups(vatGroupsDir: File): Map<CountryCode, Map<String, VatGroupDef>> =
-    inputFileReader("readVatGroups: ", vatGroupsDir) {
+    inputFileReader("readVatGroups", vatGroupsDir) {
         readAllWithHeaderAsSequence()
             .map { VatGroupDefParser.parse(it) }
-            .groupBy { it.countryCode to it }
-            .toMap()
+            .filterNotNull()
+            .groupBy(VatGroupDef::countryCode)
+            .mapValues { (_, v) ->
+                v.map { it.id to it }.toMap()
+            }
     }
 
 fun readBillingItems(billingItemsCSVs: Array<out File>): List<BillingItem> =

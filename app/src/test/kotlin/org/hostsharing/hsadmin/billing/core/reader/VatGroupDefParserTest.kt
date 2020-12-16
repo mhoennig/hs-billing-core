@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource
 internal class VatGroupDefParserTest {
 
     private val defaultRecordWithAllValidValues: Map<String, String?> = mapOf(
+        "countryCode" to "DE",
         "id" to "10",
         "description" to "Test-VAT-Group",
         "placeOfSupply" to "receiver",
@@ -27,8 +28,9 @@ internal class VatGroupDefParserTest {
 
         val actual = VatGroupDefParser.parse(givenRecord)
 
-        assertThat(actual.formatted()).isEqualTo(
+        assertThat(actual?.formatted()).isEqualTo(
             """
+            countryCode="DE"
             id="10"
             description="Test-VAT-Group"
             placeOfSupply=RECEIVER
@@ -47,7 +49,7 @@ internal class VatGroupDefParserTest {
         }
         val actual = VatGroupDefParser.parse(givenRecord)
 
-        assertThat(actual.placeOfSupply).isEqualTo(placeOfSupply)
+        assertThat(actual?.placeOfSupply).isEqualTo(placeOfSupply)
     }
 
     @Test

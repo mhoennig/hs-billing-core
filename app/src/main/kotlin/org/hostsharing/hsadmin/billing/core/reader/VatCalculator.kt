@@ -27,4 +27,3 @@ class VatCalculator(val config: Configuration) {
         }
 }
 
-class VatResult(val vatRate: VatRate, val vatAccount: String)

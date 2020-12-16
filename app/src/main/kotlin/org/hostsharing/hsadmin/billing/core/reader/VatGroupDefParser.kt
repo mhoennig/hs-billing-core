@@ -7,10 +7,13 @@ class VatGroupDefParser internal constructor(record: Map<String, String?>) :
     VatGroupDef, Parser("VAT group definition") {
 
     companion object {
-        fun parse(record: Map<String, String?>): VatGroupDef =
-            withDomainContext("parsing VAT group definition $record") { VatGroupDefParser(record) }
+        fun parse(record: Map<String, String?>): VatGroupDef? =
+            withDomainContext("parsing VAT group definition $record") {
+                if (!record.isEmptyLine()) VatGroupDefParser(record) else null
+            }
     }
 
+    override val countryCode = record.mandatoryCountryCode("countryCode")
     override val id = record.mandatoryString("id")
     override val description = record.mandatoryString("description")
     override val placeOfSupply = record.mandatoryPlaceOfSupply("placeOfSupply")
@@ -18,3 +21,6 @@ class VatGroupDefParser internal constructor(record: Map<String, String?>) :
     override val dcAccount = record.mandatoryString("dcAccount")
     override val rcAccount = record.mandatoryString("rcAccount")
 }
+
+private fun Map<String, String?>.isEmptyLine(): Boolean =
+    size > 1 || get(0).isNullOrBlank()
