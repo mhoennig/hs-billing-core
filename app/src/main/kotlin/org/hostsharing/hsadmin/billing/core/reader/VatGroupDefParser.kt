@@ -23,4 +23,4 @@ class VatGroupDefParser internal constructor(record: Map<String, String?>) :
 }
 
 private fun Map<String, String?>.isEmptyLine(): Boolean =
-    size > 1 || get(0).isNullOrBlank()
+    size < 1 || size == 1 && get(0).isNullOrBlank()
