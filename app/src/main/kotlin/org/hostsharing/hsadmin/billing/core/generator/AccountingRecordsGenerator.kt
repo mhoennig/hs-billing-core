@@ -16,12 +16,12 @@ class AccountingRecordsGenerator(val configuration: Configuration) {
         val outputFile = File(configuration.outputDirectory, OUTPUT_FILE_NAME)
 
         withDomainContext("outputFile: " + OUTPUT_FILE_NAME) {
-            val invoicePrinter = InvoiceWriter(
+            val invoiceWriter = InvoiceWriter(
                 configuration.templatesDirectory + "/" + TEMPLATE
             )
 
             FileWriter(outputFile).use { fileWriter ->
-                invoices.forEach { invoicePrinter.printInvoice(it, fileWriter) }
+                invoices.forEach { invoiceWriter.printInvoice(it, fileWriter) }
             }
         }
         return outputFile

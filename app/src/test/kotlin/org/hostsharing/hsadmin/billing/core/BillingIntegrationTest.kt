@@ -14,7 +14,7 @@ class BillingIntegrationTest {
 
     val vatGroupsCsvFile by lazy {
         givenInputDir withFile "vat-groups.csv" containing """
-            |countryCode; id;    description;            placeOfSupply;  rate;       dc.account;  rc.account
+            |countryCode; id;    description;            placeOfSupply;  vatRate;    dcAccount;   rcAccount
             |
             |"DE";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "n/a"
             |"DE";        "01";  "Rabatttarif";          "receiver";     "16,00";    "440001";    "n/a"
@@ -39,15 +39,15 @@ class BillingIntegrationTest {
             |"AT";        "09";  "Buch";                 "supplier";     "domestic"; "433809";    "433609"
             |
             |"CH";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "420000"
-            |"AT";        "01";  "Rabatttarif";          "receiver";     "n/i";      "n/i";       "433801"
-            |"AT";        "02";  "Domain-Laufzeit";      "receiver";     "n/i";      "n/i";       "433802"
-            |"AT";        "03";  "Package";              "receiver";     "n/i";      "n/i";       "433803"
-            |"AT";        "04";  "Traffic";              "receiver";     "n/i";      "n/i";       "433804"
-            |"AT";        "05";  "CPU";                  "receiver";     "n/i";      "n/i";       "433805"
-            |"AT";        "06";  "WoD";                  "supplier";     "n/i";      "n/i";       "433806"
-            |"AT";        "07";  "SLA";                  "receiver";     "n/i";      "n/i";       "433807"
-            |"AT";        "08";  "BBB";                  "receiver";     "n/i";      "n/i";       "433808"
-            |"AT";        "09";  "Buch";                 "supplier";     "n/i";      "n/i";       "433809"
+            |"CH";        "01";  "Rabatttarif";          "receiver";     "n/i";      "n/i";       "433801"
+            |"CH";        "02";  "Domain-Laufzeit";      "receiver";     "n/i";      "n/i";       "433802"
+            |"CH";        "03";  "Package";              "receiver";     "n/i";      "n/i";       "433803"
+            |"CH";        "04";  "Traffic";              "receiver";     "n/i";      "n/i";       "433804"
+            |"CH";        "05";  "CPU";                  "receiver";     "n/i";      "n/i";       "433805"
+            |"CH";        "06";  "WoD";                  "supplier";     "n/i";      "n/i";       "433806"
+            |"CH";        "07";  "SLA";                  "receiver";     "n/i";      "n/i";       "433807"
+            |"CH";        "08";  "BBB";                  "receiver";     "n/i";      "n/i";       "433808"
+            |"CH";        "09";  "Buch";                 "supplier";     "n/i";      "n/i";       "433809"
             |"""
     }
 
@@ -72,7 +72,7 @@ class BillingIntegrationTest {
             |"hsh00-xyz";    "bbbmeet";     "myxyz";   "1";       "08";   "4711"; "2020-11-01T10:25:00";  "2020-11-14T11:35:00"; "BBB Meet Konferenz";           "15.00"
             |"""
 
-        val actualAccountRecords = Billing(
+        val actualAccountRecordsCsv = Billing(
             configuration,
             periodEndDate = LocalDate.parse("2020-11-30"),
             billingDate = LocalDate.parse("2020-12-03"),
@@ -80,19 +80,19 @@ class BillingIntegrationTest {
             vatGroupsCSV = vatGroupsCsvFile,
             customersCSV = customersCsvFile,
             billingItemsCSVs = arrayOf(billingItemsCsvFile)
-        ).generateAccountingRecordsCsv().readText()
+        ).generateAccountingRecordsCsv()
 
-        assertThat(actualAccountRecords) matchesInExactOrder """
-            |customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"10,00";"11,60";"1,60";"440001"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"4,50";"5,22";"0,72";"440002"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"24,00";"27,84";"3,84";"440003"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"5,00";"5,80";"0,80";"440004"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"25,00";"29,00";"4,00";"440006"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"10,00";"11,60";"1,60";"440007"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"15,00";"17,40";"2,40";"440005"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"15,00";"17,40";"2,40";"440008"
+        assertThat(actualAccountRecordsCsv.readText()) matchesInExactOrder """
+            |customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount;vatCountryCode;vatChargeMode
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000";"DE";"DOMESTIC"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"10,00";"11,60";"1,60";"440001";"DE";"DOMESTIC"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"4,50";"5,22";"0,72";"440002";"DE";"DOMESTIC"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"24,00";"27,84";"3,84";"440003";"DE";"DOMESTIC"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"5,00";"5,80";"0,80";"440004";"DE";"DOMESTIC"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"25,00";"29,00";"4,00";"440006";"DE";"DOMESTIC"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"10,00";"11,60";"1,60";"440007";"DE";"DOMESTIC"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"15,00";"17,40";"2,40";"440005";"DE";"DOMESTIC"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"15,00";"17,40";"2,40";"440008";"DE";"DOMESTIC"
             |"""
     }
 
@@ -119,7 +119,7 @@ class BillingIntegrationTest {
             |"hsh00-xyz";    "xyz01";       "myxyz";   "1";       "03";   "2000"; "2020-11-14";           "2020-12-13";          "Web-Paket";                    "20.00"
             |"""
 
-        val actualAccountRecords = Billing(
+        val actualAccountRecordsCsv = Billing(
             configuration,
             periodEndDate = LocalDate.parse("2020-11-30"),
             billingDate = LocalDate.parse("2020-12-03"),
@@ -127,13 +127,13 @@ class BillingIntegrationTest {
             vatGroupsCSV = vatGroupsCsvFile,
             customersCSV = customersCsvFile,
             billingItemsCSVs = arrayOf(customerBillingItemsCsvFile, domainItemsCsvFile, packageBillingItemsCsvFile)
-        ).generateAccountingRecordsCsv().readText()
+        ).generateAccountingRecordsCsv()
 
-        assertThat(actualAccountRecords) matchesInExactOrder """
-            |customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"4,50";"5,22";"0,72";"440002"
-            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"20,00";"23,20";"3,20";"440003"
+        assertThat(actualAccountRecordsCsv.readText()) matchesInExactOrder """
+            |customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount;vatCountryCode;vatChargeMode
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000";"DE";"DOMESTIC"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"4,50";"5,22";"0,72";"440002";"DE";"DOMESTIC"
+            |"12345";"2020-2000-12345";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"20,00";"23,20";"3,20";"440003";"DE";"DOMESTIC"
             |"""
     }
 
@@ -171,20 +171,20 @@ class BillingIntegrationTest {
             vatGroupsCSV = vatGroupsCsvFile,
             customersCSV = customersCsvFile,
             billingItemsCSVs = arrayOf(billingItemsCsvFile)
-        ).generateAccountingRecordsCsv().readText()
+        ).generateAccountingRecordsCsv()
 
-        assertThat(actualAccountingRecordsCsv) matchesInExactOrder """
-            |customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount
-            |"10001";"2020-2000-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
-            |"10001";"2020-2000-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"20,00";"23,20";"3,20";"440003"
-            |"10001";"2020-2001-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
-            |"10001";"2020-2001-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"20,00";"23,20";"3,20";"440003"
-            |"10002";"2020-2002-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
-            |"10002";"2020-2002-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"20,00";"20,00";"0,00";"433603"
-            |"10002";"2020-2003-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
-            |"10002";"2020-2003-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"21,00";"20,00";"24,20";"4,20";"433103"
-            |"10003";"2020-2004-10003";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000"
-            |"10003";"2020-2004-10003";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"20,00";"20,00";"0,00";"433803"
+        assertThat(actualAccountingRecordsCsv.readText()) matchesInExactOrder """
+            |customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount;vatCountryCode;vatChargeMode
+            |"10001";"2020-2000-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000";"DE";"DOMESTIC"
+            |"10001";"2020-2000-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"20,00";"23,20";"3,20";"440003";"DE";"DOMESTIC"
+            |"10001";"2020-2001-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000";"DE";"DOMESTIC"
+            |"10001";"2020-2001-10001";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"16,00";"20,00";"23,20";"3,20";"440003";"DE";"DOMESTIC"
+            |"10002";"2020-2002-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000";"AT";"EU_REVERSE"
+            |"10002";"2020-2002-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"20,00";"20,00";"0,00";"433603";"AT";"EU_REVERSE"
+            |"10002";"2020-2003-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000";"AT";"EU_DIRECT"
+            |"10002";"2020-2003-10002";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"21,00";"20,00";"24,20";"4,20";"433103";"AT";"EU_DIRECT"
+            |"10003";"2020-2004-10003";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"10,00";"10,00";"0,00";"420000";"CH";"NON_EU_REVERSE"
+            |"10003";"2020-2004-10003";"03.12.2020";"30.11.2020";"11/2020";"02.01.2021";"true";"0,00";"20,00";"20,00";"0,00";"433803";"CH";"NON_EU_REVERSE"
             |"""
     }
 
@@ -205,7 +205,7 @@ class BillingIntegrationTest {
                 vatGroupsCSV = vatGroupsCsvFile,
                 customersCSV = customersCsvFile,
                 billingItemsCSVs = emptyArray()
-            ).generateAccountingRecordsCsv().readText()
+            ).generateAccountingRecordsCsv()
         }
 
         assertThat(actualException.message).isEqualTo(

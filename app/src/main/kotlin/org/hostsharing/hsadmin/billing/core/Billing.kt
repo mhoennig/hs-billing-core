@@ -20,15 +20,15 @@ class Billing(
     val customersCSV: File,
     vararg val billingItemsCSVs: File,
 ) {
-    val customers: List<Customer> = readCustomers(customersCSV)
+    private val customers: List<Customer> = readCustomers(customersCSV)
 
-    val invoices: List<Invoice> by lazy {
+    private val invoices: List<Invoice> by lazy {
         InvoiceGenerator(
             configuration = configuration,
             periodEndDate = periodEndDate,
             billingDate = billingDate,
             startInvoiceNumber = startInvoiceNumber,
-            vatGroupDefs = readVatGroups(vatGroupsCSV),
+            vatGroupDefs = readVatGroups(vatGroupsCSV).resolveReferences(),
             customers = customers,
             billingItems = readBillingItems(billingItemsCSVs)
         ).generateInvoices()
@@ -40,6 +40,17 @@ class Billing(
 
     fun generateAccountingRecordsCsv(): File =
         AccountingRecordsGenerator(configuration).generate(invoices)
+
+    private fun Map<CountryCode, Map<VatGroupId, VatGroupDef>>.resolveReferences(): Map<CountryCode, Map<VatGroupId, VatGroupDef>> =
+        map { countryEntry ->
+            countryEntry.key to countryEntry.value.mapValues {
+                if (it.value.vatRate.domestic)
+                    // TODO: get rid of !!, eg by wrapping in a class and lookup through a method
+                    it.value.copy(vatRate=this[configuration.domesticCountryCode]!!.get(it.value.id)!!.vatRate)
+                else
+                    it.value
+            }
+        }.toMap()
 }
 
 private class FileBasedConfiguration(val configFile: File) : Configuration {

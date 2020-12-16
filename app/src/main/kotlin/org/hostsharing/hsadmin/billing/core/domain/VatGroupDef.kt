@@ -1,18 +1,19 @@
 package org.hostsharing.hsadmin.billing.core.domain
 
-interface VatGroupDef : Formattable {
+data class VatGroupDef(
+
+val countryCode: CountryCode,
+val id: VatGroupId,
+val description: String,
+val placeOfSupply: PlaceOfSupply,
+val vatRate: VatRate,
+val dcAccount: Account,
+val rcAccount: Account
+) : Formattable {
 
     companion object {
         val FALLBACK_VAT_COUNTRY_CODE = "*"
     }
-
-    val countryCode: CountryCode
-    val id: VatGroupId
-    val description: String
-    val placeOfSupply: PlaceOfSupply
-    val vatRate: VatRate
-    val dcAccount: Account
-    val rcAccount: Account
 
     override fun format(indent: Int): String = """
         |countryCode=${countryCode.quoted}

@@ -16,41 +16,52 @@ interface VatGroup {
     val items: List<InvoiceItem>
 }
 
-class VatRate(rate: String) {
+private object VatPercentageFormat {
+    val decimalFormat = DecimalFormat(
+        "#0.0#",
+        DecimalFormatSymbols().apply {
+            setGroupingSeparator('.')
+            setDecimalSeparator(',')
+        }
+    ).apply {
+        isParseBigDecimal = true
+    }
+}
 
+class VatRate(val rate: String) {
     companion object {
         val NO_TAX: VatRate = VatRate("noTax")
+        val DOMESTIC: VatRate = VatRate("domestic")
         val NOT_APPLICABLE: VatRate = VatRate("n/a")
         val NOT_IMPLEMENTED: VatRate = VatRate("n/i")
         val CENT: BigDecimal = BigDecimal(100).apply {
             setScale(2, RoundingMode.HALF_UP)
         }
-        val decimalFormat = DecimalFormat(
-            "#0.0#",
-            DecimalFormatSymbols().apply {
-                setGroupingSeparator('.')
-                setDecimalSeparator(',')
-            }
-        ).apply {
-            setParseBigDecimal(true)
-        }
     }
 
     val noTax: Boolean = rate == "noTax"
+    val domestic: Boolean = rate == "domestic"
     val notApplicable: Boolean = rate == "n/a"
     val notImplemented: Boolean = rate == "n/i"
-    val unknown: Boolean = notApplicable || notImplemented
-    val percentage: BigDecimal? =
-        when (true) {
+    val unknown: Boolean = notApplicable || notImplemented || domestic
+    val percentage: BigDecimal
+        get() = when (true) {
             noTax -> BigDecimal.ZERO
-            notApplicable -> null
-            notImplemented -> null
-            else -> decimalFormat.parse(rate) as BigDecimal / CENT
+            domestic -> error("unresolved 'domestic' vat rate reference")
+            notApplicable -> error("vat rate not applicable")
+            notImplemented -> error("vat rate not implemented")
+            else -> VatPercentageFormat.decimalFormat.parse(rate) as BigDecimal / CENT
         }
+
+    init {
+        // force to detect invalid numeric format within constructor
+        if (!unknown) percentage
+    }
 
     override fun toString(): String =
         when (true) {
             noTax -> "noTax"
+            domestic -> "domestic"
             notApplicable -> "n/a"
             notImplemented -> "n/i"
             else -> percentage.toString()
@@ -59,12 +70,9 @@ class VatRate(rate: String) {
     override fun equals(other: Any?): Boolean =
         other is VatRate &&
             noTax == other.noTax &&
+            domestic == other.domestic &&
             notApplicable == other.notApplicable &&
             notImplemented == other.notImplemented &&
-            (
-                if (percentage == null)
-                    percentage == other.percentage
-                else
-                    percentage.compareTo(other.percentage) == 0
-                )
+            (unknown == other.unknown ||
+                percentage.compareTo(other.percentage) == 0)
 }

@@ -3,24 +3,25 @@ package org.hostsharing.hsadmin.billing.core.reader
 import org.hostsharing.hsadmin.billing.core.domain.VatGroupDef
 import org.hostsharing.hsadmin.billing.core.lib.withDomainContext
 
-class VatGroupDefParser internal constructor(record: Map<String, String?>) :
-    VatGroupDef, Parser("VAT group definition") {
+class VatGroupDefParser internal constructor(val record: Map<String, String?>) :
+    Parser("VAT group definition") {
 
     companion object {
-        fun parse(record: Map<String, String?>): VatGroupDef? =
-            withDomainContext("parsing VAT group definition $record") {
-                if (!record.isEmptyLine()) VatGroupDefParser(record) else null
-            }
+        fun parse(record: Map<String, String?>): VatGroupDef =
+            VatGroupDefParser(record).parse()
     }
 
-    override val countryCode = record.mandatoryCountryCode("countryCode")
-    override val id = record.mandatoryString("id")
-    override val description = record.mandatoryString("description")
-    override val placeOfSupply = record.mandatoryPlaceOfSupply("placeOfSupply")
-    override val vatRate = record.mandatorVatRate("vatRate")
-    override val dcAccount = record.mandatoryString("dcAccount")
-    override val rcAccount = record.mandatoryString("rcAccount")
+    private fun parse(): VatGroupDef =
+        withDomainContext("parsing VAT group definition $record") {
+            VatGroupDef(
+                countryCode = record.mandatoryCountryCode("countryCode"),
+                id = record.mandatoryString("id"),
+                description = record.mandatoryString("description"),
+                placeOfSupply = record.mandatoryPlaceOfSupply("placeOfSupply"),
+                vatRate = record.mandatorVatRate("vatRate"),
+                dcAccount = record.mandatoryString("dcAccount"),
+                rcAccount = record.mandatoryString("rcAccount"),
+            )
+        }
 }
 
-private fun Map<String, String?>.isEmptyLine(): Boolean =
-    size < 1 || size == 1 && get(0).isNullOrBlank()

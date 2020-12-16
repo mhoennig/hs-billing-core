@@ -26,25 +26,25 @@ internal class VatCalculatorTest {
     /* ktlint-disable */// @formatter:off
     val vatCountryGroupDefsGlobals = mapOf(
         "DE" to mapOf(
-            vatGroupDefAssignment(ID00_MEMBERSHIP,  VatRate.NO_TAX,         dcAccount = "420000", rcAccount = "n/a"),
-            vatGroupDefAssignment(ID10_HOSTING,     VatRate("16,00"),  dcAccount = "440010", rcAccount = "n/a"),
-            vatGroupDefAssignment(ID20_WEBMASTER,   VatRate("16,00"),  dcAccount = "440020", rcAccount = "n/a"),
-            vatGroupDefAssignment(ID30_BOOK,        VatRate( "5,00"),  dcAccount = "430030", rcAccount = "n/a"),
-            vatGroupDefAssignment(ID40_TSHIRT,      VatRate("16,00"),  dcAccount = "440040", rcAccount = "n/a"),
+            vatGroupDefAssignment(ID00_MEMBERSHIP, VatRate.NO_TAX, dcAccount = "420000", rcAccount = "n/a"),
+            vatGroupDefAssignment(ID10_HOSTING, VatRate("16,00"), dcAccount = "440010", rcAccount = "n/a"),
+            vatGroupDefAssignment(ID20_WEBMASTER, VatRate("16,00"), dcAccount = "440020", rcAccount = "n/a"),
+            vatGroupDefAssignment(ID30_BOOK, VatRate("5,00"), dcAccount = "430030", rcAccount = "n/a"),
+            vatGroupDefAssignment(ID40_TSHIRT, VatRate("16,00"), dcAccount = "440040", rcAccount = "n/a"),
         ),
         "AT" to mapOf(
-            vatGroupDefAssignment(ID00_MEMBERSHIP,  VatRate.NO_TAX,         dcAccount = "420000", rcAccount = "420000"),
-            vatGroupDefAssignment(ID10_HOSTING,     VatRate("21,00"),  dcAccount = "433110", rcAccount = "433610"),
-            vatGroupDefAssignment(ID20_WEBMASTER,   VatRate("21,00"),  dcAccount = "433120", rcAccount = "433620"),
-            vatGroupDefAssignment(ID30_BOOK,        VatRate( "9,00"),  dcAccount = "433130", rcAccount = "433630"),
-            vatGroupDefAssignment(ID40_TSHIRT,      VatRate("16,00"),  dcAccount = "430040", rcAccount = "433640"),
+            vatGroupDefAssignment(ID00_MEMBERSHIP, VatRate.NO_TAX, dcAccount = "420000", rcAccount = "420000"),
+            vatGroupDefAssignment(ID10_HOSTING, VatRate("21,00"), dcAccount = "433110", rcAccount = "433610"),
+            vatGroupDefAssignment(ID20_WEBMASTER, VatRate("21,00"), dcAccount = "433120", rcAccount = "433620"),
+            vatGroupDefAssignment(ID30_BOOK, VatRate("9,00"), dcAccount = "433130", rcAccount = "433630"),
+            vatGroupDefAssignment(ID40_TSHIRT, VatRate("16,00"), dcAccount = "430040", rcAccount = "433640"),
         ),
         "CH" to mapOf(
-            vatGroupDefAssignment(ID00_MEMBERSHIP,  VatRate.NO_TAX,         dcAccount = "420000", rcAccount = "n/a"),
-            vatGroupDefAssignment(ID10_HOSTING,     VatRate.NOT_IMPLEMENTED,dcAccount = "n/i",    rcAccount = "433810"),
-            vatGroupDefAssignment(ID20_WEBMASTER,   VatRate.NOT_IMPLEMENTED,dcAccount = "n/i",    rcAccount = "433820"),
-            vatGroupDefAssignment(ID30_BOOK,        VatRate.NOT_IMPLEMENTED,dcAccount = "n/i",    rcAccount = "433830"),
-            vatGroupDefAssignment(ID40_TSHIRT,      VatRate.NOT_IMPLEMENTED,dcAccount = "n/i",    rcAccount = "433840"),
+            vatGroupDefAssignment(ID00_MEMBERSHIP, VatRate.NO_TAX, dcAccount = "420000", rcAccount = "n/a"),
+            vatGroupDefAssignment(ID10_HOSTING, VatRate.NOT_IMPLEMENTED, dcAccount = "n/i", rcAccount = "433810"),
+            vatGroupDefAssignment(ID20_WEBMASTER, VatRate.NOT_IMPLEMENTED, dcAccount = "n/i", rcAccount = "433820"),
+            vatGroupDefAssignment(ID30_BOOK, VatRate.NOT_IMPLEMENTED, dcAccount = "n/i", rcAccount = "433830"),
+            vatGroupDefAssignment(ID40_TSHIRT, VatRate.NOT_IMPLEMENTED, dcAccount = "n/i", rcAccount = "433840"),
         )
     )
     /* ktlint-enable */ // @formatter:on
@@ -307,8 +307,7 @@ internal class VatCalculatorTest {
         assertThat(
             givenVatGroupDefAssignment.second,
             "[PRECONDITION] given definition from the test does not match corresponding global definition"
-        )
-            .isEqualToIgnoringGivenProperties(defaultVatGroupDef)
+        ).isEqualToIgnoringGivenProperties(defaultVatGroupDef)
 
         // use just the definition necessary for the particular test
         return mapOf(
@@ -381,12 +380,12 @@ private fun vatGroupDefAssignment(
     dcAccount: String,
     rcAccount: String
 ): Pair<String, VatGroupDef> =
-    vatGroup.id to object : VatGroupDef {
-        override val countryCode = "n/a" // not needed in the test
-        override val id = vatGroup.id
-        override val description = vatGroup.description
-        override val placeOfSupply = vatGroup.placeOfSupply
-        override val vatRate = vatRate
-        override val dcAccount = dcAccount
-        override val rcAccount = rcAccount
-    }
+    vatGroup.id to VatGroupDef(
+        countryCode = "n/a", // not needed in the test
+        id = vatGroup.id,
+        description = vatGroup.description,
+        placeOfSupply = vatGroup.placeOfSupply,
+        vatRate = vatRate,
+        dcAccount = dcAccount,
+        rcAccount = rcAccount
+    )

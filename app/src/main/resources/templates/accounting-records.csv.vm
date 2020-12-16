@@ -1,6 +1,6 @@
 #if ($chunk == 0)
-customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount
+customerNumber;documentNumber;documentDate;referenceDate;referencePeriod;dueDate;directDebiting;vatRate;netAmount;grossAmount;vatAmount;vatAccount;vatCountryCode;vatChargeMode
 #end
 #foreach ($vatGroup in $vatGroups)
-"$!customer.number";"$!invoice.documentNumber";"$!invoice.documentDateFormatted";"$!invoice.referenceDateFormatted";"$!invoice.referencePeriodFormatted";"$!invoice.dueDateFormatted";"$!invoice.directDebiting";"$!vatGroup.vatRateFormatted";"$!vatGroup.netAmountFormatted";"$!vatGroup.grossAmountFormatted";"$!vatGroup.vatAmountFormatted";"$!vatGroup.vatAccount";"$!customer.vatCountryCode";"$!customer.vatChargeMode"
+"$!customer.number";"$!invoice.documentNumber";"$!invoice.documentDateFormatted";"$!invoice.referenceDateFormatted";"$!invoice.referencePeriodFormatted";"$!invoice.dueDateFormatted";"$!invoice.directDebiting";"$!vatGroup.vatRateFormatted";"$!vatGroup.netAmountFormatted";"$!vatGroup.grossAmountFormatted";"$!vatGroup.vatAmountFormatted";"$!vatGroup.vatAccount";"$!customer.vatBase.vatCountryCode";"$!customer.vatBase.vatChargeMode"
 #end
