@@ -5,13 +5,13 @@ interface Sepa : Formattable {
     val bankCustomer: String?
     val bankIBAN: String?
     val bankBIC: String?
-    val mandatRef: String?
+    val mandateRef: String?
 
     override fun format(indent: Int): String = """
         |directDebiting=${directDebiting.quoted}
         |bankCustomer=${bankCustomer.quoted}
         |bankIBAN=${bankIBAN.quoted}
         |bankBIC=${bankBIC.quoted}
-        |mandatRef=${mandatRef.quoted}
+        |mandateRef=${mandateRef.quoted}
         """
 }

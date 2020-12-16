@@ -15,7 +15,7 @@ internal class SepaParserTest {
             "bankCustomer" to "Tästmann GmbH",
             "bankIBAN" to "DE987654321",
             "bankBIC" to "GENODEF1HH2",
-            "mandatRef" to "HS-10001-20140801",
+            "mandateRef" to "HS-10001-20140801",
         )
 
         val actual = SepaParser.parse(givenRecord)
@@ -26,7 +26,7 @@ internal class SepaParserTest {
             bankCustomer="Tästmann GmbH"
             bankIBAN="DE987654321"
             bankBIC="GENODEF1HH2"
-            mandatRef="HS-10001-20140801"
+            mandateRef="HS-10001-20140801"
             """.trimIndent()
         )
     }
@@ -38,7 +38,7 @@ internal class SepaParserTest {
             "bankCustomer" to null,
             "bankIBAN" to null,
             "bankBIC" to null,
-            "mandatRef" to null,
+            "mandateRef" to null,
         )
 
         val actual = SepaParser.parse(givenRecord)
@@ -49,7 +49,7 @@ internal class SepaParserTest {
             bankCustomer=null
             bankIBAN=null
             bankBIC=null
-            mandatRef=null
+            mandateRef=null
             """.trimIndent()
         )
     }
@@ -61,7 +61,7 @@ internal class SepaParserTest {
             "bankCustomer" to "Tästmann GmbH",
             "bankIBAN" to "DE987654321",
             "bankBIC" to "GENODEF1HH2",
-            "mandatRef" to "HS-10001-20140801",
+            "mandateRef" to "HS-10001-20140801",
         )
 
         val actualException = assertThrows<DomainException> {
@@ -71,7 +71,7 @@ internal class SepaParserTest {
         assertThat(actualException.message).isEqualTo(
             """
             SEPA data without directDebiting
-            - in parsing SEPA data {directDebiting=null, bankCustomer=Tästmann GmbH, bankIBAN=DE987654321, bankBIC=GENODEF1HH2, mandatRef=HS-10001-20140801}
+            - in parsing SEPA data {directDebiting=null, bankCustomer=Tästmann GmbH, bankIBAN=DE987654321, bankBIC=GENODEF1HH2, mandateRef=HS-10001-20140801}
             """.trimIndent()
         )
     }

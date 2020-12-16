@@ -12,42 +12,42 @@ import java.time.LocalDate
 
 class BillingIntegrationTest {
 
-    val vatGroupsCsvFile by lazy {
+    private val vatGroupsCsvFile by lazy {
         givenInputDir withFile "vat-groups.csv" containing """
             |countryCode; id;    description;            placeOfSupply;  vatRate;    dcAccount;   rcAccount
             |
-            |"DE";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "n/a"
-            |"DE";        "01";  "Rabatttarif";          "receiver";     "16,00";    "440001";    "n/a"
-            |"DE";        "02";  "Domain-Laufzeit";      "receiver";     "16,00";    "440002";    "n/a"
-            |"DE";        "03";  "Package";              "receiver";     "16,00";    "440003";    "n/a"
+            |"DE";        "00";  "Membership Fee";       "n/a";          "noTax";    "420000";    "n/a"
+            |"DE";        "01";  "Discount Tariff";      "receiver";     "16,00";    "440001";    "n/a"
+            |"DE";        "02";  "Domain Fee";           "receiver";     "16,00";    "440002";    "n/a"
+            |"DE";        "03";  "Hosting Plan";         "receiver";     "16,00";    "440003";    "n/a"
             |"DE";        "04";  "Traffic";              "receiver";     "16,00";    "440004";    "n/a"
             |"DE";        "05";  "CPU";                  "receiver";     "16,00";    "440005";    "n/a"
             |"DE";        "06";  "WoD";                  "supplier";     "16,00";    "440006";    "n/a"
             |"DE";        "07";  "SLA";                  "receiver";     "16,00";    "440007";    "n/a"
             |"DE";        "08";  "BBB";                  "receiver";     "16,00";    "440008";    "n/a"
-            |"DE";        "09";  "Buch";                 "supplier";      "5,00";    "430009";    "n/a"
+            |"DE";        "09";  "Literature";           "supplier";      "5,00";    "430009";    "n/a"
             |
-            |"AT";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "420000"
-            |"AT";        "01";  "Rabatttarif";          "receiver";     "21,00";    "433101";    "433601"
-            |"AT";        "02";  "Domain-Laufzeit";      "receiver";     "21,00";    "433102";    "433602"
-            |"AT";        "03";  "Package";              "receiver";     "21,00";    "433103";    "433603"
+            |"AT";        "00";  "Membership Fee";       "n/a";          "noTax";    "420000";    "420000"
+            |"AT";        "01";  "Discount Tariff";      "receiver";     "21,00";    "433101";    "433601"
+            |"AT";        "02";  "Domain Fee";           "receiver";     "21,00";    "433102";    "433602"
+            |"AT";        "03";  "Hosting Plan";         "receiver";     "21,00";    "433103";    "433603"
             |"AT";        "04";  "Traffic";              "receiver";     "21,00";    "433104";    "433604"
             |"AT";        "05";  "CPU";                  "receiver";     "21,00";    "433105";    "433605"
             |"AT";        "06";  "WoD";                  "supplier";     "domestic"; "433806";    "433606"
             |"AT";        "07";  "SLA";                  "receiver";     "21,00";    "433107";    "433607"
             |"AT";        "08";  "BBB";                  "receiver";     "21,00";    "433108";    "433608"
-            |"AT";        "09";  "Buch";                 "supplier";     "domestic"; "433809";    "433609"
+            |"AT";        "09";  "Literature";            "supplier";     "domestic"; "433809";    "433609"
             |
-            |"CH";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "420000"
-            |"CH";        "01";  "Rabatttarif";          "receiver";     "n/i";      "n/i";       "433801"
-            |"CH";        "02";  "Domain-Laufzeit";      "receiver";     "n/i";      "n/i";       "433802"
-            |"CH";        "03";  "Package";              "receiver";     "n/i";      "n/i";       "433803"
+            |"CH";        "00";  "Membership Fee";       "n/a";          "noTax";    "420000";    "420000"
+            |"CH";        "01";  "Discount Tariff";      "receiver";     "n/i";      "n/i";       "433801"
+            |"CH";        "02";  "Domain Fee";           "receiver";     "n/i";      "n/i";       "433802"
+            |"CH";        "03";  "Hosting Plan";         "receiver";     "n/i";      "n/i";       "433803"
             |"CH";        "04";  "Traffic";              "receiver";     "n/i";      "n/i";       "433804"
             |"CH";        "05";  "CPU";                  "receiver";     "n/i";      "n/i";       "433805"
             |"CH";        "06";  "WoD";                  "supplier";     "n/i";      "n/i";       "433806"
             |"CH";        "07";  "SLA";                  "receiver";     "n/i";      "n/i";       "433807"
             |"CH";        "08";  "BBB";                  "receiver";     "n/i";      "n/i";       "433808"
-            |"CH";        "09";  "Buch";                 "supplier";     "n/i";      "n/i";       "433809"
+            |"CH";        "09";  "Literature";           "supplier";     "n/i";      "n/i";       "433809"
             |"""
     }
 
@@ -55,17 +55,17 @@ class BillingIntegrationTest {
     fun `will generate accounting-records-csv`() {
 
         val customersCsvFile = givenInputDir withFile "customers.csv" containing """
-            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;vatCountryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeMode
+            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;vatCountryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandateRef;vatChargeMode
             |"12345";"hsh00-xyz";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";"DE";"taesti@taestmann.de";"DE987654321";"true";"Testmann GmbH";"DE81201900030012345678";"GENODEF1HH2";"HS-10003-20140801";"domestic"
             |"""
 
         val billingItemsCsvFile = givenInputDir withFile "billing-items.csv" containing """
             |customerCode;   product?;      project; count; vatGroupId; articleId; fromTimestamp;          untilTimestamp;        description;                  netAmount
-            |"hsh00-xyz";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Mitgliedsbeitrag";             "10.00"
+            |"hsh00-xyz";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Membership Fee";             "10.00"
             |"hsh00-xyz";    "";            ;          "1";       "01";    "110"; "2020-11-14";           "2020-11-14";          "Domain-Rabatt";                "10.00"
             |"hsh00-xyz";    "testmann.xy"; "myxyz";   "1";       "02";    "210"; "2020-11-01";           "2020-11-14";          "Laufzeit bis 01.10.21";         "4.50"
             |"hsh00-xyz";    "xyz01";       "myxyz";   "1";       "03";   "2000"; "2020-11-14";           "2020-12-13";          "Web-Paket";                    "24.00"
-            |"hsh00-xyz";    "xyz01";       "myxyz";   "1";       "04";   "3000"; "2020-11-14";           "2020-11-14";          "250 GB Datentransfervolumen";   "5.00"
+            |"hsh00-xyz";    "xyz01";       "myxyz";   "1";       "04";   "3000"; "2020-11-14";           "2020-11-14";          "250 GB Traffic";                "5.00"
             |"hsh00-xyz";    "xyz01";       "myxyz";  "12";       "06";   "0500"; "2020-11-14";           ;                      "15 Min. WoD-Normal: ...";      "25.00"
             |"hsh00-xyz";    "xyz01";       "myxyz";   "1";       "07";   "3100"; "2020-11-14";           "2020-11-14";          "HS Basic Support";             "10.00"
             |"hsh00-xyz";    "xyz01";       "myxyz";   "4";       "05";   "3000"; "2020-11-01";           "2020-11-14";          "Prozessor-Thread";             "15.00"
@@ -73,7 +73,7 @@ class BillingIntegrationTest {
             |"""
 
         val actualAccountRecordsCsv = Billing(
-            configuration,
+            CONFIGURATION,
             periodEndDate = LocalDate.parse("2020-11-30"),
             billingDate = LocalDate.parse("2020-12-03"),
             startInvoiceNumber = 2000,
@@ -100,13 +100,13 @@ class BillingIntegrationTest {
     fun `will consider multiple billing-item-files`() {
 
         val customersCsvFile = givenInputDir withFile "customers.csv" containing """
-            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;vatCountryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeMode
+            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;vatCountryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandateRef;vatChargeMode
             |"12345";"hsh00-xyz";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";"DE";"taesti@taestmann.de";"DE987654321";"true";"Testmann GmbH";"DE81201900030012345678";"GENODEF1HH2";"HS-10003-20140801";"domestic"
             |"""
 
         val customerBillingItemsCsvFile = givenInputDir withFile "customer-billing-items.csv" containing """
             |customerCode;   product?;      project; count; vatGroupId; articleId; fromTimestamp;          untilTimestamp;        description;                  netAmount
-            |"hsh00-xyz";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Mitgliedsbeitrag";             "10.00"
+            |"hsh00-xyz";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Membership Fee";             "10.00"
             |"""
 
         val domainItemsCsvFile = givenInputDir withFile "domain-billing-items.csv" containing """
@@ -120,7 +120,7 @@ class BillingIntegrationTest {
             |"""
 
         val actualAccountRecordsCsv = Billing(
-            configuration,
+            CONFIGURATION,
             periodEndDate = LocalDate.parse("2020-11-30"),
             billingDate = LocalDate.parse("2020-12-03"),
             startInvoiceNumber = 2000,
@@ -141,7 +141,7 @@ class BillingIntegrationTest {
     fun `will choose VAT-accounts based on vatChargeMode`() {
 
         val customersCsvFile = givenInputDir withFile "customers.csv" containing """
-            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;vatCountryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandatRef;vatChargeMode
+            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;vatCountryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandateRef;vatChargeMode
             |"10001";"hsh00-dee";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";    "DE";"taesti@taestmann.de";"DE987654321";"true";"Tästmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10001-20140801";"domestic"
             |"10001";"hsh00-dep";               ;"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";    "DE";"taesti@taestmann.de";             ;"true";"Tästi Tästmann";"DE81201900030012345678";"GENODEF1HH2";"HS-10001-20140801";"domestic"
             |"10002";"hsh00-ate";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"10010";"Wien";   "Austria";    "AT";"taesti@taestmann.de";"AT123456789";"true";"Testmann GmbH"; "DE81201900030012345678";"GENODEF1HH2";"HS-10002-20140801";"EU-reverse"
@@ -151,20 +151,20 @@ class BillingIntegrationTest {
 
         val billingItemsCsvFile = givenInputDir withFile "customer-billing-items.csv" containing """
             |customerCode;   product?;      project; count; vatGroupId; articleId; fromTimestamp;          untilTimestamp;        description;                  netAmount
-            |"hsh00-dee";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Mitgliedsbeitrag";            "10.00"
+            |"hsh00-dee";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Membership Fee";            "10.00"
             |"hsh00-dee";    "";            ;          "1";       "03";     "10"; "2020-11-14";           "2020-11-14";          "Web-Paket";                   "20.00"
-            |"hsh00-dep";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Mitgliedsbeitrag";            "10.00"
+            |"hsh00-dep";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Membership Fee";            "10.00"
             |"hsh00-dep";    "";            ;          "1";       "03";     "10"; "2020-11-14";           "2020-11-14";          "Web-Paket";                   "20.00"
-            |"hsh00-ate";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Mitgliedsbeitrag";            "10.00"
+            |"hsh00-ate";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Membership Fee";            "10.00"
             |"hsh00-ate";    "";            ;          "1";       "03";     "10"; "2020-11-14";           "2020-11-14";          "Web-Paket";                   "20.00"
-            |"hsh00-atp";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Mitgliedsbeitrag";            "10.00"
+            |"hsh00-atp";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Membership Fee";            "10.00"
             |"hsh00-atp";    "";            ;          "1";       "03";     "10"; "2020-11-14";           "2020-11-14";          "Web-Paket";                   "20.00"
-            |"hsh00-che";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Mitgliedsbeitrag";            "10.00"
+            |"hsh00-che";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Membership Fee";            "10.00"
             |"hsh00-che";    "";            ;          "1";       "03";     "10"; "2020-11-14";           "2020-11-14";          "Web-Paket";                   "20.00"
             |"""
 
         val actualAccountingRecordsCsv = Billing(
-            configuration,
+            CONFIGURATION,
             periodEndDate = LocalDate.parse("2020-11-30"),
             billingDate = LocalDate.parse("2020-12-03"),
             startInvoiceNumber = 2000,
@@ -198,7 +198,7 @@ class BillingIntegrationTest {
 
         val actualException = assertThrows<DomainException> {
             Billing(
-                configuration,
+                CONFIGURATION,
                 periodEndDate = LocalDate.parse("2020-11-30"),
                 billingDate = LocalDate.parse("2020-12-03"),
                 startInvoiceNumber = 2000,
@@ -220,9 +220,9 @@ class BillingIntegrationTest {
 
     // --- fixture ----------------------------------------------------------
 
-    val givenInputDir = createTempDir(prefix = "hs-billing-test-input")
+    private val givenInputDir = createTempDir(prefix = "hs-billing-test-input")
 
-    object configuration : Configuration {
+    object CONFIGURATION : Configuration {
         override val templatesDirectory = "/src/main/resources/templates"
         override val outputDirectory = createTempDir(prefix = "hs-billing-test-output").apply {
             mkdirs()
@@ -232,7 +232,7 @@ class BillingIntegrationTest {
     private infix fun File.withFile(name: String): File =
         File(givenInputDir, name)
 
-    val semicolonWithSpaces = Regex("; *")
+    private val semicolonWithSpaces = Regex("; *")
 
     private infix fun File.containing(content: String): File {
         this.writeText(content.replaceIndentByMargin(marginPrefix = "|").replace(semicolonWithSpaces, ";"))

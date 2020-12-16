@@ -15,5 +15,5 @@ class SepaParser internal constructor(record: Map<String, String?>) :
     override val bankCustomer = record.optionalString("bankCustomer")
     override val bankIBAN = record.optionalString("bankIBAN")
     override val bankBIC = record.optionalString("bankBIC")
-    override val mandatRef = record.optionalString("mandatRef")
+    override val mandateRef = record.optionalString("mandateRef")
 }

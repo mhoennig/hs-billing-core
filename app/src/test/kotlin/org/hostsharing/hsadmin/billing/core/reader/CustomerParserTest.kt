@@ -28,7 +28,7 @@ internal class CustomerParserTest {
         "bankCustomer" to "Tästmann GmbH",
         "bankIBAN" to "DE987654321",
         "bankBIC" to "GENODEF1HH2",
-        "mandatRef" to "HS-10001-20140801",
+        "mandateRef" to "HS-10001-20140801",
         "vatCountryCode" to "DE",
         "vatChargeMode" to "domestic",
     )
@@ -61,7 +61,7 @@ internal class CustomerParserTest {
                 bankCustomer="Tästmann GmbH"
                 bankIBAN="DE987654321"
                 bankBIC="GENODEF1HH2"
-                mandatRef="HS-10001-20140801"
+                mandateRef="HS-10001-20140801"
             }
             vatBase={
                 vatCountryCode="DE"
@@ -85,7 +85,7 @@ internal class CustomerParserTest {
         assertThat(actualException.message).isEqualTo(
             """
             VatBase with vatCountryCode='X' not a valid country code
-            - in parsing VatBase data {customerNumber=10001, customerCode=hsh00-dee, company=Testmann GmbH, salutation=Herr, title=Dr., firstName=Tästi, lastName=Tästmann, co=Tästmann Holdings AG, street=Teststraße 42, zipCode=20144, city=Hamburg, country=Germany, countryCode=DE, email=taesti@taestmann.de, uidVat=DE81201900030012345678, directDebiting=true, bankCustomer=Tästmann GmbH, bankIBAN=DE987654321, bankBIC=GENODEF1HH2, mandatRef=HS-10001-20140801, vatCountryCode=X, vatChargeMode=domestic}
+            - in parsing VatBase data {customerNumber=10001, customerCode=hsh00-dee, company=Testmann GmbH, salutation=Herr, title=Dr., firstName=Tästi, lastName=Tästmann, co=Tästmann Holdings AG, street=Teststraße 42, zipCode=20144, city=Hamburg, country=Germany, countryCode=DE, email=taesti@taestmann.de, uidVat=DE81201900030012345678, directDebiting=true, bankCustomer=Tästmann GmbH, bankIBAN=DE987654321, bankBIC=GENODEF1HH2, mandateRef=HS-10001-20140801, vatCountryCode=X, vatChargeMode=domestic}
             - in parsing customer $givenRecord
             """.trimIndent()
         )
@@ -104,7 +104,7 @@ internal class CustomerParserTest {
         assertThat(actual.message).isEqualTo(
             """
             VatBase with vatChargeMode='garbage' not a valid VAT charge code
-            - in parsing VatBase data {customerNumber=10001, customerCode=hsh00-dee, company=Testmann GmbH, salutation=Herr, title=Dr., firstName=Tästi, lastName=Tästmann, co=Tästmann Holdings AG, street=Teststraße 42, zipCode=20144, city=Hamburg, country=Germany, countryCode=DE, email=taesti@taestmann.de, uidVat=DE81201900030012345678, directDebiting=true, bankCustomer=Tästmann GmbH, bankIBAN=DE987654321, bankBIC=GENODEF1HH2, mandatRef=HS-10001-20140801, vatCountryCode=DE, vatChargeMode=garbage}
+            - in parsing VatBase data {customerNumber=10001, customerCode=hsh00-dee, company=Testmann GmbH, salutation=Herr, title=Dr., firstName=Tästi, lastName=Tästmann, co=Tästmann Holdings AG, street=Teststraße 42, zipCode=20144, city=Hamburg, country=Germany, countryCode=DE, email=taesti@taestmann.de, uidVat=DE81201900030012345678, directDebiting=true, bankCustomer=Tästmann GmbH, bankIBAN=DE987654321, bankBIC=GENODEF1HH2, mandateRef=HS-10001-20140801, vatCountryCode=DE, vatChargeMode=garbage}
             - in parsing customer $givenRecord
             """.trimIndent()
         )
