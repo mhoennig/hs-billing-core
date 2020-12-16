@@ -40,5 +40,6 @@ fun <T> inputFileReader(title: String, file: File, read: CsvFileReader.() -> T):
     withDomainContext("$title: ${file.name}") {
         csvReader {
             delimiter = ';'
+            skipEmptyLine = true
         }.open(file) { read() }
     }

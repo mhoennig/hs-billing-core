@@ -16,8 +16,8 @@ class BillingIntegrationTest {
         givenInputDir withFile "vat-groups.csv" containing """
             |countryCode; id;    description;            placeOfSupply;  rate;       dc.account;  rc.account
             |
-            |"DE";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "n/a"           
-            |"DE";        "01";  "Rabatttarif";          "receiver";     "16,00";    "440001";    "n/a"           
+            |"DE";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "n/a"
+            |"DE";        "01";  "Rabatttarif";          "receiver";     "16,00";    "440001";    "n/a"
             |"DE";        "02";  "Domain-Laufzeit";      "receiver";     "16,00";    "440002";    "n/a"
             |"DE";        "03";  "Package";              "receiver";     "16,00";    "440003";    "n/a"
             |"DE";        "04";  "Traffic";              "receiver";     "16,00";    "440004";    "n/a"
@@ -27,8 +27,8 @@ class BillingIntegrationTest {
             |"DE";        "08";  "BBB";                  "receiver";     "16,00";    "440008";    "n/a"
             |"DE";        "09";  "Buch";                 "supplier";      "5,00";    "430009";    "n/a"
             |
-            |"AT";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "420000"           
-            |"AT";        "01";  "Rabatttarif";          "receiver";     "21,00";    "433101";    "433601"           
+            |"AT";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "420000"
+            |"AT";        "01";  "Rabatttarif";          "receiver";     "21,00";    "433101";    "433601"
             |"AT";        "02";  "Domain-Laufzeit";      "receiver";     "21,00";    "433102";    "433602"
             |"AT";        "03";  "Package";              "receiver";     "21,00";    "433103";    "433603"
             |"AT";        "04";  "Traffic";              "receiver";     "21,00";    "433104";    "433604"
@@ -38,16 +38,16 @@ class BillingIntegrationTest {
             |"AT";        "08";  "BBB";                  "receiver";     "21,00";    "433108";    "433608"
             |"AT";        "09";  "Buch";                 "supplier";     "domestic"; "433809";    "433609"
             |
-            |"CH";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";   "420000"           
-            |"AT";        "01";  "Rabatttarif";          "receiver";     "n/i";      "n/i";      "433801"           
-            |"AT";        "02";  "Domain-Laufzeit";      "receiver";     "n/i";      "n/i";      "433802"
-            |"AT";        "03";  "Package";              "receiver";     "n/i";      "n/i";      "433803"
-            |"AT";        "04";  "Traffic";              "receiver";     "n/i";      "n/i";      "433804"
-            |"AT";        "05";  "CPU";                  "receiver";     "n/i";      "n/i";      "433805"
-            |"AT";        "06";  "WoD";                  "supplier";     "n/i";      "n/i";      "433806"
-            |"AT";        "07";  "SLA";                  "receiver";     "n/i";      "n/i";      "433807"
-            |"AT";        "08";  "BBB";                  "receiver";     "n/i";      "n/i";      "433808"
-            |"AT";        "09";  "Buch";                 "supplier";     "n/i";      "n/i";      "433809"
+            |"CH";        "00";  "Mitgliedsbeitrag";     "n/a";          "noTax";    "420000";    "420000"
+            |"AT";        "01";  "Rabatttarif";          "receiver";     "n/i";      "n/i";       "433801"
+            |"AT";        "02";  "Domain-Laufzeit";      "receiver";     "n/i";      "n/i";       "433802"
+            |"AT";        "03";  "Package";              "receiver";     "n/i";      "n/i";       "433803"
+            |"AT";        "04";  "Traffic";              "receiver";     "n/i";      "n/i";       "433804"
+            |"AT";        "05";  "CPU";                  "receiver";     "n/i";      "n/i";       "433805"
+            |"AT";        "06";  "WoD";                  "supplier";     "n/i";      "n/i";       "433806"
+            |"AT";        "07";  "SLA";                  "receiver";     "n/i";      "n/i";       "433807"
+            |"AT";        "08";  "BBB";                  "receiver";     "n/i";      "n/i";       "433808"
+            |"AT";        "09";  "Buch";                 "supplier";     "n/i";      "n/i";       "433809"
             |"""
     }
 
