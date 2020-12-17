@@ -3,7 +3,7 @@ package org.hostsharing.hsadmin.billing.core.domain
 import org.hostsharing.hsadmin.billing.core.lib.Configuration
 
 class VatGroupDefs(
-    val configuration: Configuration,
+    private val configuration: Configuration,
     map: Map<CountryCode, out Map<VatGroupId, VatGroupDef>>
 ) : Map<CountryCode, Map<VatGroupId, VatGroupDef>> by map {
 
@@ -11,7 +11,7 @@ class VatGroupDefs(
         val vatGroupDefsForCountry = get(countryCode)
             ?: error("no VAT group def found for '$countryCode' in '$keys'")
         return vatGroupDefsForCountry.get(vatGroupId)
-            ?: error("no VAT group def found for '$countryCode'.'$vatGroupId' in '${vatGroupDefsForCountry.keys}'")
+            ?: error("no VAT group def found for '$vatGroupId' in '${vatGroupDefsForCountry.keys}' for country '$countryCode'")
     }
 
     /**

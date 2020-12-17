@@ -91,20 +91,19 @@ jacocoTestReport {
 jacocoTestCoverageVerification {
     violationRules {
         rule {
-            limit {
-                minimum = 0.9
-            }
-        }
-
-        rule {
-            enabled = false
             element = 'CLASS'
             includes = ['org.hostsharing.hsadmin.billing.core.*']
+            excludes = []
 
             limit {
                 counter = 'LINE'
-                value = 'TOTALCOUNT'
-                maximum = 0.3
+                value = 'COVEREDRATIO'
+                minimum = 0.95
+            }
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.80
             }
         }
     }

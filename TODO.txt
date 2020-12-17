@@ -9,7 +9,7 @@ File-Formats
 - output vat rate as 0,16 or 16,00?
 
 Architecture
-- zur Zeit nix mehr :-)
+- currently nothing
 
 Code-Quality
 - increase mutationThreshold.set(85) to 95 for pitest
