@@ -17,15 +17,23 @@ internal class VatGroupDefsTest {
     }
 
     /* ktlint-disable */// @formatter:off
-    private val vatGroupDefDE00 = VatGroupDef("DE", "00",
-        "Membership", PlaceOfSupply.NOT_APPLICABLE, VatRate.NO_TAX,           dcAccount = "420000", rcAccount = "n/a")
-    private val vatGroupDefDE60 = VatGroupDef("DE", "60",
-        "Webmaster",  PlaceOfSupply.SUPPLIER,       VatRate("16,00") ,   dcAccount = "440060", rcAccount = "n/a")
-    private val vatGroupDefAT00 = VatGroupDef("AT", "00",
-        "Membership", PlaceOfSupply.NOT_APPLICABLE, VatRate.NO_TAX,           dcAccount = "420000", rcAccount = "420000")
-    private val vatGroupDefAT60 = VatGroupDef("AT", "60",
-        "Webmaster",  PlaceOfSupply.SUPPLIER,       VatRate("domestic"), dcAccount = "433860", rcAccount = "433660")
-    /* ktlint-enable */// @formatter:off
+    private val vatGroupDefDE00 = VatGroupDef(
+        "DE", "00",
+        "Membership", PlaceOfSupply.NOT_APPLICABLE, VatRate.NO_TAX,           dcAccount = "420000", rcAccount = "n/a"
+    )
+    private val vatGroupDefDE60 = VatGroupDef(
+        "DE", "60",
+        "Webmaster",  PlaceOfSupply.SUPPLIER,       VatRate("16,00") ,   dcAccount = "440060", rcAccount = "n/a"
+    )
+    private val vatGroupDefAT00 = VatGroupDef(
+        "AT", "00",
+        "Membership", PlaceOfSupply.NOT_APPLICABLE, VatRate.NO_TAX,           dcAccount = "420000", rcAccount = "420000"
+    )
+    private val vatGroupDefAT60 = VatGroupDef(
+        "AT", "60",
+        "Webmaster",  PlaceOfSupply.SUPPLIER,       VatRate("domestic"), dcAccount = "433860", rcAccount = "433660"
+    )
+    /* ktlint-enable */ // @formatter:off
 
     /* ktlint-disable */// @formatter:off
     val givenVatGroupDefs = VatGroupDefs(
@@ -41,7 +49,7 @@ internal class VatGroupDefsTest {
             ),
         )
     )
-    /* ktlint-enable */// @formatter:off
+    /* ktlint-enable */ // @formatter:off
 
     @Test
     fun `lookup will return VatGroupDef for existing countryCode and vatGroupId`() {

@@ -26,7 +26,7 @@ open class Parser(val contextInfo: String) {
     protected fun Map<String, String?>.mandatoryCountryCode(fieldName: String): String {
         val fieldValue = mandatoryString(fieldName)
         if (!fieldValue.isCountryCode()) {
-            error("$contextInfo with $fieldName='$fieldValue' not a valid country code")
+            error("$contextInfo: $fieldName='$fieldValue' not a valid country code")
         }
         return fieldValue
     }
@@ -36,7 +36,7 @@ open class Parser(val contextInfo: String) {
         try {
             return VatChargeMode.ofCode(fieldValue)
         } catch (exc: Exception) {
-            error("$contextInfo with $fieldName='$fieldValue' not a valid VAT charge code")
+            error("$contextInfo: $fieldName='$fieldValue' not a valid VAT charge code")
         }
     }
 
@@ -45,7 +45,7 @@ open class Parser(val contextInfo: String) {
         try {
             return PlaceOfSupply.ofCode(fieldValue)
         } catch (exc: Exception) {
-            error("$contextInfo with $fieldName='$fieldValue' not a valid PlaceOfSupply")
+            error("$contextInfo: $fieldName='$fieldValue' not a valid PlaceOfSupply")
         }
     }
 
@@ -54,7 +54,7 @@ open class Parser(val contextInfo: String) {
         try {
             return VatRate(fieldValue)
         } catch (exc: Exception) {
-            error("$contextInfo with $fieldName='$fieldValue' not a valid VatRate")
+            error("$contextInfo: $fieldName='$fieldValue' not a valid VatRate")
         }
     }
 }

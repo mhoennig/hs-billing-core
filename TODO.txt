@@ -12,8 +12,9 @@ Architecture
 - currently nothing
 
 Code-Quality
-- increase mutationThreshold.set(85) to 95 for pitest
-- configure path coverage for jacoco
+- split all ...Parser classes like VatGroupDef/-Parser
+- increase jacoco line coverage to 95 and branch coverage to 90
+- increase pitest mutationThreshold.set(85) to 95
 - consistent naming of interfaces vs. implementations
 - getting rid of the """...|"""?
 - cleanup VatCalculation (feature envy)

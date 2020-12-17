@@ -180,7 +180,7 @@ internal class ParserTest : Parser("some test data") {
             record.mandatoryCountryCode("someField")
         }
 
-        assertThat(actual.message).isEqualTo("some test data with someField='invalid value' not a valid country code")
+        assertThat(actual.message).isEqualTo("some test data: someField='invalid value' not a valid country code")
     }
 
     @Test
@@ -204,7 +204,7 @@ internal class ParserTest : Parser("some test data") {
             record.mandatoryVatChargeMode("someField")
         }
 
-        assertThat(actual.message).isEqualTo("some test data with someField='invalid value' not a valid VAT charge code")
+        assertThat(actual.message).isEqualTo("some test data: someField='invalid value' not a valid VAT charge code")
     }
 
     @Test

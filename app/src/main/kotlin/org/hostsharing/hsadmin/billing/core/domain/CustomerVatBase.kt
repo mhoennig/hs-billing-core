@@ -1,11 +1,15 @@
 package org.hostsharing.hsadmin.billing.core.domain
 
-interface CustomerVatBase : Formattable {
-    val vatCountryCode: String
-    val vatChargeMode: VatChargeMode
+data class CustomerVatBase(
+    val vatCountryCode: String,
+    val vatChargeMode: VatChargeMode,
+    val uidVat: String? = null
+) : Formattable {
 
-    val uidVat: String?
-        get() = null
+    init {
+        if (!uidVat.isNullOrEmpty() && !uidVat.startsWith(vatCountryCode))
+            error("UID-VAT $uidVat does not match vatCountryCode $vatCountryCode")
+    }
 
     override fun format(indent: Int): String = """
         |vatCountryCode=${vatCountryCode.quoted}

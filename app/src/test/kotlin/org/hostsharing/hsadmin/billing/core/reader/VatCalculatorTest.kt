@@ -21,7 +21,7 @@ internal class VatCalculatorTest {
     val id20Webmaster = VatGroup("20", "Webmaster on Demand", PlaceOfSupply.SUPPLIER)
     val id30Book = VatGroup("30", "Book", PlaceOfSupply.SUPPLIER)
     val id40TShirt = VatGroup("40", "T-Shirt", PlaceOfSupply.SUPPLIER)
-    val id99Undefined = VatGroup( "99", "Undefined", PlaceOfSupply.SUPPLIER)
+    val id99Undefined = VatGroup("99", "Undefined", PlaceOfSupply.SUPPLIER)
 
     // This map of global VatGroupDefs is just to have an overview of all VAT group definitions.
     // Each single test lists their own definitions to have all relevant inputs and outputs in one place.
@@ -86,7 +86,7 @@ internal class VatCalculatorTest {
         fun `customer with VAT-country-code 'DE' for manual service item with full tax rate`() =
             vatCalculatorWillCalculateResult(
                 Given(
-                        vatGroupDef("DE", id20Webmaster, "16,00", dcAccount = "440020", rcAccount = "n/a"),
+                    vatGroupDef("DE", id20Webmaster, "16,00", dcAccount = "440020", rcAccount = "n/a"),
                     id20Webmaster, customerVatBase("DE", VatChargeMode.DOMESTIC)
                 ),
                 Expected.Result(
@@ -322,7 +322,6 @@ internal class VatCalculatorTest {
             )
     }
 
-
     @Nested
     inner class `will throw exception with error message` : VatCalculatorTestImplementation() {
 
@@ -383,11 +382,11 @@ internal class VatCalculatorTest {
     }
 
     private fun customerVatBase(vatCountryCode: String, vatChargeMode: VatChargeMode, uidVat: String? = null): CustomerVatBase =
-        object : CustomerVatBase {
-            override val vatCountryCode = vatCountryCode
-            override val vatChargeMode = vatChargeMode
-            override val uidVat = uidVat
-        }
+        CustomerVatBase(
+            vatCountryCode = vatCountryCode,
+            vatChargeMode = vatChargeMode,
+            uidVat = uidVat
+    )
 
     open inner class VatCalculatorTestImplementation {
 

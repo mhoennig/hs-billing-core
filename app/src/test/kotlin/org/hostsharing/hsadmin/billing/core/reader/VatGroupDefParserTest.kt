@@ -64,7 +64,7 @@ internal class VatGroupDefParserTest {
 
         assertThat(actual.message).isEqualTo(
             """
-            VAT group definition with vatRate='broken' not a valid VatRate
+            VAT group definition: vatRate='broken' not a valid VatRate
             - in parsing VAT group definition $givenRecord
             """.trimIndent()
         )
