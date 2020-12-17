@@ -26,4 +26,3 @@ class VatCalculator(val config: Configuration) {
             vatBase.vatChargeMode.calculateVat(config, vatGroupDef, vatBase.vatCountryCode)
         }
 }
-

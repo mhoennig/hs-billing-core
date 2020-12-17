@@ -21,32 +21,36 @@ internal class VatCalculatorTest {
     val ID30_BOOK = VatGroup("30", "Book", PlaceOfSupply.SUPPLIER)
     val ID40_TSHIRT = VatGroup("40", "T-Shirt", PlaceOfSupply.SUPPLIER)
 
-    // just to have an overview of all VAT group definitions,
-    // each test lists their own definitions which are checked against these global definitions
+    // This map of global VatGroupDefs is just to have an overview of all VAT group definitions.
+    // Each single test lists their own definitions to have all relevant inputs and outputs in one place.
+    // Also, the test fixture checkes each the inputs against these global VatGroupDefs.
     /* ktlint-disable */// @formatter:off
-    val vatCountryGroupDefsGlobals = VatGroupDefs(config, mapOf(
-        "DE" to mapOf(
-            vatGroupDefAssignment(ID00_MEMBERSHIP, VatRate.NO_TAX, dcAccount = "420000", rcAccount = "n/a"),
-            vatGroupDefAssignment(ID10_HOSTING, VatRate("16,00"), dcAccount = "440010", rcAccount = "n/a"),
-            vatGroupDefAssignment(ID20_WEBMASTER, VatRate("16,00"), dcAccount = "440020", rcAccount = "n/a"),
-            vatGroupDefAssignment(ID30_BOOK, VatRate("5,00"), dcAccount = "430030", rcAccount = "n/a"),
-            vatGroupDefAssignment(ID40_TSHIRT, VatRate("16,00"), dcAccount = "440040", rcAccount = "n/a"),
-        ),
-        "AT" to mapOf(
-            vatGroupDefAssignment(ID00_MEMBERSHIP, VatRate.NO_TAX, dcAccount = "420000", rcAccount = "420000"),
-            vatGroupDefAssignment(ID10_HOSTING, VatRate("21,00"), dcAccount = "433110", rcAccount = "433610"),
-            vatGroupDefAssignment(ID20_WEBMASTER, VatRate("21,00"), dcAccount = "433120", rcAccount = "433620"),
-            vatGroupDefAssignment(ID30_BOOK, VatRate("9,00"), dcAccount = "433130", rcAccount = "433630"),
-            vatGroupDefAssignment(ID40_TSHIRT, VatRate("16,00"), dcAccount = "430040", rcAccount = "433640"),
-        ),
-        "CH" to mapOf(
-            vatGroupDefAssignment(ID00_MEMBERSHIP, VatRate.NO_TAX, dcAccount = "420000", rcAccount = "n/a"),
-            vatGroupDefAssignment(ID10_HOSTING, VatRate.NOT_IMPLEMENTED, dcAccount = "n/i", rcAccount = "433810"),
-            vatGroupDefAssignment(ID20_WEBMASTER, VatRate.NOT_IMPLEMENTED, dcAccount = "n/i", rcAccount = "433820"),
-            vatGroupDefAssignment(ID30_BOOK, VatRate.NOT_IMPLEMENTED, dcAccount = "n/i", rcAccount = "433830"),
-            vatGroupDefAssignment(ID40_TSHIRT, VatRate.NOT_IMPLEMENTED, dcAccount = "n/i", rcAccount = "433840"),
+    val vatCountryGroupDefsGlobals = VatGroupDefs(
+        config,
+        mapOf(
+            "DE" to mapOf(
+                vatGroupDefAssignment(ID00_MEMBERSHIP, VatRate.NO_TAX,         dcAccount = "420000", rcAccount = "n/a"),
+                vatGroupDefAssignment(ID10_HOSTING,    VatRate("16,00") , dcAccount = "440010", rcAccount = "n/a"),
+                vatGroupDefAssignment(ID20_WEBMASTER,  VatRate("16,00"),  dcAccount = "440020", rcAccount = "n/a"),
+                vatGroupDefAssignment(ID30_BOOK,       VatRate( "5,00"),  dcAccount = "430030", rcAccount = "n/a"),
+                vatGroupDefAssignment(ID40_TSHIRT,     VatRate("16,00"),  dcAccount = "440040", rcAccount = "n/a"),
+            ),
+            "AT" to mapOf(
+                vatGroupDefAssignment(ID00_MEMBERSHIP, VatRate.NO_TAX,         dcAccount = "420000", rcAccount = "420000"),
+                vatGroupDefAssignment(ID10_HOSTING,    VatRate("21,00"),  dcAccount = "433110", rcAccount = "433610"),
+                vatGroupDefAssignment(ID20_WEBMASTER,  VatRate("21,00"),  dcAccount = "433120", rcAccount = "433620"),
+                vatGroupDefAssignment(ID30_BOOK,       VatRate( "9,00"),  dcAccount = "433130", rcAccount = "433630"),
+                vatGroupDefAssignment(ID40_TSHIRT,     VatRate("16,00"),  dcAccount = "433130", rcAccount = "433640"),
+            ),
+            "CH" to mapOf(
+                vatGroupDefAssignment(ID00_MEMBERSHIP, VatRate.NO_TAX,         dcAccount = "420000", rcAccount = "n/a"),
+                vatGroupDefAssignment(ID10_HOSTING, VatRate.NOT_IMPLEMENTED,   dcAccount = "n/i",    rcAccount = "433810"),
+                vatGroupDefAssignment(ID20_WEBMASTER, VatRate.NOT_IMPLEMENTED, dcAccount = "n/i",    rcAccount = "433820"),
+                vatGroupDefAssignment(ID30_BOOK, VatRate.NOT_IMPLEMENTED,      dcAccount = "n/i",    rcAccount = "433830"),
+                vatGroupDefAssignment(ID40_TSHIRT, VatRate.NOT_IMPLEMENTED,    dcAccount = "n/i",    rcAccount = "433840"),
+            )
         )
-    ))
+    )
     /* ktlint-enable */ // @formatter:on
 
     @Nested
@@ -77,6 +81,18 @@ internal class VatCalculatorTest {
             )
 
         @Test
+        fun `customer with VAT-country-code 'DE' for manual service item with full tax rate`() =
+            vatCalculatorWillCalculateResult(
+                Given(
+                    vatGroupDef("DE", ID20_WEBMASTER, "16,00", dcAccount = "440020", rcAccount = "n/a"),
+                    ID20_WEBMASTER, vatBase("DE", VatChargeMode.EU_DIRECT)
+                ),
+                Expected.Result(
+                    VatRate("21,00"), "440020"
+                )
+            )
+
+        @Test
         fun `customer with VAT-country-code 'DE' for physical item with reduced tax rate`() =
             vatCalculatorWillCalculateResult(
                 Given(
@@ -100,7 +116,6 @@ internal class VatCalculatorTest {
                 )
             )
 
-        // TODO: apply this formulation for all cases
         fun `customer with invalid VAT-country-code 'AT' and arbitrary item`() =
             vatCalculatorWillThrowDomainException(
                 Given(
@@ -164,6 +179,18 @@ internal class VatCalculatorTest {
                 ),
                 Expected.Result(
                     VatRate("9,00"), "433130"
+                )
+            )
+
+        @Test
+        fun `customer with VAT-country-code 'AT' for physical item with full tax rate`() =
+            vatCalculatorWillCalculateResult(
+                Given(
+                    vatGroupDef("AT", ID40_TSHIRT, "16,00", dcAccount = "433130", rcAccount = "433640"),
+                    ID40_TSHIRT, vatBase("DE", VatChargeMode.DOMESTIC)
+                ),
+                Expected.Result(
+                    VatRate("16,00"), "433130"
                 )
             )
 
@@ -310,9 +337,12 @@ internal class VatCalculatorTest {
         ).isEqualToIgnoringGivenProperties(defaultVatGroupDef)
 
         // use just the definition necessary for the particular test
-        return VatGroupDefs(config, mapOf(
-            countryCode to mapOf(givenVatGroupDefAssignment)
-        ))
+        return VatGroupDefs(
+            config,
+            mapOf(
+                countryCode to mapOf(givenVatGroupDefAssignment)
+            )
+        )
     }
 
     private fun vatBase(vatCountryCode: String, vatChargeMode: VatChargeMode, uidVat: String? = null): VatBase =

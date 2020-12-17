@@ -24,4 +24,3 @@ class VatGroupDefParser internal constructor(val record: Map<String, String?>) :
             )
         }
 }
-

@@ -2,7 +2,6 @@ package org.hostsharing.hsadmin.billing.core.domain
 
 import org.hostsharing.hsadmin.billing.core.lib.Configuration
 
-
 class VatGroupDefs(
     val configuration: Configuration,
     map: Map<CountryCode, out Map<VatGroupId, VatGroupDef>>
@@ -10,7 +9,7 @@ class VatGroupDefs(
 
     fun lookup(countryCode: CountryCode, vatGroupId: VatGroupId): VatGroupDef {
         val vatGroupDefsForCountry = get(countryCode)
-            ?: error("no VAT group def found for '$countryCode' in '${keys}'")
+            ?: error("no VAT group def found for '$countryCode' in '$keys'")
         return vatGroupDefsForCountry.get(vatGroupId)
             ?: error("no VAT group def found for '$countryCode'.'$vatGroupId' in '${vatGroupDefsForCountry.keys}'")
     }
@@ -21,15 +20,17 @@ class VatGroupDefs(
      * @return a new instance with all references resolved
      */
     fun resolveVatRateReferences(): VatGroupDefs =
-        VatGroupDefs(configuration,
+        VatGroupDefs(
+            configuration,
             map { countryEntry ->
-            countryEntry.key to countryEntry.value.mapValues {
-                if (it.value.vatRate.domestic)
-                    it.value.copy(vatRate = lookup(configuration.domesticCountryCode, it.value.id).vatRate)
-                else
-                    it.value
-            }
-        }.toMap())
+                countryEntry.key to countryEntry.value.mapValues {
+                    if (it.value.vatRate.domestic)
+                        it.value.copy(vatRate = lookup(configuration.domesticCountryCode, it.value.id).vatRate)
+                    else
+                        it.value
+                }
+            }.toMap()
+        )
 }
 
 data class VatGroupDef(
