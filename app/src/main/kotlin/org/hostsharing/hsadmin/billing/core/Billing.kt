@@ -28,7 +28,7 @@ class Billing(
             periodEndDate = periodEndDate,
             billingDate = billingDate,
             startInvoiceNumber = startInvoiceNumber,
-            vatGroupDefs = VatGroupDefs(readVatGroups(vatGroupsCSV)).resolveReferences(configuration),
+            vatGroupDefs = VatGroupDefs(configuration, readVatGroups(vatGroupsCSV)).resolveVatRateReferences(),
             customers = customers,
             billingItems = readBillingItems(billingItemsCSVs)
         ).generateInvoices()

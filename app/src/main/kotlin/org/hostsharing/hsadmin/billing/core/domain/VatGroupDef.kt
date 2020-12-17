@@ -3,30 +3,44 @@ package org.hostsharing.hsadmin.billing.core.domain
 import org.hostsharing.hsadmin.billing.core.lib.Configuration
 
 
-class VatGroupDefs(map: Map<CountryCode, out Map<VatGroupId, VatGroupDef>>) :
-    Map<CountryCode, Map<VatGroupId, VatGroupDef>> by map {
+class VatGroupDefs(
+    val configuration: Configuration,
+    map: Map<CountryCode, out Map<VatGroupId, VatGroupDef>>
+) : Map<CountryCode, Map<VatGroupId, VatGroupDef>> by map {
 
-    fun resolveReferences(configuration: Configuration): VatGroupDefs =
-        VatGroupDefs(map { countryEntry ->
+    fun lookup(countryCode: CountryCode, vatGroupId: VatGroupId): VatGroupDef {
+        val vatGroupDefsForCountry = get(countryCode)
+            ?: error("no VAT group def found for '$countryCode' in '${keys}'")
+        return vatGroupDefsForCountry.get(vatGroupId)
+            ?: error("no VAT group def found for '$countryCode'.'$vatGroupId' in '${vatGroupDefsForCountry.keys}'")
+    }
+
+    /**
+     * Resolves references, curren
+     *
+     * @return a new instance with all references resolved
+     */
+    fun resolveVatRateReferences(): VatGroupDefs =
+        VatGroupDefs(configuration,
+            map { countryEntry ->
             countryEntry.key to countryEntry.value.mapValues {
                 if (it.value.vatRate.domestic)
-                // TODO: get rid of !!, eg by wrapping in a class and lookup through a method
-                    it.value.copy(vatRate=this[configuration.domesticCountryCode]!!.get(it.value.id)!!.vatRate)
+                    it.value.copy(vatRate = lookup(configuration.domesticCountryCode, it.value.id).vatRate)
                 else
                     it.value
             }
         }.toMap())
-    }
+}
 
 data class VatGroupDef(
 
-val countryCode: CountryCode,
-val id: VatGroupId,
-val description: String,
-val placeOfSupply: PlaceOfSupply,
-val vatRate: VatRate,
-val dcAccount: Account,
-val rcAccount: Account
+    val countryCode: CountryCode,
+    val id: VatGroupId,
+    val description: String,
+    val placeOfSupply: PlaceOfSupply,
+    val vatRate: VatRate,
+    val dcAccount: Account,
+    val rcAccount: Account
 ) : Formattable {
 
     companion object {

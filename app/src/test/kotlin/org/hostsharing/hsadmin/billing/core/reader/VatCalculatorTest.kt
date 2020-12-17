@@ -24,7 +24,7 @@ internal class VatCalculatorTest {
     // just to have an overview of all VAT group definitions,
     // each test lists their own definitions which are checked against these global definitions
     /* ktlint-disable */// @formatter:off
-    val vatCountryGroupDefsGlobals = VatGroupDefs(mapOf(
+    val vatCountryGroupDefsGlobals = VatGroupDefs(config, mapOf(
         "DE" to mapOf(
             vatGroupDefAssignment(ID00_MEMBERSHIP, VatRate.NO_TAX, dcAccount = "420000", rcAccount = "n/a"),
             vatGroupDefAssignment(ID10_HOSTING, VatRate("16,00"), dcAccount = "440010", rcAccount = "n/a"),
@@ -310,7 +310,7 @@ internal class VatCalculatorTest {
         ).isEqualToIgnoringGivenProperties(defaultVatGroupDef)
 
         // use just the definition necessary for the particular test
-        return VatGroupDefs(mapOf(
+        return VatGroupDefs(config, mapOf(
             countryCode to mapOf(givenVatGroupDefAssignment)
         ))
     }
