@@ -20,6 +20,7 @@ internal class VatCalculatorTest {
     val id20Webmaster = VatGroup("20", "Webmaster on Demand", PlaceOfSupply.SUPPLIER)
     val id30Book = VatGroup("30", "Book", PlaceOfSupply.SUPPLIER)
     val id40TShirt = VatGroup("40", "T-Shirt", PlaceOfSupply.SUPPLIER)
+    val id99Undefined = VatGroup( "99", "Undefined", PlaceOfSupply.SUPPLIER)
 
     // This map of global VatGroupDefs is just to have an overview of all VAT group definitions.
     // Each single test lists their own definitions to have all relevant inputs and outputs in one place.
@@ -61,7 +62,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatGroupDef("DE", id00Membership, "noTax", dcAccount = "420000", rcAccount = "n/a"),
-                    id00Membership, vatBase("DE", VatChargeMode.DOMESTIC)
+                    id00Membership, customerVatBase("DE", VatChargeMode.DOMESTIC)
                 ),
                 Expected.Result(
                     VatRate.NO_TAX, "420000"
@@ -73,7 +74,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatGroupDef("DE", id10Hosting, "16,00", dcAccount = "440010", rcAccount = "n/a"),
-                    id10Hosting, vatBase("DE", VatChargeMode.DOMESTIC)
+                    id10Hosting, customerVatBase("DE", VatChargeMode.DOMESTIC)
                 ),
                 Expected.Result(
                     VatRate("16,00"), "440010"
@@ -85,7 +86,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                         vatGroupDef("DE", id20Webmaster, "16,00", dcAccount = "440020", rcAccount = "n/a"),
-                    id20Webmaster, vatBase("DE", VatChargeMode.DOMESTIC)
+                    id20Webmaster, customerVatBase("DE", VatChargeMode.DOMESTIC)
                 ),
                 Expected.Result(
                     VatRate("21,00"), "440020"
@@ -97,7 +98,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatGroupDef("DE", id30Book, "5,00", dcAccount = "430030", rcAccount = "n/a"),
-                    id30Book, vatBase("DE", VatChargeMode.DOMESTIC)
+                    id30Book, customerVatBase("DE", VatChargeMode.DOMESTIC)
                 ),
                 Expected.Result(
                     VatRate("5,00"), "430030"
@@ -109,7 +110,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatGroupDef("DE", id40TShirt, "16,00", dcAccount = "440040", rcAccount = "n/a"),
-                    id40TShirt, vatBase("DE", VatChargeMode.DOMESTIC)
+                    id40TShirt, customerVatBase("DE", VatChargeMode.DOMESTIC)
                 ),
                 Expected.Result(
                     VatRate("16,00"), "440040"
@@ -120,7 +121,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillThrowDomainException(
                 Given(
                     vatGroupDef("AT", id10Hosting, "21,00", dcAccount = "433110", rcAccount = "433610"),
-                    id10Hosting, vatBase("AT", VatChargeMode.DOMESTIC)
+                    id10Hosting, customerVatBase("AT", VatChargeMode.DOMESTIC)
                 ),
                 Expected.DomainException(
                     """
@@ -139,7 +140,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatCountryGroupDefsGlobals,
-                    id00Membership, vatBase("AT", VatChargeMode.EU_DIRECT)
+                    id00Membership, customerVatBase("AT", VatChargeMode.EU_DIRECT)
                 ),
                 Expected.Result(
                     VatRate.NO_TAX, "420000"
@@ -151,7 +152,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatCountryGroupDefsGlobals,
-                    id10Hosting, vatBase("AT", VatChargeMode.EU_DIRECT)
+                    id10Hosting, customerVatBase("AT", VatChargeMode.EU_DIRECT)
                 ),
                 Expected.Result(
                     VatRate("21,00"), "433110"
@@ -163,7 +164,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatGroupDef("AT", id20Webmaster, "21,00", dcAccount = "433120", rcAccount = "433620"),
-                    id20Webmaster, vatBase("AT", VatChargeMode.EU_DIRECT)
+                    id20Webmaster, customerVatBase("AT", VatChargeMode.EU_DIRECT)
                 ),
                 Expected.Result(
                     VatRate("21,00"), "433120"
@@ -175,7 +176,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatGroupDef("AT", id30Book, "9,00", dcAccount = "433130", rcAccount = "433630"),
-                    id30Book, vatBase("AT", VatChargeMode.EU_DIRECT)
+                    id30Book, customerVatBase("AT", VatChargeMode.EU_DIRECT)
                 ),
                 Expected.Result(
                     VatRate("9,00"), "433130"
@@ -187,7 +188,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatGroupDef("AT", id40TShirt, "16,00", dcAccount = "433130", rcAccount = "433640"),
-                    id40TShirt, vatBase("AT", VatChargeMode.EU_DIRECT)
+                    id40TShirt, customerVatBase("AT", VatChargeMode.EU_DIRECT)
                 ),
                 Expected.Result(
                     VatRate("16,00"), "433130"
@@ -199,7 +200,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillThrowDomainException(
                 Given(
                     vatGroupDef("DE", id10Hosting, "16,00", dcAccount = "440010", rcAccount = "n/a"),
-                    id10Hosting, vatBase("DE", VatChargeMode.EU_DIRECT)
+                    id10Hosting, customerVatBase("DE", VatChargeMode.EU_DIRECT)
                 ),
                 Expected.DomainException(
                     """
@@ -218,7 +219,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatGroupDef("AT", id00Membership, "noTax", dcAccount = "420000", rcAccount = "420000"),
-                    id00Membership, vatBase("AT", VatChargeMode.EU_REVERSE)
+                    id00Membership, customerVatBase("AT", VatChargeMode.EU_REVERSE)
                 ),
                 Expected.Result(
                     VatRate.NO_TAX, "420000"
@@ -230,7 +231,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatGroupDef("AT", id10Hosting, "21,00", dcAccount = "433110", rcAccount = "433610"),
-                    id10Hosting, vatBase("AT", VatChargeMode.EU_REVERSE)
+                    id10Hosting, customerVatBase("AT", VatChargeMode.EU_REVERSE)
                 ),
                 Expected.Result(
                     VatRate.NO_TAX, "433610"
@@ -242,7 +243,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatCountryGroupDefsGlobals,
-                    id20Webmaster, vatBase("AT", VatChargeMode.EU_REVERSE)
+                    id20Webmaster, customerVatBase("AT", VatChargeMode.EU_REVERSE)
                 ),
                 Expected.Result(
                     VatRate.NO_TAX, "433620"
@@ -254,7 +255,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillThrowDomainException(
                 Given(
                     vatGroupDef("DE", id10Hosting, "16,00", dcAccount = "440010", rcAccount = "n/a"),
-                    id10Hosting, vatBase("DE", VatChargeMode.EU_REVERSE)
+                    id10Hosting, customerVatBase("DE", VatChargeMode.EU_REVERSE)
                 ),
                 Expected.DomainException(
                     """
@@ -273,7 +274,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatGroupDef("CH", id00Membership, "noTax", dcAccount = "420000", rcAccount = "n/a"),
-                    id00Membership, vatBase("CH", VatChargeMode.NON_EU_REVERSE)
+                    id00Membership, customerVatBase("CH", VatChargeMode.NON_EU_REVERSE)
                 ),
                 Expected.Result(
                     VatRate.NO_TAX, "420000"
@@ -285,7 +286,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatGroupDef("CH", id10Hosting, "n/i", dcAccount = "n/i", rcAccount = "433810"),
-                    id10Hosting, vatBase("CH", VatChargeMode.NON_EU_REVERSE)
+                    id10Hosting, customerVatBase("CH", VatChargeMode.NON_EU_REVERSE)
                 ),
                 Expected.Result(
                     VatRate.NO_TAX, "433810"
@@ -297,7 +298,7 @@ internal class VatCalculatorTest {
             vatCalculatorWillCalculateResult(
                 Given(
                     vatGroupDef("CH", id20Webmaster, "n/i", dcAccount = "n/i", rcAccount = "433820"),
-                    id20Webmaster, vatBase("CH", VatChargeMode.NON_EU_REVERSE)
+                    id20Webmaster, customerVatBase("CH", VatChargeMode.NON_EU_REVERSE)
                 ),
                 Expected.Result(
                     VatRate.NO_TAX, "433820"
@@ -309,12 +310,47 @@ internal class VatCalculatorTest {
             vatCalculatorWillThrowDomainException(
                 Given(
                     vatGroupDef("DE", id10Hosting, "16,00", dcAccount = "440010", rcAccount = "n/a"),
-                    id10Hosting, vatBase("DE", VatChargeMode.NON_EU_REVERSE, "DE0123456789")
+                    id10Hosting, customerVatBase("DE", VatChargeMode.NON_EU_REVERSE, "DE0123456789")
                 ),
                 Expected.DomainException(
                     """
                     vatCountryCode 'DE' is invalid for vatChargeMode NON_EU_REVERSE
                     - in calculating VAT by vatGroupId='10', vatCountryCode='DE', vatChargeMode='NON_EU_REVERSE'
+                    """.trimIndent()
+                )
+            )
+    }
+
+
+    @Nested
+    inner class `will throw exception with error message` : VatCalculatorTestImplementation() {
+
+        @Test
+        fun `if  customerVatBase-vatCountryCode is not defined`() =
+            vatCalculatorWillThrowDomainException(
+                Given(
+                    vatGroupDef("DE", id10Hosting, "16,00", dcAccount = "440010", rcAccount = "n/a"),
+                    id10Hosting, customerVatBase("XX", VatChargeMode.EU_REVERSE, "XX0123456789")
+                ),
+                Expected.DomainException(
+                    """
+                    vatCountryCode 'XX' not found in [DE]
+                    - in calculating VAT by vatGroupId='10', vatCountryCode='XX', vatChargeMode='EU_REVERSE'
+                    """.trimIndent()
+                )
+            )
+
+        @Test
+        fun `if vatGroupId is not defined`() =
+            vatCalculatorWillThrowDomainException(
+                Given(
+                    vatGroupDef("DE", id10Hosting, "16,00", dcAccount = "440010", rcAccount = "n/a"),
+                    id99Undefined, customerVatBase("DE", VatChargeMode.DOMESTIC, "DE0123456789")
+                ),
+                Expected.DomainException(
+                    """
+                    vatGroupId '99' not found in [10]
+                    - in calculating VAT by vatGroupId='99', vatCountryCode='DE', vatChargeMode='DOMESTIC'
                     """.trimIndent()
                 )
             )
@@ -345,8 +381,8 @@ internal class VatCalculatorTest {
         )
     }
 
-    private fun vatBase(vatCountryCode: String, vatChargeMode: VatChargeMode, uidVat: String? = null): VatBase =
-        object : VatBase {
+    private fun customerVatBase(vatCountryCode: String, vatChargeMode: VatChargeMode, uidVat: String? = null): CustomerVatBase =
+        object : CustomerVatBase {
             override val vatCountryCode = vatCountryCode
             override val vatChargeMode = vatChargeMode
             override val uidVat = uidVat
@@ -356,10 +392,10 @@ internal class VatCalculatorTest {
 
         protected fun vatCalculatorWillCalculateResult(given: Given, expected: Expected.Result) {
             // when
-            val result = calculator.calculateEffectiveRate(
+            val result = calculator.determineEffectiveRate(
                 given.vatCountryGroupDefs,
                 given.vatGroup.id,
-                given.vatBase
+                given.customerVatBase
             )
 
             // then
@@ -371,10 +407,10 @@ internal class VatCalculatorTest {
 
             // when
             val actualException = assertThrows<DomainException> {
-                calculator.calculateEffectiveRate(
+                calculator.determineEffectiveRate(
                     given.vatCountryGroupDefs,
                     given.vatGroup.id,
-                    given.vatBase
+                    given.customerVatBase
                 )
             }
 
@@ -386,7 +422,7 @@ internal class VatCalculatorTest {
     class Given(
         val vatCountryGroupDefs: VatGroupDefs,
         val vatGroup: VatGroup,
-        val vatBase: VatBase
+        val customerVatBase: CustomerVatBase
     )
 
     sealed class Expected {

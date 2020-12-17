@@ -34,7 +34,6 @@ class VatGroupDefs(
 }
 
 data class VatGroupDef(
-
     val countryCode: CountryCode,
     val id: VatGroupId,
     val description: String,

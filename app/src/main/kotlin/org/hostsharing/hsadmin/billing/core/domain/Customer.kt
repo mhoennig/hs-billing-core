@@ -6,7 +6,7 @@ interface Customer : Formattable {
     val code: String
     val billingContact: Contact
     val sepa: Sepa
-    val vatBase: VatBase
+    val vatBase: CustomerVatBase
 
     override fun format(indent: Int): String = """
         |number=${number.quoted}

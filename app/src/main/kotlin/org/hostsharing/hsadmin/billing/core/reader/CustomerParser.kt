@@ -15,5 +15,5 @@ class CustomerParser internal constructor(record: Map<String, String?>) :
     override val code = record.mandatoryString("customerCode")
     override val billingContact = ContactParser.parse("billing contact", record)
     override val sepa = SepaParser.parse(record)
-    override val vatBase = VatBaseParser.parse(record)
+    override val vatBase = CustomerVatBaseParser.parse(record)
 }

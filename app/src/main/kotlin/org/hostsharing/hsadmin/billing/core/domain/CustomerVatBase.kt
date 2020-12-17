@@ -1,6 +1,6 @@
 package org.hostsharing.hsadmin.billing.core.domain
 
-interface VatBase : Formattable {
+interface CustomerVatBase : Formattable {
     val vatCountryCode: String
     val vatChargeMode: VatChargeMode
 

@@ -30,7 +30,7 @@ class InvoiceGenerator(
                         .filter { it.customerCode == customer.code }
                         .map {
                             val vatResult = VatCalculator(configuration)
-                                .calculateEffectiveRate(
+                                .determineEffectiveRate(
                                     vatGroupDefs,
                                     it.vatGroupId,
                                     customer.vatBase
@@ -71,7 +71,7 @@ class InvoiceVatGroup(
     override val items: List<InvoiceItem>
 ) : VatGroup {
     val vatResult = VatCalculator(config)
-        .calculateEffectiveRate(vatGroupDef, customer.vatBase)
+        .determineEffectiveRate(vatGroupDef, customer.vatBase)
     override val vatRate: BigDecimal = vatResult.vatRate.percentage
     override val vatAccount: String = vatResult.vatAccount
 }

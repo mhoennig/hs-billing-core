@@ -20,7 +20,7 @@ Code-Quality
 
 Domain Language
 - check field names for "denglisch"
-- better name for VatBase?
+- better name for CustomerVatBase?
 - "bill(ing)", "invoic(ing)" etc.
 - also check everything for proper domain language
 
