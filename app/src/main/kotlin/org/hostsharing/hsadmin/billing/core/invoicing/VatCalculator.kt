@@ -1,5 +1,4 @@
-// TODO: wrong package
-package org.hostsharing.hsadmin.billing.core.reader
+package org.hostsharing.hsadmin.billing.core.invoicing
 
 import org.hostsharing.hsadmin.billing.core.domain.*
 import org.hostsharing.hsadmin.billing.core.lib.Configuration

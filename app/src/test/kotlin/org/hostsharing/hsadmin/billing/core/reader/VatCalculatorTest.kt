@@ -4,6 +4,7 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isEqualToIgnoringGivenProperties
 import org.hostsharing.hsadmin.billing.core.domain.*
+import org.hostsharing.hsadmin.billing.core.invoicing.VatCalculator
 import org.hostsharing.hsadmin.billing.core.lib.Configuration
 import org.hostsharing.hsadmin.billing.core.lib.DomainException
 import org.junit.jupiter.api.Nested

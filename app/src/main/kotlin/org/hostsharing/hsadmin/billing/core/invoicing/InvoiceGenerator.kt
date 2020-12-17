@@ -3,7 +3,6 @@ package org.hostsharing.hsadmin.billing.core.invoicing
 import org.hostsharing.hsadmin.billing.core.domain.*
 import org.hostsharing.hsadmin.billing.core.lib.Configuration
 import org.hostsharing.hsadmin.billing.core.lib.Format
-import org.hostsharing.hsadmin.billing.core.reader.VatCalculator
 import java.math.BigDecimal
 import java.time.LocalDate
 
