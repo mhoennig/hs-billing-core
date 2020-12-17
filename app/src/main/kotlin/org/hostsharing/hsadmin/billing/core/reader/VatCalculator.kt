@@ -7,7 +7,7 @@ import org.hostsharing.hsadmin.billing.core.lib.withDomainContext
 class VatCalculator(val config: Configuration) {
 
     fun calculateEffectiveRate(
-        vatGroupDefs: Map<CountryCode, Map<VatGroupId, VatGroupDef>>,
+        vatGroupDefs: VatGroupDefs,
         vatGroupId: VatGroupId,
         vatBase: VatBase
     ): VatResult =

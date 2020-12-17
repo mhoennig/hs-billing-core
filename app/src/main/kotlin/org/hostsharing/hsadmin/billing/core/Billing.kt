@@ -28,7 +28,7 @@ class Billing(
             periodEndDate = periodEndDate,
             billingDate = billingDate,
             startInvoiceNumber = startInvoiceNumber,
-            vatGroupDefs = readVatGroups(vatGroupsCSV).resolveReferences(),
+            vatGroupDefs = VatGroupDefs(readVatGroups(vatGroupsCSV)).resolveReferences(configuration),
             customers = customers,
             billingItems = readBillingItems(billingItemsCSVs)
         ).generateInvoices()
@@ -40,17 +40,6 @@ class Billing(
 
     fun generateAccountingRecordsCsv(): File =
         AccountingRecordsGenerator(configuration).generate(invoices)
-
-    private fun Map<CountryCode, Map<VatGroupId, VatGroupDef>>.resolveReferences(): Map<CountryCode, Map<VatGroupId, VatGroupDef>> =
-        map { countryEntry ->
-            countryEntry.key to countryEntry.value.mapValues {
-                if (it.value.vatRate.domestic)
-                    // TODO: get rid of !!, eg by wrapping in a class and lookup through a method
-                    it.value.copy(vatRate=this[configuration.domesticCountryCode]!!.get(it.value.id)!!.vatRate)
-                else
-                    it.value
-            }
-        }.toMap()
 }
 
 private class FileBasedConfiguration(val configFile: File) : Configuration {

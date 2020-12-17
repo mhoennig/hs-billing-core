@@ -12,7 +12,7 @@ class InvoiceGenerator(
     val periodEndDate: LocalDate,
     val billingDate: LocalDate,
     val startInvoiceNumber: Int,
-    val vatGroupDefs: Map<CountryCode, Map<VatGroupId, VatGroupDef>>,
+    val vatGroupDefs: VatGroupDefs,
     val customers: List<Customer>,
     val billingItems: List<BillingItem>
 ) {

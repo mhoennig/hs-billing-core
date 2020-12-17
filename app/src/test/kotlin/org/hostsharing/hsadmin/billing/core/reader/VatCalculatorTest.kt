@@ -24,7 +24,7 @@ internal class VatCalculatorTest {
     // just to have an overview of all VAT group definitions,
     // each test lists their own definitions which are checked against these global definitions
     /* ktlint-disable */// @formatter:off
-    val vatCountryGroupDefsGlobals = mapOf(
+    val vatCountryGroupDefsGlobals = VatGroupDefs(mapOf(
         "DE" to mapOf(
             vatGroupDefAssignment(ID00_MEMBERSHIP, VatRate.NO_TAX, dcAccount = "420000", rcAccount = "n/a"),
             vatGroupDefAssignment(ID10_HOSTING, VatRate("16,00"), dcAccount = "440010", rcAccount = "n/a"),
@@ -46,7 +46,7 @@ internal class VatCalculatorTest {
             vatGroupDefAssignment(ID30_BOOK, VatRate.NOT_IMPLEMENTED, dcAccount = "n/i", rcAccount = "433830"),
             vatGroupDefAssignment(ID40_TSHIRT, VatRate.NOT_IMPLEMENTED, dcAccount = "n/i", rcAccount = "433840"),
         )
-    )
+    ))
     /* ktlint-enable */ // @formatter:on
 
     @Nested
@@ -300,7 +300,7 @@ internal class VatCalculatorTest {
         vatRate: String,
         dcAccount: String,
         rcAccount: String
-    ): Map<CountryCode, Map<VatGroupId, VatGroupDef>> {
+    ): VatGroupDefs {
         // make sure the given VAT group def is part of the global vat group definitions
         val defaultVatGroupDef = vatCountryGroupDefsGlobals[countryCode]!!.get(vatGroup.id)!!
         val givenVatGroupDefAssignment = vatGroupDefAssignment(vatGroup, VatRate(vatRate), dcAccount, rcAccount)
@@ -310,9 +310,9 @@ internal class VatCalculatorTest {
         ).isEqualToIgnoringGivenProperties(defaultVatGroupDef)
 
         // use just the definition necessary for the particular test
-        return mapOf(
+        return VatGroupDefs(mapOf(
             countryCode to mapOf(givenVatGroupDefAssignment)
-        )
+        ))
     }
 
     private fun vatBase(vatCountryCode: String, vatChargeMode: VatChargeMode, uidVat: String? = null): VatBase =
@@ -354,7 +354,7 @@ internal class VatCalculatorTest {
     }
 
     class Given(
-        val vatCountryGroupDefs: Map<CountryCode, Map<VatGroupId, VatGroupDef>>,
+        val vatCountryGroupDefs: VatGroupDefs,
         val vatGroup: VatGroup,
         val vatBase: VatBase
     )
