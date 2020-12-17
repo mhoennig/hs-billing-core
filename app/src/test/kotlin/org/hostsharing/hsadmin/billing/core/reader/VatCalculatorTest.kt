@@ -386,7 +386,7 @@ internal class VatCalculatorTest {
             vatCountryCode = vatCountryCode,
             vatChargeMode = vatChargeMode,
             uidVat = uidVat
-    )
+        )
 
     open inner class VatCalculatorTestImplementation {
 

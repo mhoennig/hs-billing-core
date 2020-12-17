@@ -44,9 +44,11 @@ internal class CustomerVatBaseParserTest {
         }
 
         assertThat(actual).isNotNull()
-            .prop(Exception::message).isEqualTo("""
+            .prop(Exception::message).isEqualTo(
+                """
             CustomerVatBase: vatChargeMode='unknown' not a valid VAT charge code
             - in parsing CustomerVatBase data $givenRecord
-            """.trimIndent())
+                """.trimIndent()
+            )
     }
 }

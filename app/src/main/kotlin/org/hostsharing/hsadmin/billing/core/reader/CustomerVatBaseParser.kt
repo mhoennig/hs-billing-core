@@ -1,7 +1,6 @@
 package org.hostsharing.hsadmin.billing.core.reader
 
 import org.hostsharing.hsadmin.billing.core.domain.CustomerVatBase
-import org.hostsharing.hsadmin.billing.core.domain.VatGroupDef
 import org.hostsharing.hsadmin.billing.core.lib.withDomainContext
 
 class CustomerVatBaseParser internal constructor(val record: Map<String, String?>) :

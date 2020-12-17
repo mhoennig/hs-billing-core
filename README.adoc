@@ -58,6 +58,11 @@ Functions which convert the generated domain objects to be used as contexts in _
 `lib`::
 Types functions which can be used in all other modules.
 
+== Build System
+
+=== Dependency Management
+
+A _dependabot_ for automatic dependency update checking of this project is running on https://github.com/mhoennig/hs-billing-core[its github repo].
 
 == Quality Assurance
 
