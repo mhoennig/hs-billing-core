@@ -12,7 +12,7 @@ import java.lang.RuntimeException
 
 internal class VatChargeModeTest {
 
-    object configuration : Configuration {
+    object FakeConfig : Configuration {
         override val templatesDirectory = "/src/main/resources/templates"
         override val outputDirectory = "/unused/"
     }

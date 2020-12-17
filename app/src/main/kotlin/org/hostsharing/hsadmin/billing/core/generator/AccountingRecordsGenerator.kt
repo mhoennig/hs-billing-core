@@ -9,15 +9,15 @@ import java.io.FileWriter
 
 class AccountingRecordsGenerator(val configuration: Configuration) {
 
-    private val TEMPLATE = "accounting-records.csv.vm"
-    private val OUTPUT_FILE_NAME = "accounting-records.csv"
+    private val template = "accounting-records.csv.vm"
+    private val outputFileName = "accounting-records.csv"
 
     fun generate(invoices: List<Invoice>): File {
-        val outputFile = File(configuration.outputDirectory, OUTPUT_FILE_NAME)
+        val outputFile = File(configuration.outputDirectory, outputFileName)
 
-        withDomainContext("outputFile: " + OUTPUT_FILE_NAME) {
+        withDomainContext("outputFile: " + outputFileName) {
             val invoiceWriter = InvoiceWriter(
-                configuration.templatesDirectory + "/" + TEMPLATE
+                configuration.templatesDirectory + "/" + template
             )
 
             FileWriter(outputFile).use { fileWriter ->

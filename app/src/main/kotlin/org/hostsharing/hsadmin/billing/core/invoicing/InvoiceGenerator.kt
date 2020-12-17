@@ -38,7 +38,7 @@ class InvoiceGenerator(
                             InvoiceItemData(
                                 vatCountryCode = customer.vatBase.vatCountryCode,
                                 vatChargeMode = customer.vatBase.vatChargeMode,
-                                vatRate = vatResult.vatRate.percentage!!,
+                                vatRate = vatResult.vatRate.percentage,
                                 vatAccount = vatResult.vatAccount,
                                 billingItem = it
                             )
@@ -72,7 +72,7 @@ class InvoiceVatGroup(
 ) : VatGroup {
     val vatResult = VatCalculator(config)
         .calculateEffectiveRate(vatGroupDef, customer.vatBase)
-    override val vatRate: BigDecimal = vatResult.vatRate.percentage!!
+    override val vatRate: BigDecimal = vatResult.vatRate.percentage
     override val vatAccount: String = vatResult.vatAccount
 }
 

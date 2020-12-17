@@ -28,7 +28,7 @@ internal class VatGroupDefParserTest {
 
         val actual = VatGroupDefParser.parse(givenRecord)
 
-        assertThat(actual?.formatted()).isEqualTo(
+        assertThat(actual.formatted()).isEqualTo(
             """
             countryCode="DE"
             id="10"
@@ -49,7 +49,7 @@ internal class VatGroupDefParserTest {
         }
         val actual = VatGroupDefParser.parse(givenRecord)
 
-        assertThat(actual?.placeOfSupply).isEqualTo(placeOfSupply)
+        assertThat(actual.placeOfSupply).isEqualTo(placeOfSupply)
     }
 
     @Test
