@@ -5,6 +5,6 @@ import java.math.BigDecimal
 /**
  * Represents a single output item belonging to an invoice.
  */
-interface InvoiceItem : BillingItem {
+interface InvoiceItem : Item {
     val grossAmount: BigDecimal
 }

@@ -82,7 +82,7 @@ class InvoiceItemData(
     val vatRate: BigDecimal,
     val vatAccount: String,
     val billingItem: BillingItem
-) : InvoiceItem, BillingItem by billingItem {
+) : InvoiceItem, Item by billingItem {
     val vatAmount: BigDecimal = netAmount * vatRate
     override val grossAmount = netAmount + vatAmount
 }
