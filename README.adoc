@@ -67,7 +67,32 @@ Types functions which can be used in all other modules.
 
 == Build System
 
-=== Dependency Management
+=== Task Overview
+
+To see all available build tasks, run:
+
+[source,shell script]
+----
+./gradlew tasks --all
+----
+
+
+The _Gradle_ task dependency plugin _tiTree_ can be used to list all `gradlew` tasks with their dependencies.
+For example to see all dependencies of the `gradlew build` task, run:
+
+[source,shell script]
+----
+$ ./gradlew tiTree build
+----
+
+=== Library Dependency Management
+
+To get a dependency graph of all used libraries, run:
+
+[source,shell script]
+----
+$ /gradlew app:dependencies
+----
 
 A _dependabot_ for automatic dependency update checking of this project is running on https://github.com/mhoennig/hs-billing-core[its github repo].
 
