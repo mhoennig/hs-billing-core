@@ -1,6 +1,10 @@
 package org.hostsharing.hsadmin.billing.core.invoicing
 
-import org.hostsharing.hsadmin.billing.core.domain.*
+import org.hostsharing.hsadmin.billing.core.domain.CustomerVatBase
+import org.hostsharing.hsadmin.billing.core.domain.VatGroupDef
+import org.hostsharing.hsadmin.billing.core.domain.VatGroupDefs
+import org.hostsharing.hsadmin.billing.core.domain.VatGroupId
+import org.hostsharing.hsadmin.billing.core.domain.VatResult
 import org.hostsharing.hsadmin.billing.core.lib.Configuration
 import org.hostsharing.hsadmin.billing.core.lib.withDomainContext
 

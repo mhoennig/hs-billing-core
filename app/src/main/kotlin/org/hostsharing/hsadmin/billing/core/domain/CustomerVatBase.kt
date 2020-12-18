@@ -1,5 +1,7 @@
 package org.hostsharing.hsadmin.billing.core.domain
 
+import org.hostsharing.hsadmin.billing.core.lib.validationError
+
 data class CustomerVatBase(
     val vatCountryCode: String,
     val vatChargeMode: VatChargeMode,
@@ -7,8 +9,9 @@ data class CustomerVatBase(
 ) : Formattable {
 
     init {
-        if (!uidVat.isNullOrEmpty() && !uidVat.startsWith(vatCountryCode))
-            error("UID-VAT $uidVat does not match vatCountryCode $vatCountryCode")
+        if (!uidVat.isNullOrEmpty() && !uidVat.startsWith(vatCountryCode)) {
+            validationError("UID-VAT $uidVat does not match vatCountryCode $vatCountryCode")
+        }
     }
 
     override fun format(indent: Int): String = """

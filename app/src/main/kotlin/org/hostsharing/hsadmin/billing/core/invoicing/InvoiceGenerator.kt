@@ -47,7 +47,8 @@ class InvoiceGenerator(
                             InvoiceVatGroup(
                                 config = configuration,
                                 vatGroupDef = vatGroupDefs[customer.vatBase.vatCountryCode]
-                                    ?.get(it.key) ?: error("vatGroupDef ${customer.vatBase.vatCountryCode}.${it.key} not found"),
+                                    ?.get(it.key)
+                                    ?: error("vatGroupDef ${customer.vatBase.vatCountryCode}.${it.key} not found"),
                                 customer = customer,
                                 vatAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.vatAmount },
                                 netAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.netAmount },
@@ -81,7 +82,7 @@ class InvoiceItemData(
     val vatRate: BigDecimal,
     val vatAccount: String,
     val billingItem: BillingItem
-) : InvoiceItem, BillingItem by billingItem {
+) : InvoiceItem, Item by billingItem {
     val vatAmount: BigDecimal = netAmount * vatRate
     override val grossAmount = netAmount + vatAmount
 }
