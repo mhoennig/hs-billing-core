@@ -2,6 +2,13 @@
 Michael Hönnig
 2020-12-03
 :icons: font
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
 
 CAUTION: This software is under development and not yet usable.
 
