@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>EqualsWithHashCodeExist:VatGroup.kt$VatRate</ID>
+    <ID>LongParameterList:Billing.kt$Billing$( val configuration: Configuration, val periodEndDate: LocalDate, val billingDate: LocalDate, val startInvoiceNumber: Int, val vatGroupsCSV: File, val customersCSV: File, vararg val billingItemsCSVs: File, )</ID>
+    <ID>LongParameterList:InvoiceGenerator.kt$InvoiceGenerator$( val configuration: Configuration, val periodEndDate: LocalDate, val billingDate: LocalDate, val startInvoiceNumber: Int, val vatGroupDefs: Map&lt;String, VatGroupDef&gt;, val customers: List&lt;Customer&gt;, val billingItems: List&lt;BillingItem&gt; )</ID>
+    <ID>LongParameterList:InvoiceGenerator.kt$InvoiceVatGroup$( config: Configuration, vatGroupDef: VatGroupDef, customer: Customer, override val vatAmount: BigDecimal, override val netAmount: BigDecimal, override val grossAmount: BigDecimal, override val items: List&lt;InvoiceItem&gt; )</ID>
+    <ID>MagicNumber:Customer.kt$Customer$4</ID>
+    <ID>MagicNumber:InvoiceGenerator.kt$InvoiceGenerator.&lt;no name provided&gt;$30</ID>
+    <ID>MagicNumber:InvoiceWriter.kt$InvoiceWriter.VatGroupFormatter$100</ID>
+    <ID>MaxLineLength:InvoiceGenerator.kt$InvoiceGenerator.&lt;no name provided&gt;$override val documentNumber = "${billingDate.format(Format.year)}-${startInvoiceNumber + index}-${customer.number}"</ID>
+    <ID>MaxLineLength:VatCalculator.kt$VatCalculator$withDomainContext</ID>
+    <ID>MaxLineLength:VatChargeCode.kt$VatChargeCode$// ?: error("vatCountryCode '$vatCountryCode' not found in vatGroupDef '${vatGroupDef.id} rates ${vatGroupDef.rates.keys}")</ID>
+    <ID>MaxLineLength:VatChargeCode.kt$VatChargeCode$?:</ID>
+    <ID>MaxLineLength:VatChargeCode.kt$VatChargeCode$error("invalid vatChargeCode DOMESTIC for customer with vatCountryCode '$vatCountryCode', only allowed for '${config.domesticCountryCode}'")</ID>
+    <ID>MaxLineLength:VatChargeCode.kt$VatChargeCode$error("invalid vatCountryCode '$vatCountryCode' must not be '${config.domesticCountryCode}' for vatChargeCode DOMESTIC")</ID>
+    <ID>MaxLineLength:VatChargeCode.kt$VatChargeCode$protected</ID>
+    <ID>TooGenericExceptionCaught:DomainContext.kt$exc: Exception</ID>
+    <ID>TooGenericExceptionCaught:Parser.kt$Parser$exc: Exception</ID>
+    <ID>UnusedPrivateClass:Billing.kt$FileBasedConfiguration : Configuration</ID>
+    <ID>UtilityClassWithPublicConstructor:DomainContext.kt$DomainContext</ID>
+    <ID>UtilityClassWithPublicConstructor:Format.kt$Format</ID>
+    <ID>VariableNaming:AccountingRecordsGenerator.kt$AccountingRecordsGenerator$private val OUTPUT_FILE_NAME = "accounting-records.csv"</ID>
+    <ID>VariableNaming:AccountingRecordsGenerator.kt$AccountingRecordsGenerator$private val TEMPLATE = "accounting-records.csv.vm"</ID>
+    <ID>WildcardImport:Billing.kt$import org.hostsharing.hsadmin.billing.core.domain.*</ID>
+    <ID>WildcardImport:Billing.kt$import org.hostsharing.hsadmin.billing.core.reader.*</ID>
+    <ID>WildcardImport:InvoiceGenerator.kt$import org.hostsharing.hsadmin.billing.core.domain.*</ID>
+    <ID>WildcardImport:InvoiceWriter.kt$import org.hostsharing.hsadmin.billing.core.domain.*</ID>
+  </CurrentIssues>
+</SmellBaseline>

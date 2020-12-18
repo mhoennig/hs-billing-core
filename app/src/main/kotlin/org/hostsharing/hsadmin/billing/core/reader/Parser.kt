@@ -4,6 +4,7 @@ import org.hostsharing.hsadmin.billing.core.domain.PlaceOfSupply
 import org.hostsharing.hsadmin.billing.core.domain.VatChargeMode
 import org.hostsharing.hsadmin.billing.core.domain.VatRate
 import org.hostsharing.hsadmin.billing.core.domain.isCountryCode
+import org.hostsharing.hsadmin.billing.core.lib.validationError
 import java.math.BigDecimal
 
 open class Parser(val contextInfo: String) {
@@ -36,7 +37,7 @@ open class Parser(val contextInfo: String) {
         try {
             return VatChargeMode.ofCode(fieldValue)
         } catch (exc: Exception) {
-            error("$contextInfo: $fieldName='$fieldValue' not a valid VAT charge code")
+            validationError("$contextInfo: $fieldName='$fieldValue' not a valid VAT charge code", exc)
         }
     }
 
@@ -45,7 +46,7 @@ open class Parser(val contextInfo: String) {
         try {
             return PlaceOfSupply.ofCode(fieldValue)
         } catch (exc: Exception) {
-            error("$contextInfo: $fieldName='$fieldValue' not a valid PlaceOfSupply")
+            validationError("$contextInfo: $fieldName='$fieldValue' not a valid PlaceOfSupply", exc)
         }
     }
 
@@ -54,7 +55,7 @@ open class Parser(val contextInfo: String) {
         try {
             return VatRate(fieldValue)
         } catch (exc: Exception) {
-            error("$contextInfo: $fieldName='$fieldValue' not a valid VatRate")
+            validationError("$contextInfo: $fieldName='$fieldValue' not a valid VatRate", exc)
         }
     }
 }

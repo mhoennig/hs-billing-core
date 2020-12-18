@@ -30,19 +30,24 @@ private object VatPercentageFormat {
 
 class VatRate(val rate: String) {
     companion object {
-        val NO_TAX: VatRate = VatRate("noTax")
-        val DOMESTIC: VatRate = VatRate("domestic")
-        val NOT_APPLICABLE: VatRate = VatRate("n/a")
-        val NOT_IMPLEMENTED: VatRate = VatRate("n/i")
+        private const val NO_TAX_VALUE = "noTax"
+        private const val DOMESTIC_VALUE = "domestic"
+        private const val NOT_APPLICABLE_VALUE = "n/a"
+        private const val NOT_IMPLEMENTED_VALUE = "n/i"
+
+        val NO_TAX: VatRate = VatRate(NO_TAX_VALUE)
+        val DOMESTIC: VatRate = VatRate(DOMESTIC_VALUE)
+        val NOT_APPLICABLE: VatRate = VatRate(NOT_APPLICABLE_VALUE)
+        val NOT_IMPLEMENTED: VatRate = VatRate(NOT_IMPLEMENTED_VALUE)
         val CENT: BigDecimal = BigDecimal(100).apply {
             setScale(2, RoundingMode.HALF_UP)
         }
     }
 
-    val noTax: Boolean = rate == "noTax"
-    val domestic: Boolean = rate == "domestic"
-    val notApplicable: Boolean = rate == "n/a"
-    val notImplemented: Boolean = rate == "n/i"
+    val noTax: Boolean = rate == NO_TAX_VALUE
+    val domestic: Boolean = rate == DOMESTIC_VALUE
+    val notApplicable: Boolean = rate == NOT_APPLICABLE_VALUE
+    val notImplemented: Boolean = rate == NOT_IMPLEMENTED_VALUE
     val unknown: Boolean = notApplicable || notImplemented || domestic
     val percentage: BigDecimal
         get() = when (true) {
@@ -60,10 +65,10 @@ class VatRate(val rate: String) {
 
     override fun toString(): String =
         when (true) {
-            noTax -> "noTax"
-            domestic -> "domestic"
-            notApplicable -> "n/a"
-            notImplemented -> "n/i"
+            noTax -> NO_TAX_VALUE
+            domestic -> DOMESTIC_VALUE
+            notApplicable -> NOT_APPLICABLE_VALUE
+            notImplemented -> NOT_IMPLEMENTED_VALUE
             else -> percentage.toString()
         }
 

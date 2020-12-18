@@ -87,7 +87,7 @@ To automatically fix code style deviations, use:
 $ ./gradlew ktlintFormat
 ----
 
-=== Code Complexity
+=== Code Quality
 
 For checking code complexity _detekt_ is configured:
 
@@ -96,9 +96,11 @@ For checking code complexity _detekt_ is configured:
 $ ./gradlew detekt
 ----
 
-This command will check for rule violations and create a link:app/build/reports/detekt.html[report].
+This command will check for rule violations and create a link:app/build/reports/detekt/detekt.html[report].
 
-For more information see https://detekt.github.io/detekt/gradle.html#available-plugin-tasks[_detekt_ project on _Github_].
+The configuration can be found in link:app/config/detekt/config.yml[].
+
+For more information see https://arturbosch.github.io/detekt[_detekt_ project on _Github_].
 
 
 === Unit Testing
@@ -156,7 +158,7 @@ The mutation-tests can be executed with:
 $ ./gradlew pitest
 ----
 
-This creates link:./app/build/reports/pitest/org.hostsharing.hsadmin.billing.core.reader/index.html[a report] comprising line- and mutation-coverage of the unit-tests.
+This creates link:./app/build/reports/pitest/index.html[a report] comprising line- and mutation-coverage of the unit-tests.
 
 If the "mutant-kill rate" falls below a configured limit, the _pitest_-task  will fail;
 in that case, please improve the unit-tests.

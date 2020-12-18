@@ -22,19 +22,21 @@ enum class VatChargeMode(
     EU_REVERSE("EU-reverse", false) {
         override fun calculateVat(config: Configuration, vatGroupDef: VatGroupDef, vatCountryCode: String): VatResult {
             validateNonDomesticCountryCode(config, vatCountryCode)
-            return if (vatGroupDef.vatRate.noTax)
+            return if (vatGroupDef.vatRate.noTax) {
                 determineDirectChargeVat(vatGroupDef)
-            else
-                determineReverseChargeVat(config, vatGroupDef)
+            } else {
+                determineReverseChargeVat(vatGroupDef)
+            }
         }
     },
     NON_EU_REVERSE("NonEU-reverse", false) {
         override fun calculateVat(config: Configuration, vatGroupDef: VatGroupDef, vatCountryCode: String): VatResult {
             validateNonDomesticCountryCode(config, vatCountryCode)
-            return if (vatGroupDef.vatRate.noTax)
+            return if (vatGroupDef.vatRate.noTax) {
                 determineDirectChargeVat(vatGroupDef)
-            else
-                determineReverseChargeVat(config, vatGroupDef)
+            } else {
+                determineReverseChargeVat(vatGroupDef)
+            }
         }
     };
 
@@ -65,7 +67,6 @@ enum class VatChargeMode(
         return VatResult(vatGroupDef.vatRate, vatGroupDef.dcAccount)
     }
 
-    protected fun determineReverseChargeVat(config: Configuration, vatGroupDef: VatGroupDef): VatResult {
-        return VatResult(VatRate.NO_TAX, vatGroupDef.rcAccount)
-    }
+    protected fun determineReverseChargeVat(vatGroupDef: VatGroupDef): VatResult =
+        VatResult(VatRate.NO_TAX, vatGroupDef.rcAccount)
 }
