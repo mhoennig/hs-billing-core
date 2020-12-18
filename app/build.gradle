@@ -121,7 +121,7 @@ pitest {
     threads.set(4)
     outputFormats.set(['XML', 'HTML'])
     timestampedReports.set(false)
-    mutationThreshold.set(85)
+    mutationThreshold.set(75)
     mutators.set(["STRONGER", "DEFAULTS"])
     avoidCallsTo.set(["kotlin.jvm.internal", "kotlinx.coroutines"])
 }
