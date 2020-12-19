@@ -46,9 +46,7 @@ class InvoiceGenerator(
                         .map {
                             InvoiceVatGroup(
                                 config = configuration,
-                                vatGroupDef = vatGroupDefs[customer.vatBase.vatCountryCode]
-                                    ?.get(it.key)
-                                    ?: error("vatGroupDef ${customer.vatBase.vatCountryCode}.${it.key} not found"),
+                                vatGroupDef = vatGroupDefs.lookup(customer.vatBase.vatCountryCode, it.key),
                                 customer = customer,
                                 vatAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.vatAmount },
                                 netAmount = it.value.fold(BigDecimal.ZERO) { acc, value -> acc + value.netAmount },

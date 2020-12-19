@@ -365,7 +365,7 @@ internal class VatCalculatorTest {
         rcAccount: String
     ): VatGroupDefs {
         // make sure the given VAT group def is part of the global vat group definitions
-        val defaultVatGroupDef = vatCountryGroupDefsGlobals[countryCode]!!.get(vatGroup.id)!!
+        val defaultVatGroupDef = vatCountryGroupDefsGlobals.lookup(countryCode, vatGroup.id)
         val givenVatGroupDefAssignment = vatGroupDefAssignment(vatGroup, VatRate(vatRate), dcAccount, rcAccount)
         assertThat(
             givenVatGroupDefAssignment.second,

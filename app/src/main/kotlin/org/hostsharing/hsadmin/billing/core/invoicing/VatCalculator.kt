@@ -16,9 +16,7 @@ class VatCalculator(val config: Configuration) {
         customerVatBase: CustomerVatBase
     ): VatResult =
         withDomainContext("calculating VAT by vatGroupId='$vatGroupId', vatCountryCode='${customerVatBase.vatCountryCode}', vatChargeMode='${customerVatBase.vatChargeMode}'") {
-            val vatCountryGroup = vatGroupDefs[customerVatBase.vatCountryCode]
-                ?: vatGroupDefs[VatGroupDef.FALLBACK_VAT_COUNTRY_CODE]
-                ?: error("vatCountryCode '${customerVatBase.vatCountryCode}' not found in ${vatGroupDefs.keys}")
+            val vatCountryGroup = vatGroupDefs.byCountryCode(customerVatBase.vatCountryCode)
             val vatGroupDef = vatCountryGroup[vatGroupId]
                 ?: error("vatGroupId '$vatGroupId' not found in ${vatCountryGroup.keys}")
             customerVatBase.vatChargeMode

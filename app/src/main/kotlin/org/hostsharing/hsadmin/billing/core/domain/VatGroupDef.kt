@@ -4,12 +4,11 @@ import org.hostsharing.hsadmin.billing.core.lib.Configuration
 
 class VatGroupDefs(
     private val configuration: Configuration,
-    map: Map<CountryCode, Map<VatGroupId, VatGroupDef>>
-) : Map<CountryCode, Map<VatGroupId, VatGroupDef>> by map {
-
+    val vatGroupDefsByCountryCode: Map<CountryCode, Map<VatGroupId, VatGroupDef>>
+) {
     fun lookup(countryCode: CountryCode, vatGroupId: VatGroupId): VatGroupDef {
-        val vatGroupDefsForCountry = get(countryCode)
-            ?: error("no VAT group def found for '$countryCode' in '$keys'")
+        val vatGroupDefsForCountry = vatGroupDefsByCountryCode.get(countryCode)
+            ?: error("no VAT group def found for '$countryCode' in '${vatGroupDefsByCountryCode.keys}'")
         return vatGroupDefsForCountry.get(vatGroupId)
             ?: error(
                 "no VAT group def found for '$vatGroupId' in '${vatGroupDefsForCountry.keys}' " +
@@ -32,7 +31,7 @@ class VatGroupDefs(
     fun resolveVatRateReferences(): VatGroupDefs =
         VatGroupDefs(
             configuration,
-            map { countryEntry ->
+            vatGroupDefsByCountryCode.map { countryEntry ->
                 countryEntry.key to countryEntry.value.mapValues {
                     if (it.value.vatRate.domestic) {
                         it.value.copy(vatRate = lookup(configuration.domesticCountryCode, it.value.id).vatRate)
@@ -42,6 +41,11 @@ class VatGroupDefs(
                 }
             }.toMap()
         )
+
+    fun byCountryCode(vatCountryCode: String): Map<VatGroupId, VatGroupDef> =
+        vatGroupDefsByCountryCode[vatCountryCode]
+            ?: vatGroupDefsByCountryCode[VatGroupDef.FALLBACK_VAT_COUNTRY_CODE]
+            ?: error("vatCountryCode '${vatCountryCode}' not found in ${vatGroupDefsByCountryCode.keys}")
 }
 
 data class VatGroupDef(

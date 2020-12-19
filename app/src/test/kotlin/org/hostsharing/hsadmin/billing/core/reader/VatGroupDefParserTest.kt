@@ -34,7 +34,7 @@ internal class VatGroupDefParserTest {
             id="10"
             description="Test-VAT-Group"
             placeOfSupply=RECEIVER
-            vatRate="0.16"
+            vatRate="0.1600"
             dcAccount="440000"
             rcAccount="n/a"
             """.trimIndent()

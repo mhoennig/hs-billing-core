@@ -18,7 +18,7 @@ interface VatGroup {
 
 private object VatPercentageFormat {
     val decimalFormat = DecimalFormat(
-        "#0.0#",
+        "#0.00#",
         DecimalFormatSymbols().apply {
             setGroupingSeparator('.')
             setDecimalSeparator(',')
@@ -40,7 +40,7 @@ class VatRate(val rate: String) {
         val NOT_APPLICABLE: VatRate = VatRate(NOT_APPLICABLE_VALUE)
         val NOT_IMPLEMENTED: VatRate = VatRate(NOT_IMPLEMENTED_VALUE)
         val CENT: BigDecimal = BigDecimal(100).apply {
-            setScale(2, RoundingMode.HALF_UP)
+            setScale(4, RoundingMode.HALF_UP)
         }
     }
 
@@ -55,7 +55,8 @@ class VatRate(val rate: String) {
             domestic -> error("unresolved 'domestic' vat rate reference")
             notApplicable -> error("vat rate not applicable")
             notImplemented -> error("vat rate not implemented")
-            else -> VatPercentageFormat.decimalFormat.parse(rate) as BigDecimal / CENT
+            else -> (VatPercentageFormat.decimalFormat.parse(rate) as BigDecimal)
+                .setScale(4) / CENT
         }
 
     init {

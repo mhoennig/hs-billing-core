@@ -57,6 +57,7 @@ dependencies {
     testImplementation 'com.tngtech.archunit:archunit-junit5:0.15.0'
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
 
+    // mutation testing libraries
     testImplementation 'org.pitest:pitest-junit5-plugin:0.12'
 
     // linting
@@ -121,9 +122,16 @@ pitest {
     threads.set(4)
     outputFormats.set(['XML', 'HTML'])
     timestampedReports.set(false)
-    mutationThreshold.set(75)
+    mutationThreshold.set(85)
     mutators.set(["STRONGER", "DEFAULTS"])
-    avoidCallsTo.set(["kotlin.jvm.internal", "kotlinx.coroutines"])
+    avoidCallsTo.set([
+        "kotlin.jvm.internal",
+        "kotlinx.coroutines",
+        "kotlin.io.CloseableKt"
+    ])
+    excludedMethods.set([
+        "get*"
+    ])
 }
 
 // --- ktlint -- checking format style and formatting
