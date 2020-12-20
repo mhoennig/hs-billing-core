@@ -2,13 +2,11 @@ package org.hostsharing.hsadmin.billing.core.lib
 
 import java.util.*
 
-class DomainContext {
-    companion object {
-        val infos = Stack<String>()
+object DomainContext {
+    val infos = Stack<String>()
 
-        override fun toString(): String =
-            infos.reversed().map { "- in $it" }.joinToString("\n")
-    }
+    override fun toString(): String =
+        infos.reversed().map { "- in $it" }.joinToString("\n")
 }
 
 fun <T> withDomainContext(contextInfo: String, body: () -> T): T {

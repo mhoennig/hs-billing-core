@@ -3,6 +3,7 @@ package org.hostsharing.hsadmin.billing.core.lib
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 internal class DomainContextTest {
 
@@ -53,5 +54,26 @@ internal class DomainContextTest {
         }
 
         assertThat(actual).isEqualTo("some value")
+    }
+
+    @Test
+    fun `validationError throws exception`() {
+        val actual = assertThrows<IllegalStateException> {
+            validationError("some validation error")
+        }
+
+        assertThat(actual.message).isEqualTo("some validation error")
+    }
+
+    @Test
+    fun `validationError throws exception with cause`() {
+        val givenCause = Exception("some cause")
+
+        val actual = assertThrows<IllegalStateException> {
+            validationError("some validation error", givenCause)
+        }
+
+        assertThat(actual.message).isEqualTo("some validation error")
+        assertThat(actual.cause).isEqualTo(givenCause)
     }
 }
