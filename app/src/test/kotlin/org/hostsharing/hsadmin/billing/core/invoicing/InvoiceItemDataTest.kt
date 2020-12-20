@@ -5,18 +5,14 @@ import assertk.assertions.isEqualByComparingTo
 import assertk.assertions.isEqualTo
 import org.hostsharing.hsadmin.billing.core.domain.BillingItem
 import org.hostsharing.hsadmin.billing.core.domain.VatChargeMode
-import org.hostsharing.hsadmin.billing.core.domain.VatRate
-import org.hostsharing.hsadmin.billing.core.lib.Format
-import org.hostsharing.hsadmin.billing.core.lib.format
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
-import java.time.LocalDate
 
 internal class InvoiceItemDataTest {
 
     private val given = InvoiceItemData(
         vatCountryCode = "NL",
-        vatChargeMode  = VatChargeMode.EU_DIRECT,
+        vatChargeMode = VatChargeMode.EU_DIRECT,
         vatRate = BigDecimal("0.10"),
         vatAccount = "123456",
         billingItem = BillingItem(
@@ -36,7 +32,6 @@ internal class InvoiceItemDataTest {
         assertThat(given.netAmount).isEqualTo(BigDecimal("10.00"))
         assertThat(given.vatGroupId).isEqualTo("00")
     }
-
 
     @Test
     fun `calculates vatAmount`() {
