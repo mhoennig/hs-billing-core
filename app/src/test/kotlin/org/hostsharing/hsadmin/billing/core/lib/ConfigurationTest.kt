@@ -26,10 +26,17 @@ internal class ConfigurationTest {
     }
 
     @Test
-    fun `default for property domesticCountryCode is 'DE'`() {
+    fun `default for property domesticVatCountryCode is 'DE'`() {
         val given = object : Configuration {}
-        val actual = given.domesticCountryCode
+        val actual = given.domesticVatCountryCode
         assertThat(actual).isEqualTo("DE")
+    }
+
+    @Test
+    fun `default for property domesticCountryCodes is ('DE')`() {
+        val given = object : Configuration {}
+        val actual = given.domesticCountryCodes
+        assertThat(actual).isEqualTo(arrayOf("DE"))
     }
 
     @Test

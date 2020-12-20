@@ -34,7 +34,7 @@ class VatGroupDefs(
             vatGroupDefsByCountryCode.map { countryEntry ->
                 countryEntry.key to countryEntry.value.mapValues {
                     if (it.value.vatRate.domestic) {
-                        it.value.copy(vatRate = lookup(configuration.domesticCountryCode, it.value.id).vatRate)
+                        it.value.copy(vatRate = lookup(configuration.domesticVatCountryCode, it.value.id).vatRate)
                     } else {
                         it.value
                     }

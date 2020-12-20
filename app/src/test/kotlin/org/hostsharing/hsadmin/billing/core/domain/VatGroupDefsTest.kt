@@ -12,7 +12,8 @@ import org.junit.jupiter.api.assertThrows
 internal class VatGroupDefsTest {
 
     private val config = object : Configuration {
-        override val domesticCountryCode = "DE"
+        override val domesticVatCountryCode = "DE"
+        override val domesticCountryCodes = arrayOf("DE")
     }
 
     /* ktlint-disable */// @formatter:off

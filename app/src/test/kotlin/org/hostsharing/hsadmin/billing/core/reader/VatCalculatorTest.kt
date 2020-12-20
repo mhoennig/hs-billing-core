@@ -13,21 +13,21 @@ import org.junit.jupiter.api.assertThrows
 
 internal class VatCalculatorTest {
 
-    val config = object : Configuration {}
-    val calculator = VatCalculator(config)
+    private val config = object : Configuration {}
+    private val calculator = VatCalculator(config)
 
-    val id00Membership = VatGroup("00", "Membership Fee", PlaceOfSupply.NOT_APPLICABLE)
-    val id10Hosting = VatGroup("10", "Hosting-Plan", PlaceOfSupply.RECEIVER)
-    val id20Webmaster = VatGroup("20", "Webmaster on Demand", PlaceOfSupply.SUPPLIER)
-    val id30Book = VatGroup("30", "Book", PlaceOfSupply.SUPPLIER)
-    val id40TShirt = VatGroup("40", "T-Shirt", PlaceOfSupply.SUPPLIER)
-    val id99Undefined = VatGroup("99", "Undefined", PlaceOfSupply.SUPPLIER)
+    private val id00Membership = VatGroup("00", "Membership Fee", PlaceOfSupply.NOT_APPLICABLE)
+    private val id10Hosting = VatGroup("10", "Hosting-Plan", PlaceOfSupply.RECEIVER)
+    private val id20Webmaster = VatGroup("20", "Webmaster on Demand", PlaceOfSupply.SUPPLIER)
+    private val id30Book = VatGroup("30", "Book", PlaceOfSupply.SUPPLIER)
+    private val id40TShirt = VatGroup("40", "T-Shirt", PlaceOfSupply.SUPPLIER)
+    private val id99Undefined = VatGroup("99", "Undefined", PlaceOfSupply.SUPPLIER)
 
     // This map of global VatGroupDefs is just to have an overview of all VAT group definitions.
     // Each single test lists their own definitions to have all relevant inputs and outputs in one place.
     // Also, the test fixture checkes each the inputs against these global VatGroupDefs.
     /* ktlint-disable */// @formatter:off
-    val vatCountryGroupDefsGlobals = VatGroupDefs(
+    private val vatCountryGroupDefsGlobals = VatGroupDefs(
         config,
         mapOf(
             "DE" to mapOf(

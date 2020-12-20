@@ -5,7 +5,7 @@ plugins {
     id 'application'
     id 'jacoco'
     id 'info.solidsoft.pitest' version '1.5.2'
-    id "io.gitlab.arturbosch.detekt" version "1.15.0-RC1"
+    id "io.gitlab.arturbosch.detekt" version "1.15.0-RC2"
     id 'org.barfuin.gradle.taskinfo' version '1.0.1'
 }
 
