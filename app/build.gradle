@@ -107,9 +107,30 @@ jacocoTestCoverageVerification {
                 minimum = 0.80
             }
             limit {
+                counter = 'LINE'
+                value = 'MISSEDCOUNT'
+                maximum = 2
+            }
+            limit {
                 counter = 'BRANCH'
                 value = 'COVEREDRATIO'
-                minimum = 0.70
+                minimum = 0.85
+            }
+            limit {
+                counter = 'BRANCH'
+                value = 'MISSEDCOUNT'
+                maximum = 2
+            }
+        }
+        rule {
+            element = 'METHOD'
+            includes = ['org.hostsharing.hsadmin.billing.core.*']
+            excludes = ['equals']
+
+            limit {
+                counter = 'COMPLEXITY'
+                value = 'TOTALCOUNT'
+                maximum = 8
             }
         }
     }
