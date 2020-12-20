@@ -18,7 +18,7 @@ class VatGroupDefParser internal constructor(val record: Map<String, String?>) :
                 id = record.mandatoryString("id"),
                 description = record.mandatoryString("description"),
                 placeOfSupply = record.mandatoryPlaceOfSupply("placeOfSupply"),
-                vatRate = record.mandatorVatRate("vatRate"),
+                vatRate = record.mandatoryVatRate("vatRate"),
                 dcAccount = record.mandatoryString("dcAccount"),
                 rcAccount = record.mandatoryString("rcAccount"),
             )

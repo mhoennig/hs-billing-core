@@ -29,8 +29,10 @@ fun <T> withDomainContext(contextInfo: String, body: () -> T): T {
 
 class DomainException(message: String, exc: Exception) : Exception(message, exc)
 
-fun validationError(message: String, cause: Throwable): Nothing =
+// if inline is removed, jacoco does not recognize callers code-coverage
+inline fun validationError(message: String, cause: Throwable): Nothing =
     throw IllegalStateException(message, cause)
 
-fun validationError(message: String): Nothing =
+// if inline is removed, jacoco does not recognize callers code-coverage
+inline fun validationError(message: String): Nothing =
     throw IllegalStateException(message)

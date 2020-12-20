@@ -3,7 +3,9 @@ package org.hostsharing.hsadmin.billing.core.reader
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNull
+import org.hostsharing.hsadmin.billing.core.domain.PlaceOfSupply
 import org.hostsharing.hsadmin.billing.core.domain.VatChargeMode
+import org.hostsharing.hsadmin.billing.core.domain.VatRate
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.math.BigDecimal
@@ -215,6 +217,80 @@ internal class ParserTest : Parser("some test data") {
 
         val actual = assertThrows<IllegalStateException> {
             record.mandatoryVatChargeMode("someField")
+        }
+
+        assertThat(actual.message).isEqualTo("some test data without someField")
+    }
+
+    @Test
+    fun `mandatoryPlaceOfSupply will return given valid value`() {
+        val record: Map<String, String?> = mapOf(
+            "someField" to PlaceOfSupply.RECEIVER.code
+        )
+
+        val actual = record.mandatoryPlaceOfSupply("someField")
+
+        assertThat(actual).isEqualTo(PlaceOfSupply.RECEIVER)
+    }
+
+    @Test
+    fun `mandatoryPlaceOfSupply will throw error for invalid value`() {
+        val record: Map<String, String?> = mapOf(
+            "someField" to "invalid value"
+        )
+
+        val actual = assertThrows<IllegalStateException> {
+            record.mandatoryPlaceOfSupply("someField")
+        }
+
+        assertThat(actual.message).isEqualTo("some test data: someField='invalid value' not a valid PlaceOfSupply")
+    }
+
+    @Test
+    fun `mandatoryPlaceOfSupply will throw error for missing value`() {
+        val record: Map<String, String?> = mapOf(
+            "someField" to null
+        )
+
+        val actual = assertThrows<IllegalStateException> {
+            record.mandatoryPlaceOfSupply("someField")
+        }
+
+        assertThat(actual.message).isEqualTo("some test data without someField")
+    }
+
+    @Test
+    fun `mandatoryVatRate will return given valid value`() {
+        val record: Map<String, String?> = mapOf(
+            "someField" to "12,34"
+        )
+
+        val actual = record.mandatoryVatRate("someField")
+
+        assertThat(actual).isEqualTo(VatRate("12,34"))
+    }
+
+    @Test
+    fun `mandatoryVatRate will throw error for invalid value`() {
+        val record: Map<String, String?> = mapOf(
+            "someField" to "invalid value"
+        )
+
+        val actual = assertThrows<IllegalStateException> {
+            record.mandatoryVatRate("someField")
+        }
+
+        assertThat(actual.message).isEqualTo("some test data: someField='invalid value' not a valid VatRate")
+    }
+
+    @Test
+    fun `mandatoryVatRate will throw error for missing value`() {
+        val record: Map<String, String?> = mapOf(
+            "someField" to null
+        )
+
+        val actual = assertThrows<IllegalStateException> {
+            record.mandatoryVatRate("someField")
         }
 
         assertThat(actual.message).isEqualTo("some test data without someField")

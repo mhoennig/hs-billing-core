@@ -50,7 +50,7 @@ open class Parser(val contextInfo: String) {
         }
     }
 
-    protected fun Map<String, String?>.mandatorVatRate(fieldName: String): VatRate {
+    protected fun Map<String, String?>.mandatoryVatRate(fieldName: String): VatRate {
         val fieldValue = mandatoryString(fieldName)
         try {
             return VatRate(fieldValue)
