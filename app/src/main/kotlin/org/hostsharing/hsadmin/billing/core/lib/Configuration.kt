@@ -9,4 +9,7 @@ interface Configuration {
 
     val domesticCountryCode: String
         get() = "DE"
+
+    val paymentTermInDays: Long
+        get() = 30
 }

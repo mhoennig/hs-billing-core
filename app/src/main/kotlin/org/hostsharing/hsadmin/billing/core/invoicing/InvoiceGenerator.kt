@@ -23,7 +23,7 @@ class InvoiceGenerator(
                     override val documentDate = billingDate
                     override val customer = customer
                     override val referenceDate = periodEndDate
-                    override val dueDate = this.documentDate.plusDays(30)
+                    override val dueDate = this.documentDate.plusDays(configuration.paymentTermInDays)
                     override val directDebiting = this.customer.sepa.directDebiting
                     override val vatGroups = billingItems
                         .filter { it.customerCode == customer.code }

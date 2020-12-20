@@ -31,4 +31,11 @@ internal class ConfigurationTest {
         val actual = given.domesticCountryCode
         assertThat( actual).isEqualTo("DE")
     }
+
+    @Test
+    fun `default for property paymentTermInDays is 30`() {
+        val given = object : Configuration{}
+        val actual = given.paymentTermInDays
+        assertThat( actual).isEqualTo(30)
+    }
 }
