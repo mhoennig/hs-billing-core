@@ -4,7 +4,7 @@ import org.hostsharing.hsadmin.billing.core.lib.Configuration
 import org.hostsharing.hsadmin.billing.core.lib.validationError
 
 data class CustomerVatBase(
-    val vatCountryCode: String,
+    val vatCountryCode: CountryCode,
     val vatChargeMode: VatChargeMode,
     val uidVat: String? = null
 ) : Formattable {
