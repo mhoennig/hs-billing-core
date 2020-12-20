@@ -4,6 +4,8 @@ import assertk.assertThat
 import assertk.assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import java.lang.IllegalStateException
 import java.math.BigDecimal
 
@@ -84,5 +86,10 @@ internal class VatRateTest {
         assertThat(given.hashCode()).isEqualTo(VatRate.NOT_IMPLEMENTED.hashCode())
         assertThat(given).isEqualTo(VatRate.NOT_IMPLEMENTED)
         assertThat(given).isNotEqualTo(VatRate("12,34"))
+    }
+
+    @Test
+    fun `equals() will treat other classes as false`() {
+        assertThat(VatRate("0")).isNotEqualTo(0)
     }
 }

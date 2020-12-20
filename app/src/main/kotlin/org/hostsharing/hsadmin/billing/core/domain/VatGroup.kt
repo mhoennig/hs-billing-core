@@ -78,11 +78,13 @@ class VatRate(val rate: String) {
 
     override fun equals(other: Any?): Boolean =
         other is VatRate &&
-            noTax == other.noTax &&
-            domestic == other.domestic &&
-            notApplicable == other.notApplicable &&
-            notImplemented == other.notImplemented &&
-            (unknown == other.unknown || percentage.compareTo(other.percentage) == 0)
+            when (true) {
+                noTax -> other.noTax
+                domestic -> other.domestic
+                notApplicable -> other.notApplicable
+                notImplemented -> other.notImplemented
+                else -> percentage.compareTo(other.percentage) == 0
+            }
 
     override fun hashCode(): Int = toString().hashCode()
 }

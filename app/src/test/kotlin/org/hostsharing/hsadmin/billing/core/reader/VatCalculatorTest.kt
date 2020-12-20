@@ -90,7 +90,7 @@ internal class VatCalculatorTest {
                     id20Webmaster, customerVatBase("DE", VatChargeMode.DOMESTIC)
                 ),
                 Expected.Result(
-                    VatRate("21,00"), "440020"
+                    VatRate("16,00"), "440020"
                 )
             )
 
