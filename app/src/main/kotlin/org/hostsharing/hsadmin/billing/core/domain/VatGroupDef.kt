@@ -45,7 +45,7 @@ class VatGroupDefs(
     fun byCountryCode(vatCountryCode: String): Map<VatGroupId, VatGroupDef> =
         vatGroupDefsByCountryCode[vatCountryCode]
             ?: vatGroupDefsByCountryCode[VatGroupDef.FALLBACK_VAT_COUNTRY_CODE]
-            ?: error("vatCountryCode '${vatCountryCode}' not found in ${vatGroupDefsByCountryCode.keys}")
+            ?: error("vatCountryCode '$vatCountryCode' not found in ${vatGroupDefsByCountryCode.keys}")
 }
 
 data class VatGroupDef(

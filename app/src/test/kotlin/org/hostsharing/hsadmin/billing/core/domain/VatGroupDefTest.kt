@@ -9,18 +9,19 @@ internal class VatGroupDefTest {
     @Test
     fun `will format values`() {
         val given = VatGroupDef(
-             countryCode = "DE",
-         id = "10",
-         description = "some description",
-         placeOfSupply= PlaceOfSupply.SUPPLIER,
-         vatRate = VatRate("20,50"),
-         dcAccount = "440010",
-         rcAccount = "n/a"
+            countryCode = "DE",
+            id = "10",
+            description = "some description",
+            placeOfSupply = PlaceOfSupply.SUPPLIER,
+            vatRate = VatRate("20,50"),
+            dcAccount = "440010",
+            rcAccount = "n/a"
         )
 
         val actual = given.formatted()
 
-        assertThat(actual).isEqualTo("""
+        assertThat(actual).isEqualTo(
+            """
             countryCode="DE"
             id="10"
             description="some description"
@@ -28,7 +29,8 @@ internal class VatGroupDefTest {
             vatRate="0.2050"
             dcAccount="440010"
             rcAccount="n/a"
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 
     @Test
@@ -37,7 +39,7 @@ internal class VatGroupDefTest {
             countryCode = "DE",
             id = "10",
             description = "some description",
-            placeOfSupply= PlaceOfSupply.SUPPLIER,
+            placeOfSupply = PlaceOfSupply.SUPPLIER,
             vatRate = VatRate("20.50"),
             dcAccount = "440010",
             rcAccount = "n/a"

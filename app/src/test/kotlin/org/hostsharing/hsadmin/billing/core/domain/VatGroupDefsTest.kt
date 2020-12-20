@@ -1,19 +1,13 @@
 package org.hostsharing.hsadmin.billing.core.domain
 
 import assertk.assertThat
-import assertk.assertions.*
-import io.mockk.MockKException
+import assertk.assertions.isEqualTo
+import assertk.assertions.isNotNull
+import assertk.assertions.isSameAs
+import assertk.assertions.prop
 import org.hostsharing.hsadmin.billing.core.lib.Configuration
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalStateException
-import io.mockk.mockk
-import io.mockk.mockkClass
-import io.mockk.verify
-import org.junit.jupiter.api.Disabled
-import kotlin.reflect.KCallable
-import kotlin.reflect.KClass
-import kotlin.reflect.full.createInstance
 
 internal class VatGroupDefsTest {
 
@@ -91,69 +85,4 @@ internal class VatGroupDefsTest {
         assertThat(actual.lookup("AT", "60").vatRate)
             .isEqualTo(VatRate("16,00"))
     }
-
-    @Test
-    @Disabled
-    fun `will delegate all Map methods`() {
-        val delegate =  mockk<Map<CountryCode, Map<VatGroupId, VatGroupDef>>>(relaxed = true)
-        val wrapper = VatGroupDefs(config, delegate)
-
-        for (delegateMethod in Map::class.members) {
-
-            val wrapperMethod = VatGroupDefs::class.members.singleOrNull {
-                hasSameSignature(delegateMethod, it)
-            }
-            if (wrapperMethod != null) {
-                if ( delegateMethod.parameters.size == 1 ) {
-                    wrapperMethod.call(wrapper)
-                    verify(exactly = 1) {
-                        delegateMethod.call(delegate)
-                    }
-                } else {
-                    val arguments = wrapperMethod.arguments
-                    wrapperMethod.call(wrapper, arguments)
-                    verify(exactly = 1) {
-                        delegateMethod.call(delegate, arguments)
-                    }
-                }
-            }
-        }
-    }
-//            assertThat(methodCalled,
-//                "wrapper does not delegate to Map.'" + delegateMethod.getName().toString() + "'")
-//                .isTrue()
-//            )
-
-    private fun hasSameSignature(
-        delegateMethod: KCallable<*>,
-        wrapperMethod: KCallable<*>
-    ) = delegateMethod.name == wrapperMethod.name &&
-        hasSameParamerters(delegateMethod, wrapperMethod)
-
-    private fun hasSameParamerters(
-        delegateMethod: KCallable<*>,
-        wrapperMethod: KCallable<*>
-    ): Boolean {
-        if ( delegateMethod.parameters.size != wrapperMethod.parameters.size) {
-            return false
-        }
-        delegateMethod.parameters.forEachIndexed { index, param ->
-            if ( delegateMethod.parameters[index].toString() != param.toString() ) {
-                return false
-            }
-        }
-        return true
-    }
-
-    private val KCallable<*>.arguments: Array<Any?>
-        get() = this.parameters.map {
-            val clazz = it.type.classifier as KClass<*>
-            val instance = try {
-                mockkClass(clazz, relaxed = true)
-            } catch (exc: MockKException) {
-                clazz.createInstance()
-            }
-            instance
-{}        }.toTypedArray()
-
 }

@@ -30,6 +30,7 @@ private object VatPercentageFormat {
 
 class VatRate(val rate: String) {
     companion object {
+        private const val DIGITS = 4
         private const val NO_TAX_VALUE = "noTax"
         private const val DOMESTIC_VALUE = "domestic"
         private const val NOT_APPLICABLE_VALUE = "n/a"
@@ -55,8 +56,10 @@ class VatRate(val rate: String) {
             domestic -> error("unresolved 'domestic' vat rate reference")
             notApplicable -> error("vat rate not applicable")
             notImplemented -> error("vat rate not implemented")
-            else -> (VatPercentageFormat.decimalFormat.parse(rate) as BigDecimal)
-                .setScale(4) / CENT
+            else -> {
+                (VatPercentageFormat.decimalFormat.parse(rate) as BigDecimal)
+                    .setScale(DIGITS) / CENT
+            }
         }
 
     init {
