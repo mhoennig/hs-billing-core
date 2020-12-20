@@ -232,7 +232,7 @@ class BillingIntegrationTest {
             |"hsh00-xyz";    "";            ;          "1";       "01";    "110"; "2020-11-14";           "2020-11-14";          "Domain-Rabatt";                "10.00"
             |"""
 
-        val actualAccountRecordsCsv = Billing(
+        Billing(
             CONFIGURATION,
             periodEndDate = LocalDate.parse("2020-11-30"),
             billingDate = LocalDate.parse("2020-12-03"),
@@ -240,9 +240,9 @@ class BillingIntegrationTest {
             vatGroupsCSV = vatGroupsCsvFile,
             customersCSV = customersCsvFile,
             billingItemsCSVs = arrayOf(billingItemsCsvFile)
-        ).generateAccountingRecordsCsv()
+        ).run()
 
-        assertThat(actualAccountRecordsCsv.exists())
+        assertThat(File(CONFIGURATION.outputDirectory, "accounting-records.csv").exists())
     }
 
     // --- fixture ----------------------------------------------------------
