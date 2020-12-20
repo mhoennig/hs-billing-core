@@ -218,6 +218,33 @@ class BillingIntegrationTest {
         )
     }
 
+    @Test
+    fun `run will generate all output files`() {
+
+        val customersCsvFile = givenInputDir withFile "customers.csv" containing """
+            |customerNumber;customerCode;company;salutation;title;firstName;lastName;fullName;co;street;zipCode;city;country;vatCountryCode;email;uidVat;directDebiting;bankCustomer;bankIBAN;bankBIC;mandateRef;vatChargeMode
+            |"12345";"hsh00-xyz";"Testmann GmbH";"Herr";"";"Tästi";"Testmann";"Tästi Testmann";"";"Teststraße 42";"20144";"Hamburg";"Germany";"DE";"taesti@taestmann.de";"DE987654321";"true";"Testmann GmbH";"DE81201900030012345678";"GENODEF1HH2";"HS-10003-20140801";"domestic"
+            |"""
+
+        val billingItemsCsvFile = givenInputDir withFile "billing-items.csv" containing """
+            |customerCode;   product?;      project; count; vatGroupId; articleId; fromTimestamp;          untilTimestamp;        description;                  netAmount
+            |"hsh00-xyz";    "";            ;          "1";       "00";      "0"; "2020-11-14";           "2020-11-14";          "Membership Fee";             "10.00"
+            |"hsh00-xyz";    "";            ;          "1";       "01";    "110"; "2020-11-14";           "2020-11-14";          "Domain-Rabatt";                "10.00"
+            |"""
+
+        val actualAccountRecordsCsv = Billing(
+            CONFIGURATION,
+            periodEndDate = LocalDate.parse("2020-11-30"),
+            billingDate = LocalDate.parse("2020-12-03"),
+            startInvoiceNumber = 2000,
+            vatGroupsCSV = vatGroupsCsvFile,
+            customersCSV = customersCsvFile,
+            billingItemsCSVs = arrayOf(billingItemsCsvFile)
+        ).generateAccountingRecordsCsv()
+
+        assertThat(actualAccountRecordsCsv.exists())
+    }
+
     // --- fixture ----------------------------------------------------------
 
     private val givenInputDir = createTempDir(prefix = "hs-billing-test-input")

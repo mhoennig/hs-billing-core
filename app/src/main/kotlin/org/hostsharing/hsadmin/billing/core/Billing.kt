@@ -41,22 +41,3 @@ class Billing(
     fun generateAccountingRecordsCsv(): File =
         AccountingRecordsGenerator(configuration).generate(invoices)
 }
-
-private class FileBasedConfiguration(val configFile: File) : Configuration {
-    private val config: Properties = Properties().also { config ->
-        withDomainContext("reading configuration: $configFile") {
-            FileInputStream(configFile).use { configFile ->
-                config.load(configFile)
-            }
-        }
-    }
-
-    override val templatesDirectory =
-        config.getProperty("templatesDirectory")
-    override val outputDirectory =
-        config.getProperty("outputDirectory")
-}
-
-fun main(args: Array<String>) {
-    println("Hello, World!")
-}
