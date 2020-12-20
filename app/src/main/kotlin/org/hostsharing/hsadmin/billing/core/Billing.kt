@@ -4,10 +4,8 @@ import org.hostsharing.hsadmin.billing.core.domain.*
 import org.hostsharing.hsadmin.billing.core.generator.AccountingRecordsGenerator
 import org.hostsharing.hsadmin.billing.core.invoicing.InvoiceGenerator
 import org.hostsharing.hsadmin.billing.core.lib.Configuration
-import org.hostsharing.hsadmin.billing.core.lib.withDomainContext
 import org.hostsharing.hsadmin.billing.core.reader.*
 import java.io.File
-import java.io.FileInputStream
 import java.time.LocalDate
 import java.util.*
 

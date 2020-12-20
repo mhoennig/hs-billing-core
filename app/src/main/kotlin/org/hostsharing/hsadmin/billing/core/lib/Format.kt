@@ -1,10 +1,8 @@
 package org.hostsharing.hsadmin.billing.core.lib
 
 import java.math.BigDecimal
-import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
-import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class Format {
@@ -32,5 +30,4 @@ class Format {
     }
 }
 
-inline fun LocalDate.format(format: DateFormat): String = format.format(this)
-inline fun BigDecimal.format(format: DecimalFormat): String = format.format(this)
+fun BigDecimal.format(format: DecimalFormat): String = format.format(this)

@@ -27,8 +27,10 @@ internal class PlaceOfSupplyTest {
 
     @Test
     fun `ofCode() throws exception with error message for unknown code`() {
-        assertThat( assertThrows<IllegalStateException> {
-            PlaceOfSupply.ofCode("unknown")
-        }.message).isEqualTo("unknown vatChargeMode 'unknown'")
+        assertThat(
+            assertThrows<IllegalStateException> {
+                PlaceOfSupply.ofCode("unknown")
+            }.message
+        ).isEqualTo("unknown vatChargeMode 'unknown'")
     }
 }

@@ -76,7 +76,7 @@ test {
 // --- jacoco plugin configuration --- measures code coverage of unit tests ---
 
 jacocoTestReport {
-    dependsOn test // tests are a prerequisite for report
+    dependsOn test
 }
 
 jacoco {
@@ -88,11 +88,13 @@ jacocoTestReport {
     reports {
         xml.enabled false
         csv.enabled false
-        html.destination file("${buildDir}/jacocoHtml")
+        html.destination file("${buildDir}/reports/jacoco")
     }
 }
 
 jacocoTestCoverageVerification {
+    dependsOn test
+
     violationRules {
         rule {
             element = 'CLASS'
@@ -112,6 +114,8 @@ jacocoTestCoverageVerification {
         }
     }
 }
+check.dependsOn jacocoTestCoverageVerification
+
 
 // --- pitest configuration --- runs mutation tests, thus testing the quality of the unit tests ---
 

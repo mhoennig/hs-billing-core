@@ -134,7 +134,6 @@ The configuration can be found in link:app/config/detekt/config.yml[].
 
 For more information see https://arturbosch.github.io/detekt[_detekt_ project on _Github_].
 
-
 === Unit Testing
 
 For unit-testing, _JUnit 5 (Jupiter)__ is used along with _assertk_, a _Kotlin_ version of _assertj_ as a check task for gradle.
@@ -165,18 +164,25 @@ Focused::
 the scenarios should illustrate a single rule only
 Brief — keep scenarios short
 
+=== Test Code Coverage
 
-=== Architecture Verification
-
-There is some automatic verification of architecture rules using __ArchUnit__ in the unit test `ArchitectureTest`.
-See there for more information, especially about the git branch `archunit-rule-validation` and verifying the rules themselves.
-
-Technically this is a mal unit-test, thus run with:
+To verify a specified test code coverage minimum, _jacoco_ is configured.
+The verification is a dependent of `gradlew check` and  can be run separately with:
 
 [source,shell script]
 ----
-$ ./gradlew test
+$ ./gradlew jacocoTestCodeCoverageVerification
 ----
+
+A coverage report (link:./app/build/reports/jacoco/index.html[]]) can be generated with:
+
+[source,shell script]
+----
+$ ./gradlew jacocoTestReport
+----
+
+Find the configuration in link:./app/build.gradle[]
+
 
 
 === Mutation Testing
@@ -200,3 +206,16 @@ about 2 percent points below the level we have actually reached, is a good measu
 
 CAUTION: After a successful run, you can see percentage  which actually counts for the limit.
 The percentage shown in the report HTML-file seems to be calculated differently and is usually a bit higher.
+
+=== Architecture Verification
+
+There is some automatic verification of architecture rules using __ArchUnit__ in the unit test `ArchitectureTest`.
+See there for more information, especially about the git branch `archunit-rule-validation` and verifying the rules themselves.
+
+Technically this is a mal unit-test, thus run with:
+
+[source,shell script]
+----
+$ ./gradlew test
+----
+
