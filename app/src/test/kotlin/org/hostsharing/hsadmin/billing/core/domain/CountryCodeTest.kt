@@ -13,7 +13,7 @@ internal class CountryCodeTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = arrayOf("", "D", "d", "DEX", "12"))
+    @ValueSource(strings = arrayOf("", "D", "d", "de", "DEX", "D1", "1D", "12"))
     fun `will recognize invalid country codes as invalid`(value: String) {
         assertThat(value.isCountryCode()).isFalse()
     }
