@@ -39,7 +39,7 @@ enum class VatChargeMode(
             validateNonDomesticEuCountryCode(config, vatCountryCode)
     },
     NON_EU_REVERSE("NonEU-reverse") {
-        override fun validate(config: Configuration, vatCountryCode: CountryCode)  =
+        override fun validate(config: Configuration, vatCountryCode: CountryCode) =
             validateNonEuCountryCode(config, vatCountryCode)
     };
 
@@ -48,7 +48,6 @@ enum class VatChargeMode(
             values().firstOrNull { it.code == code }
                 ?: error("unknown vatChargeMode '$code'")
     }
-
 
     abstract fun validate(config: Configuration, vatCountryCode: CountryCode)
 
@@ -66,11 +65,12 @@ enum class VatChargeMode(
 
     protected fun validateNonEuCountryCode(config: Configuration, vatCountryCode: CountryCode) {
         if (config.domesticCountryCodes.contains(vatCountryCode) ||
-            config.euCountryCodes.contains(vatCountryCode)) {
+            config.euCountryCodes.contains(vatCountryCode)
+        ) {
             error(countryCodeValidationError(vatCountryCode))
         }
     }
 
     private fun countryCodeValidationError(vatCountryCode: CountryCode): String =
-        "vatCountryCode '${vatCountryCode}' is invalid for vatChargeMode $this"
+        "vatCountryCode '$vatCountryCode' is invalid for vatChargeMode $this"
 }

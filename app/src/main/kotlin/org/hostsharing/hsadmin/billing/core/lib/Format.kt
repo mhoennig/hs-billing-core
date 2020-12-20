@@ -5,28 +5,25 @@ import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.time.format.DateTimeFormatter
 
-class Format {
+object Format {
+    val year: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy")
+    val date: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+    val datePeriod: DateTimeFormatter = DateTimeFormatter.ofPattern("MM/yyyy")
+    val money = DecimalFormat("#,##0.00")
+    val vatRate = DecimalFormat("#,##0.00")
 
-    companion object {
-        val year: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy")
-        val date: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-        val datePeriod: DateTimeFormatter = DateTimeFormatter.ofPattern("MM/yyyy")
-        val money = DecimalFormat("#,##0.00")
-        val vatRate = DecimalFormat("#,##0.00")
+    init {
+        val decimalFormatSymbols = DecimalFormatSymbols()
+        decimalFormatSymbols.decimalSeparator = ','
+        decimalFormatSymbols.groupingSeparator = '.'
 
-        init {
-            val decimalFormatSymbols = DecimalFormatSymbols()
-            decimalFormatSymbols.decimalSeparator = ','
-            decimalFormatSymbols.groupingSeparator = '.'
+        money.decimalFormatSymbols = decimalFormatSymbols
+        money.isDecimalSeparatorAlwaysShown = true
+        money.isGroupingUsed = true
 
-            money.decimalFormatSymbols = decimalFormatSymbols
-            money.isDecimalSeparatorAlwaysShown = true
-            money.isGroupingUsed = true
-
-            vatRate.decimalFormatSymbols = decimalFormatSymbols
-            vatRate.isDecimalSeparatorAlwaysShown = true
-            vatRate.isGroupingUsed = true
-        }
+        vatRate.decimalFormatSymbols = decimalFormatSymbols
+        vatRate.isDecimalSeparatorAlwaysShown = true
+        vatRate.isGroupingUsed = true
     }
 }
 

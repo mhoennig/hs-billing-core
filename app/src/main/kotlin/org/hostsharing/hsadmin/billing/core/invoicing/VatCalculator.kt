@@ -58,7 +58,6 @@ class VatCalculator(val config: Configuration) {
         }
     }
 
-
     private fun determineDirectChargeVat(vatGroupDef: VatGroupDef): VatResult {
         if (vatGroupDef.vatRate.unknown) {
             error("VAT rate cannot be determined from ${vatGroupDef.format(0)}")

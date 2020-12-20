@@ -14,7 +14,6 @@ interface Configuration {
     val domesticVatCountryCode: String
         get() = "DE"
 
-
     val domesticCountryCodes: Array<String>
         get() = arrayOf("DE")
 
