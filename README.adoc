@@ -207,6 +207,10 @@ about 2 percent points below the level we have actually reached, is a good measu
 CAUTION: After a successful run, you can see percentage  which actually counts for the limit.
 The percentage shown in the report HTML-file seems to be calculated differently and is usually a bit higher.
 
+Similar to the problem mentioned above (see chapter <<Test Code Coverage>>), some _Kotlin_ features generate code which our tests won't cover and should not cover because we don't want to test the _Kotlin_ compiler.
+Unfortunately _pitest_ does not know about this fact and is going to mutate this code as well which leads to false positives.
+Most of these issues could only be fixed jointly by the _Kotlin_-compiler and _pitest_ development teams, https://github.com/hcoles/pitest/issues/260[as mentioned in this open _Kotlin_-compiler issue].
+
 === Architecture Verification
 
 There is some automatic verification of architecture rules using __ArchUnit__ in the unit test `ArchitectureTest`.
