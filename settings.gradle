@@ -7,5 +7,13 @@
  * in the user manual at https://docs.gradle.org/6.7.1/userguide/multi_project_builds.html
  */
 
+// also use mavenLocal() for gradle plugins
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenLocal()
+    }
+}
+
 rootProject.name = 'org.hostsharing.hsadmin.billing.core'
 include('app')
