@@ -1,3 +1,13 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    configurations.maybeCreate("pitest")
+    dependencies {
+        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.2.4'
+        pitest 'org.pitest:pitest-kotlin-plugin:0.1'
+    }
+}
 
 plugins {
     id 'java'
@@ -16,6 +26,7 @@ repositories {
 
 configurations {
     ktlint
+    maybeCreate("pitest")
 }
 
 java {
@@ -143,19 +154,17 @@ check.dependsOn jacocoTestCoverageVerification
 pitest {
     junit5PluginVersion.set('0.12')
     targetClasses.set(['org.hostsharing.hsadmin.billing.core.*'])
-    pitestVersion.set('1.6.1') //not needed when a default PIT version should be used
+    pitestVersion.set('1.6.1') // not to confuse with the solidsoft gradle-plugin version
     threads.set(4)
     outputFormats.set(['XML', 'HTML'])
     timestampedReports.set(false)
-    mutationThreshold.set(85)
+    mutationThreshold.set(90)
+    coverageThreshold.set(95)
     mutators.set(["STRONGER", "DEFAULTS"])
     avoidCallsTo.set([
         "kotlin.jvm.internal",
         "kotlinx.coroutines",
-        "kotlin.io.CloseableKt"
-    ])
-    excludedMethods.set([
-        "get*"
+        "kotlin.io.CloseableKt" // calls to this class are usually generated
     ])
 }
 
