@@ -211,7 +211,6 @@ detekt {
     }
 }
 
-
 // --- OWASP dependency check -- vulnerability check of library dependencies
 
 dependencyCheck {

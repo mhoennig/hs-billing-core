@@ -43,3 +43,6 @@ jobs:
       - name: mutation testing
         run: ./gradlew pitest
 
+      - name: OWASP dependency vulnerability check
+        run: ./gradlew dependencyCheckAnalyze
+
