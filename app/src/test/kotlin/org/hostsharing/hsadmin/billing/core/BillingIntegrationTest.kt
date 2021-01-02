@@ -267,6 +267,8 @@ class BillingIntegrationTest {
     }
 
     private infix fun Assert<String>.matchesInExactOrder(textBlock: String) =
-        this.isEqualTo(textBlock.replaceIndentByMargin(marginPrefix = "|")
-            .replace("\n", System.lineSeparator()))
+        this.isEqualTo(
+            textBlock.replaceIndentByMargin(marginPrefix = "|")
+                .replace("\n", System.lineSeparator())
+        )
 }
