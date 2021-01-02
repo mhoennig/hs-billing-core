@@ -164,6 +164,9 @@ Focused::
 the scenarios should illustrate a single rule only
 Brief — keep scenarios short
 
+For prettier output of test results, https://github.com/radarsh/gradle-test-logger-plugin[a testlogger] is configured.
+Find the configuration in link:./app/build.gradle[] under `testlogger`.
+
 === Test Code Coverage
 
 To verify a specified test code coverage minimum, _jacoco_ is configured.
