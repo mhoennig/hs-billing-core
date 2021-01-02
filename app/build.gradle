@@ -7,6 +7,7 @@ plugins {
     id "io.gitlab.arturbosch.detekt" version "1.15.0"
     id 'org.barfuin.gradle.taskinfo' version '1.0.5'
     id "org.owasp.dependencycheck" version "6.0.3"
+    id 'com.adarshr.test-logger' version '2.1.1'
 }
 
 repositories {
@@ -72,6 +73,16 @@ build {
 test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport // generate report after tests
+}
+
+// --- testlogger -- prettier output for test results
+
+testlogger {
+    theme 'mocha' // project level
+    slowThreshold 1000
+    logLevel 'quiet'
+    showPassed false
+    showStackTraces false
 }
 
 // --- jacoco plugin configuration --- measures code coverage of unit tests ---

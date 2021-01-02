@@ -136,6 +136,8 @@ For more information see https://arturbosch.github.io/detekt[_detekt_ project on
 
 === Unit Testing
 
+==== Running Tests
+
 For unit-testing, _JUnit 5 (Jupiter)__ is used along with _assertk_, a _Kotlin_ version of _assertj_ as a check task for gradle.
 
 To execute the unit-tests, run:
@@ -144,6 +146,8 @@ To execute the unit-tests, run:
 ----
 $ ./gradlew test
 ----
+
+==== Writing Tests
 
 For writing unit-tests consider the __BRIEF__ rules http://gasparnagy.com/2019/05/clean-up-bad-bdd-scenarios/[from BDD]:
 
@@ -163,6 +167,18 @@ include only relevant details in the scenario
 Focused::
 the scenarios should illustrate a single rule only
 Brief — keep scenarios short
+
+==== Pretty Logging
+
+For prettier output of test results, https://github.com/radarsh/gradle-test-logger-plugin[a testlogger] is configured.
+Find the configuration in link:./app/build.gradle[] under `testlogger`.
+
+On Windows,  to get a proper output, you need to change the codepage before running gradle:
+
+[source,commandline]
+----
+chcp 65001
+----
 
 === Test Code Coverage
 

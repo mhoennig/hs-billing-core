@@ -38,7 +38,7 @@ jobs:
         run: ./gradlew ktlint detekt
 
       - name: unit testing with code-coverage
-        run: ./gradlew test jacocoTestCoverageVerification
+        run: ./gradlew test jacocoTestCoverageVerification --console=plain
 
       - name: mutation testing
         run: ./gradlew pitest
