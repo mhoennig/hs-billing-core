@@ -81,6 +81,7 @@ testlogger {
     theme 'mocha' // project level
     slowThreshold 1000
     logLevel 'quiet'
+    showPassed false
     showStackTraces false
 }
 
