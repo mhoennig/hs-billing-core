@@ -34,7 +34,7 @@ compileTestKotlin {
 }
 
 dependencies {
-    ext.kotlinVersion = '1.4.21-2'
+    ext.kotlinVersion = '1.4.30'
     ext.junit_version = "5.7.0"
 
     // Align versions of all Kotlin components
