@@ -35,7 +35,7 @@ compileTestKotlin {
 
 dependencies {
     ext.kotlinVersion = '1.4.30'
-    ext.junit_version = "5.7.0"
+    ext.junit_version = "5.7.1"
 
     // Align versions of all Kotlin components
     implementation platform('org.jetbrains.kotlin:kotlin-bom')
@@ -63,7 +63,7 @@ dependencies {
     testImplementation 'org.pitest:pitest-junit5-plugin:0.12'
 
     // linting
-    ktlint "com.pinterest:ktlint:0.40.0"
+    ktlint "com.pinterest:ktlint:0.41.0"
 }
 
 build {
