@@ -63,7 +63,7 @@ dependencies {
     testImplementation 'org.pitest:pitest-junit5-plugin:0.12'
 
     // linting
-    ktlint "com.pinterest:ktlint:0.40.0"
+    ktlint "com.pinterest:ktlint:0.47.1"
 }
 
 build {
