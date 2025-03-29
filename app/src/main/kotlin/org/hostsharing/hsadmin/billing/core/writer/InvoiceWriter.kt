@@ -16,6 +16,7 @@ import java.math.BigDecimal
 internal class InvoiceWriter(templateFilename: String) {
 
     class VatGroupFormatter(vatGroup: VatGroup) : VatGroup by vatGroup {
+
         val vatRateFormatted = (vatGroup.vatRate * BigDecimal(100)).format(Format.vatRate)
         val vatAmountFormatted = vatGroup.vatAmount.format(Format.money)
         val netAmountFormatted = vatGroup.netAmount.format(Format.money)

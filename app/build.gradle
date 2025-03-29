@@ -12,7 +12,6 @@ plugins {
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 configurations {
@@ -64,6 +63,7 @@ dependencies {
 
     // linting
     ktlint "com.pinterest:ktlint:0.40.0"
+    detekt "org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2"
 }
 
 build {
